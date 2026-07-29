@@ -1,14 +1,26 @@
 {
+  "id": "/",
   "name": "ContractKeeper",
   "short_name": "ContractKeeper",
   "description": "Beheer al je contracten op één plaats.",
+  "lang": "nl-BE",
+
   "start_url": "./",
   "scope": "./",
+
   "display": "standalone",
   "orientation": "portrait",
+
   "background_color": "#081521",
   "theme_color": "#18C47C",
-  "lang": "nl-BE",
+
+  "categories": [
+    "productivity",
+    "utilities",
+    "finance"
+  ],
+
+  "prefer_related_applications": false,
 
   "icons": [
     {
@@ -22,6 +34,33 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
+    }
+  ],
+
+  "shortcuts": [
+    {
+      "name": "Nieuw contract",
+      "short_name": "Toevoegen",
+      "description": "Voeg een nieuw contract toe",
+      "url": "./?action=add",
+      "icons": [
+        {
+          "src": "assets/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Contracten",
+      "short_name": "Lijst",
+      "description": "Bekijk alle contracten",
+      "url": "./?page=contracts",
+      "icons": [
+        {
+          "src": "assets/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
     }
   ]
 }
