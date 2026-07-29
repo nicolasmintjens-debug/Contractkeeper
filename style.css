@@ -1,447 +1,216 @@
-/* ==========================
-   CONTRACTKEEPER v0.1
-========================== */
+/* ==========================================
+   ContractKeeper v0.2
+   Basis
+========================================== */
 
-:root{
-    --bg:#081521;
-    --card:#112131;
-    --card2:#162B40;
-    --green:#18C47C;
-    --green-hover:#22d68b;
-    --text:#ffffff;
-    --text2:#9FB3C8;
-    --border:#1D3952;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
+:root {
 
-body{
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
-    background:var(--bg);
-    color:var(--text);
-}
+    --bg: #0F172A;
+    --surface: #1E293B;
+    --surface-light: #334155;
 
-.app{
-    max-width:500px;
-    margin:auto;
-    min-height:100vh;
-    padding:25px 20px 110px;
-}
+    --green: #22C55E;
+    --green-dark: #16A34A;
 
-/* ==========================
-   HEADER
-========================== */
+    --text: #FFFFFF;
+    --text-secondary: #94A3B8;
 
-.header{
-    display:flex;
-    align-items:center;
-    gap:18px;
-    margin-bottom:35px;
-}
+    --border: rgba(255,255,255,.06);
 
-.logo{
-    width:70px;
-    height:70px;
-    object-fit:contain;
-}
-
-.welcome h2{
-    font-size:28px;
-    margin-bottom:6px;
-}
-
-.welcome p{
-    color:var(--text2);
-}
-
-/* ==========================
-   DASHBOARD
-========================== */
-
-.stats{
-    margin-bottom:30px;
-}
-
-.card{
-    background:var(--card);
-    border-radius:22px;
-    padding:28px;
-    margin-bottom:18px;
-    border:1px solid var(--border);
-}
-
-.label{
-    color:var(--text2);
-    font-size:15px;
-}
-
-.card h1{
-    margin-top:12px;
-    font-size:42px;
-}
-
-.mini-cards{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:15px;
-}
-
-.mini-card{
-    background:var(--card);
-    border-radius:18px;
-    padding:20px;
-    border:1px solid var(--border);
-}
-
-.mini-card span{
-    color:var(--text2);
-    font-size:14px;
-}
-
-.mini-card h2{
-    margin-top:10px;
-    font-size:34px;
-}
-
-/* ==========================
-   SECTIONS
-========================== */
-
-.section{
-    margin-top:35px;
-}
-
-.section h3{
-    margin-bottom:18px;
-    font-size:22px;
-}
-
-.empty-card{
-    background:var(--card);
-    padding:24px;
-    border-radius:18px;
-    color:var(--text2);
-    border:1px solid var(--border);
-}
-
-/* ==========================
-   CONTRACTEN
-========================== */
-
-.contract-card{
-    background:var(--card);
-    border-radius:18px;
-    padding:18px;
-    margin-bottom:15px;
-
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-
-    border:1px solid var(--border);
-
-    transition:.25s;
-}
-
-.contract-card:hover{
-    transform:translateY(-2px);
-    border-color:var(--green);
-}
-
-.contract-card h4{
-    font-size:18px;
-    margin-bottom:5px;
-}
-
-.contract-card p{
-    color:var(--text2);
-    font-size:14px;
-}
-
-.price{
-    color:var(--green);
-    font-weight:bold;
-    font-size:20px;
-}
-
-/* ==========================
-   BOTTOM NAV
-========================== */
-
-.bottom-nav{
-
-    position:fixed;
-    bottom:20px;
-    left:50%;
-    transform:translateX(-50%);
-
-    width:min(470px,calc(100% - 24px));
-
-    background:var(--card);
-
-    border-radius:28px;
-
-    display:flex;
-    justify-content:space-around;
-    align-items:center;
-
-    padding:14px 10px;
-
-    border:1px solid var(--border);
-
-    backdrop-filter:blur(20px);
-}
-
-.bottom-nav button{
-
-    background:none;
-    border:none;
-
-    color:var(--text2);
-
-    display:flex;
-    flex-direction:column;
-
-    align-items:center;
-
-    gap:6px;
-
-    cursor:pointer;
-
-    font-size:13px;
-
-    transition:.2s;
-}
-
-.bottom-nav button i{
-
-    font-size:20px;
+    --radius: 22px;
 
 }
 
-.bottom-nav button.active{
-
-    color:var(--green);
-
-}
-
-.add-button{
-
-    width:62px;
-    height:62px;
-
-    border-radius:50%;
-
-    background:var(--green)!important;
-
-    color:white!important;
-
-    display:flex;
-    justify-content:center;
-    align-items:center;
-
-    margin-top:-35px;
-
-    box-shadow:0 10px 30px rgba(24,196,124,.35);
-
-}
-
-.add-button i{
-
-    font-size:24px!important;
-
-}
-
-/* ==========================
-   SCROLLBAR
-========================== */
-
-::-webkit-scrollbar{
-    width:8px;
-}
-
-::-webkit-scrollbar-thumb{
-    background:#2A4156;
-    border-radius:20px;
-}
-
-/* ==========================
-   RESPONSIVE
-========================== */
-
-@media (max-width:420px){
-
-    .welcome h2{
-        font-size:22px;
-    }
-
-    .card h1{
-        font-size:34px;
-    }
-
-    .mini-card h2{
-        font-size:28px;
-    }
-
-}
-
-/* ===========================================
-   MODAL
-=========================================== */
-
-.modal {
-
-    position: fixed;
-
-    inset: 0;
-
-    background: rgba(0,0,0,.45);
-
-    display: flex;
-
-    align-items: flex-end;
-
-    justify-content: center;
-
-    opacity: 0;
-
-    visibility: hidden;
-
-    transition: .30s;
-
-    z-index: 999;
-
-}
-
-.modal.show {
-
-    opacity: 1;
-
-    visibility: visible;
-
-}
-
-.modal-content {
+html,
+body {
 
     width: 100%;
-    max-width: 500px;
+    height: 100%;
 
-    background: var(--card);
+    background: var(--bg);
 
-    border-radius: 28px 28px 0 0;
+    color: var(--text);
+
+    font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        sans-serif;
+
+}
+
+body {
+
+    display: flex;
+    justify-content: center;
+
+}
+
+.app {
+
+    width: 100%;
+    max-width: 520px;
+    min-height: 100vh;
+
+    padding-bottom: 110px;
+
+}
+
+/* ==========================================
+   HEADER
+========================================== */
+
+.header {
+
+    display: flex;
+    align-items: center;
+
+    gap: 18px;
 
     padding: 24px;
 
-    max-height: 90vh;
+}
 
-    overflow-y: auto;
+.logo {
 
-    transform: translateY(100%);
-
-    transition: .35s ease;
+    width: 64px;
+    height: 64px;
 
 }
 
-.modal.show .modal-content {
+.welcome h2 {
 
-    transform: translateY(0);
-
-}
-
-.modal-handle {
-
-    width: 60px;
-
-    height: 6px;
-
-    background: #4c6278;
-
-    border-radius: 999px;
-
-    margin: 0 auto 20px;
+    font-size: 26px;
+    font-weight: 700;
 
 }
 
-.modal h2{
+.welcome p {
 
-    margin-bottom:25px;
+    margin-top: 6px;
 
-}
-
-.modal label{
-
-    display:block;
-
-    margin-top:18px;
-
-    margin-bottom:8px;
-
-    font-weight:600;
+    color: var(--text-secondary);
 
 }
 
-.modal input,
-.modal select,
-.modal textarea{
+/* ==========================================
+   DASHBOARD
+========================================== */
 
-    width:100%;
+.stats {
 
-    padding:14px;
-
-    border:none;
-
-    outline:none;
-
-    border-radius:14px;
-
-    background:var(--card2);
-
-    color:white;
-
-    font-size:16px;
+    padding: 0 20px;
 
 }
 
-.modal textarea{
+.card {
 
-    resize:none;
+    background: var(--surface);
 
-    height:120px;
+    border-radius: var(--radius);
 
-}
+    padding: 24px;
 
-.save-button{
-
-    width:100%;
-
-    margin-top:28px;
-
-    padding:16px;
-
-    border:none;
-
-    border-radius:16px;
-
-    background:var(--green);
-
-    color:white;
-
-    font-size:17px;
-
-    font-weight:bold;
-
-    cursor:pointer;
-
-    transition:.25s;
+    border: 1px solid var(--border);
 
 }
 
-.save-button:hover{
+.card .label {
 
-    background:var(--green-hover);
+    color: var(--text-secondary);
+
+    font-size: 14px;
+
+}
+
+.card h1 {
+
+    margin-top: 10px;
+
+    font-size: 40px;
+
+}
+
+.mini-cards {
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 16px;
+
+    margin-top: 16px;
+
+}
+
+.mini-card {
+
+    background: var(--surface);
+
+    border-radius: var(--radius);
+
+    padding: 18px;
+
+    border: 1px solid var(--border);
+
+}
+
+.mini-card span {
+
+    color: var(--text-secondary);
+
+    font-size: 13px;
+
+}
+
+.mini-card h2 {
+
+    margin-top: 10px;
+
+    font-size: 28px;
+
+}
+
+/* ==========================================
+   SECTIES
+========================================== */
+
+.section {
+
+    margin-top: 32px;
+
+    padding: 0 20px;
+
+}
+
+.section h3 {
+
+    margin-bottom: 14px;
+
+    font-size: 20px;
+
+}
+
+.empty-card {
+
+    background: var(--surface);
+
+    border-radius: var(--radius);
+
+    padding: 24px;
+
+    text-align: center;
+
+    color: var(--text-secondary);
+
+    border: 1px solid var(--border);
 
 }
