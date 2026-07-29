@@ -1,95 +1,347 @@
-console.log("contracts.js geladen");
-
-/* ===========================================
+/* ==========================================================
    ContractKeeper
    contracts.js
-=========================================== */
+========================================================== */
 
-/* ===========================================
-   Contracten weergeven
-=========================================== */
+let currentContracts = [];
+let currentCategory = "all";
+let currentSearch = "";
 
-function renderContracts() {
 
-    const container = document.getElementById("contracts");
+/* ==========================================================
+   INITIALISATIE
+========================================================== */
 
-    if (!container) return;
+document.addEventListener("DOMContentLoaded", () => {
 
-    const contracts = getContracts();
+    initContractEvents();
 
-    console.log("Contracten:", contracts);
+});
 
-    container.innerHTML = "";
 
-    if (!contracts || contracts.length === 0) {
+function initContractEvents() {
 
-        container.innerHTML = `
-            <div class="empty-card">
-                Nog geen contracten toegevoegd.
-            </div>
-        `;
+    const search = document.getElementById("searchContracts");
 
-        return;
+    if (search) {
+
+        search.addEventListener("input", e => {
+
+            currentSearch = e.target.value;
+
+            renderContracts();
+
+        });
+
     }
 
-    contracts.forEach(contract => {
+    document.querySelectorAll(".category-chip").forEach(chip => {
 
-        console.log("Contract:", contract);
+        chip.addEventListener("click", () => {
 
-        const name = contract.name || "Onbekend contract";
-        const supplier = contract.supplier || "-";
-        const category = contract.category || "-";
-        const amount = Number(contract.amount) || 0;
-        const endDate = contract.endDate || "-";
+            document.querySelectorAll(".category-chip")
+                .forEach(c => c.classList.remove("active"));
 
-        container.innerHTML += `
-            <div class="contract-card">
+            chip.classList.add("active");
 
-                <div class="contract-info">
-                    <h4>${name}</h4>
-                    <p>${supplier}</p>
-                    <small>${category}</small>
-                </div>
+            currentCategory = chip.dataset.category || "all";
 
-                <div class="contract-price">
-                    €${amount.toFixed(2).replace(".", ",")}
-                </div>
+            renderContracts();
 
-            </div>
-        `;
+        });
 
     });
 
 }
 
-/* ===========================================
-   Contract toevoegen
-=========================================== */
 
-function addContract(contract) {
+/* ==========================================================
+   CONTRACTEN OPHALEN
+========================================================== */
 
-    contracts.push(contract);
+function getFilteredContracts() {
 
-    saveContracts();
+    let contracts = ContractService.getAll();
 
-    renderContracts();
+    if (currentCategory !== "all") {
 
-    updateDashboard();
+        contracts = contracts.filter(
+
+            c => c.category === currentCategory
+
+        );
+
+    }
+
+    if (currentSearch.trim() !== "") {
+
+        const value = currentSearch.toLowerCase();
+
+        contracts = contracts.filter(contract =>
+
+            contract.name.toLowerCase().includes(value) ||
+
+            contract.supplier.toLowerCase().includes(value) ||
+
+            contract.category.toLowerCase().includes(value)
+
+        );
+
+    }
+
+    return contracts;
 
 }
 
-/* ===========================================
-   Contract verwijderen
-=========================================== */
+
+/* ==========================================================
+   RENDER
+========================================================== */
+
+function renderContracts() {
+
+    const container = document.getElementById("contracts");
+
+    const empty = document.getElementById("emptyContracts");
+
+    if (!container) {
+
+        return;
+
+    }
+
+    currentContracts = getFilteredContracts();
+
+    container.innerHTML = "";
+
+    if (currentContracts.length === 0) {
+
+        if (empty) {
+
+            empty.hidden = false;
+
+        }
+
+        return;
+
+    }
+
+    if (empty) {
+
+        empty.hidden = true;
+
+    }
+
+    currentContracts.forEach(contract => {
+
+        container.appendChild(
+
+            createContractCard(contract)
+
+        );
+
+    });
+
+}
+
+
+/* ==========================================================
+   CARD
+========================================================== */
+
+function createContractCard(contract) {
+
+    const card = document.createElement("div");
+
+    card.className = "contract-card";
+
+    const status = ContractService.getStatus(contract);
+
+    const icon = ContractService.getCategoryIcon(contract.category);
+
+    card.innerHTML = `
+
+        <div class="contract-card-header">
+
+            <div class="contract-icon">
+
+                <i class="bi ${icon}"></i>
+
+            </div>
+
+            <div class="contract-title">
+
+                <h3>${escapeHtml(contract.name)}</h3>
+
+                <p>${escapeHtml(contract.supplier)}</p>
+
+            </div>
+
+        </div>
+
+        <div class="contract-card-body">
+
+            <div class="contract-row">
+
+                <span>Categorie</span>
+
+                <strong>${contract.category}</strong>
+
+            </div>
+
+            <div class="contract-row">
+
+                <span>Bedrag</span>
+
+                <strong>${ContractService.formatPrice(contract.amount)}</strong>
+
+            </div>
+
+            <div class="contract-row">
+
+                <span>Frequentie</span>
+
+                <strong>${translateFrequency(contract.frequency)}</strong>
+
+            </div>
+
+            <div class="contract-row">
+
+                <span>Einddatum</span>
+
+                <strong>${ContractService.formatDate(contract.endDate)}</strong>
+
+            </div>
+
+        </div>
+
+        <div class="contract-card-footer">
+
+            <span class="status ${status}">
+                ${translateStatus(status)}
+            </span>
+
+            <div class="actions">
+
+                <button
+                    class="icon-btn"
+                    onclick="editContract('${contract.id}')">
+
+                    <i class="bi bi-pencil"></i>
+
+                </button>
+
+                <button
+                    class="icon-btn danger"
+                    onclick="deleteContract('${contract.id}')">
+
+                    <i class="bi bi-trash"></i>
+
+                </button>
+
+            </div>
+
+        </div>
+
+    `;
+
+    return card;
+
+}
+
+
+/* ==========================================================
+   VERWIJDEREN
+========================================================== */
 
 function deleteContract(id) {
 
-    contracts = contracts.filter(contract => contract.id !== id);
+    if (!confirm("Dit contract verwijderen?")) {
 
-    saveContracts();
+        return;
+
+    }
+
+    ContractService.delete(id);
 
     renderContracts();
 
-    updateDashboard();
+    if (typeof updateDashboard === "function") {
+
+        updateDashboard();
+
+    }
+
+}
+
+
+/* ==========================================================
+   BEWERKEN
+========================================================== */
+
+function editContract(id) {
+
+    if (typeof openEditModal === "function") {
+
+        openEditModal(id);
+
+    }
+
+}
+
+
+/* ==========================================================
+   HULPFUNCTIES
+========================================================== */
+
+function translateFrequency(frequency) {
+
+    switch (frequency) {
+
+        case "monthly":
+            return "Maandelijks";
+
+        case "quarterly":
+            return "Per kwartaal";
+
+        case "yearly":
+            return "Jaarlijks";
+
+        default:
+            return frequency;
+
+    }
+
+}
+
+
+function translateStatus(status) {
+
+    switch (status) {
+
+        case "active":
+            return "Actief";
+
+        case "ending":
+            return "Loopt af";
+
+        case "expired":
+            return "Verlopen";
+
+        default:
+            return status;
+
+    }
+
+}
+
+
+function escapeHtml(text) {
+
+    const div = document.createElement("div");
+
+    div.textContent = text;
+
+    return div.innerHTML;
 
 }
