@@ -1073,9 +1073,15 @@ select:focus{
 
 }
 
-input[type=date]{
+input[type="date"]{
 
-    color:var(--text);
+    width:100%;
+    max-width:100%;
+    display:block;
+    box-sizing:border-box;
+
+    -webkit-appearance:none;
+    appearance:none;
 
 }
 
