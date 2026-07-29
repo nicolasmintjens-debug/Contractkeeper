@@ -1,67 +1,65 @@
-/* ===========================================
+/* ==========================================================
    ContractKeeper
    app.js
-=========================================== */
-
-const APP = {
-    name: "ContractKeeper",
-    version: "0.1.0",
-    build: 1,
-    debug: true
-};
+========================================================== */
 
 document.addEventListener("DOMContentLoaded", initApp);
 
 async function initApp() {
 
-    console.log(`${APP.name} v${APP.version}`);
+    console.log("🚀 ContractKeeper gestart");
 
-    // Controleer op nieuwe versie
+    // Demo-data toevoegen bij eerste opstart
+    Storage.seed();
+
+    // Updates controleren
     if (typeof checkAppVersion === "function") {
         await checkAppVersion();
     }
 
-    // Contracten laden
-    if (typeof loadContracts === "function") {
-        loadContracts();
-    }
-
-    // Dashboard tekenen
+    // Contracten tonen
     if (typeof renderContracts === "function") {
         renderContracts();
     }
 
+    // Dashboard bijwerken
     if (typeof updateDashboard === "function") {
         updateDashboard();
     }
-
-    // Service Worker
-    registerServiceWorker();
 
     // Modal initialiseren
     if (typeof initModal === "function") {
         initModal();
     }
 
+    // Service Worker registreren
+    registerServiceWorker();
+
 }
 
-/* ===========================================
+
+
+/* ==========================================================
    Service Worker
-=========================================== */
+========================================================== */
 
 function registerServiceWorker() {
 
-    if (!("serviceWorker" in navigator)) return;
+    if (!("serviceWorker" in navigator)) {
+        return;
+    }
 
     navigator.serviceWorker
-        .register("./sw.js")
+        .register("sw.js")
         .then(() => {
 
-            if (APP.debug) {
-                console.log("✅ Service Worker actief");
-            }
+            console.log("✅ Service Worker geregistreerd");
 
         })
-        .catch(console.error);
+        .catch(error => {
+
+            console.error("❌ Service Worker fout:", error);
+
+        });
 
 }
