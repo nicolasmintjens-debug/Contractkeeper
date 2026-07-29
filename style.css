@@ -146,6 +146,8 @@ button{
 
     position:relative;
 
+    padding-top:max(20px, env(safe-area-inset-top));
+
     padding-bottom:130px;
 
 }
@@ -155,15 +157,10 @@ button{
 =========================== */
 
 .header{
-
     display:flex;
-
     align-items:center;
-
     gap:18px;
-
-    padding:26px 22px 20px;
-
+    padding:18px 22px 20px;
 }
 
 .logo{
