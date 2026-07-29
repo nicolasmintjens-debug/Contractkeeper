@@ -1,1 +1,27 @@
+{
+  "name": "ContractKeeper",
+  "short_name": "ContractKeeper",
+  "description": "Beheer al je contracten op één plaats.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#081521",
+  "theme_color": "#18C47C",
+  "lang": "nl-BE",
 
+  "icons": [
+    {
+      "src": "assets/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
