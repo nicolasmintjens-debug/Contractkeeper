@@ -352,3 +352,25 @@ Wil je de app vernieuwen?`
     }
 
 }
+
+/* ===========================================
+   Modal
+=========================================== */
+
+const modal = document.getElementById("addContractModal");
+
+document.getElementById("nav-add").addEventListener("click", () => {
+
+    modal.classList.add("show");
+
+});
+
+modal.addEventListener("click", (e) => {
+
+    if(e.target === modal){
+
+        modal.classList.remove("show");
+
+    }
+
+});
