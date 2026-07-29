@@ -214,3 +214,128 @@ body {
     border: 1px solid var(--border);
 
 }
+
+/* ==========================================
+   ONDERSTE NAVIGATIE
+========================================== */
+
+.bottom-nav {
+
+    position: fixed;
+
+    left: 50%;
+    bottom: 18px;
+
+    transform: translateX(-50%);
+
+    width: calc(100% - 24px);
+    max-width: 500px;
+
+    height: 82px;
+
+    background: rgba(30,41,59,.88);
+
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+
+    border: 1px solid rgba(255,255,255,.06);
+
+    border-radius: 28px;
+
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    padding: 0 12px;
+
+    box-shadow:
+        0 15px 40px rgba(0,0,0,.35);
+
+    z-index: 1000;
+
+}
+
+.bottom-nav button {
+
+    background: transparent;
+    border: none;
+
+    color: var(--text-secondary);
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 6px;
+
+    cursor: pointer;
+
+    transition: .25s;
+
+    font-size: 14px;
+
+}
+
+.bottom-nav button i {
+
+    font-size: 22px;
+
+}
+
+.bottom-nav button.active {
+
+    color: var(--green);
+
+}
+
+.bottom-nav button:hover {
+
+    color: white;
+
+}
+
+/* ==========================================
+   PLUSKNOP
+========================================== */
+
+.add-button {
+
+    width: 78px;
+    height: 78px;
+
+    border-radius: 50% !important;
+
+    background: linear-gradient(
+        180deg,
+        #2FE784,
+        #22C55E
+    ) !important;
+
+    color: white !important;
+
+    display: flex !important;
+
+    justify-content: center;
+    align-items: center;
+
+    transform: translateY(-28px);
+
+    box-shadow:
+        0 10px 30px rgba(34,197,94,.35);
+
+}
+
+.add-button i {
+
+    font-size: 34px;
+
+}
+
+.add-button:hover {
+
+    transform:
+        translateY(-31px)
+        scale(1.04);
+
+}
