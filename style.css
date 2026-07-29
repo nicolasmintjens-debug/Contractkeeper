@@ -288,3 +288,160 @@ body{
     }
 
 }
+
+/* ===========================================
+   MODAL
+=========================================== */
+
+.modal {
+
+    position: fixed;
+
+    inset: 0;
+
+    background: rgba(0,0,0,.45);
+
+    display: flex;
+
+    align-items: flex-end;
+
+    justify-content: center;
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    transition: .30s;
+
+    z-index: 999;
+
+}
+
+.modal.show {
+
+    opacity: 1;
+
+    visibility: visible;
+
+}
+
+.modal-content {
+
+    width: 100%;
+    max-width: 500px;
+
+    background: var(--card);
+
+    border-radius: 28px 28px 0 0;
+
+    padding: 24px;
+
+    max-height: 90vh;
+
+    overflow-y: auto;
+
+    transform: translateY(100%);
+
+    transition: .35s ease;
+
+}
+
+.modal.show .modal-content {
+
+    transform: translateY(0);
+
+}
+
+.modal-handle {
+
+    width: 60px;
+
+    height: 6px;
+
+    background: #4c6278;
+
+    border-radius: 999px;
+
+    margin: 0 auto 20px;
+
+}
+
+.modal h2{
+
+    margin-bottom:25px;
+
+}
+
+.modal label{
+
+    display:block;
+
+    margin-top:18px;
+
+    margin-bottom:8px;
+
+    font-weight:600;
+
+}
+
+.modal input,
+.modal select,
+.modal textarea{
+
+    width:100%;
+
+    padding:14px;
+
+    border:none;
+
+    outline:none;
+
+    border-radius:14px;
+
+    background:var(--card2);
+
+    color:white;
+
+    font-size:16px;
+
+}
+
+.modal textarea{
+
+    resize:none;
+
+    height:120px;
+
+}
+
+.save-button{
+
+    width:100%;
+
+    margin-top:28px;
+
+    padding:16px;
+
+    border:none;
+
+    border-radius:16px;
+
+    background:var(--green);
+
+    color:white;
+
+    font-size:17px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+.save-button:hover{
+
+    background:var(--green-hover);
+
+}
