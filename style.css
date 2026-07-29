@@ -146,7 +146,7 @@ button{
 
     position:relative;
 
-    padding-top:max(20px, env(safe-area-inset-top));
+    padding-top:max(10px, env(safe-area-inset-top));
 
     padding-bottom:130px;
 
