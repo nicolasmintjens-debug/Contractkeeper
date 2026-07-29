@@ -11,7 +11,9 @@ function renderContracts() {
 
     if (!container) return;
 
-    const contracts = getContracts();
+const contracts = getContracts();
+
+console.log("Contracten:", contracts);
 
     container.innerHTML = "";
 
