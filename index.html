@@ -1,1 +1,156 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
+    <title>ContractKeeper</title>
+
+    <meta name="theme-color" content="#0F172A">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="ContractKeeper">
+
+    <link rel="manifest" href="manifest.json">
+
+    <link rel="apple-touch-icon" href="assets/icon-192.png">
+    <link rel="icon" href="assets/icon-192.png">
+
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://kit.fontawesome.com/6d4a5d6e7a.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<div class="app">
+
+    <!-- Header -->
+    <header class="header">
+
+        <img src="assets/logo.png" class="logo" alt="ContractKeeper">
+
+        <div class="welcome">
+            <h2>Goedemorgen 👋</h2>
+            <p>Welkom bij ContractKeeper</p>
+        </div>
+
+    </header>
+
+    <!-- Dashboard -->
+    <main>
+
+        <section class="stats">
+
+            <div class="card">
+                <span class="label">Maandelijkse kosten</span>
+                <h1>€0,00</h1>
+            </div>
+
+            <div class="mini-cards">
+
+                <div class="mini-card">
+                    <span>Actieve contracten</span>
+                    <h2>0</h2>
+                </div>
+
+                <div class="mini-card">
+                    <span>Binnen 30 dagen</span>
+                    <h2>0</h2>
+                </div>
+
+            </div>
+
+        </section>
+
+        <section class="section">
+
+            <h3>Binnenkort aflopend</h3>
+
+            <div class="empty-card">
+                Geen contracten gevonden
+            </div>
+
+        </section>
+
+        <section class="section">
+
+            <h3>Mijn contracten</h3>
+
+            <div id="contracts">
+
+                <div class="contract-card">
+
+                    <div>
+
+                        <h4>Netflix</h4>
+                        <p>Entertainment</p>
+
+                    </div>
+
+                    <div class="price">
+
+                        €14,99
+
+                    </div>
+
+                </div>
+
+                <div class="contract-card">
+
+                    <div>
+
+                        <h4>Proximus</h4>
+                        <p>Internet</p>
+
+                    </div>
+
+                    <div class="price">
+
+                        €69,99
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Navigatie -->
+
+    <nav class="bottom-nav">
+
+        <button class="active">
+            <i class="fas fa-house"></i>
+            <span>Overzicht</span>
+        </button>
+
+        <button>
+            <i class="fas fa-file-contract"></i>
+            <span>Contracten</span>
+        </button>
+
+        <button class="add-button">
+            <i class="fas fa-plus"></i>
+        </button>
+
+        <button>
+            <i class="fas fa-calendar"></i>
+            <span>Kalender</span>
+        </button>
+
+        <button>
+            <i class="fas fa-user"></i>
+            <span>Profiel</span>
+        </button>
+
+    </nav>
+
+</div>
+
+<script src="app.js"></script>
+
+</body>
+</html>
