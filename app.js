@@ -6,7 +6,7 @@
 const APP = {
     name: "ContractKeeper",
     version: "0.1.0",
-    build: "2026-07-29",
+    build: 1,
     debug: true
 };
 
