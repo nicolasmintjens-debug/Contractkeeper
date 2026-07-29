@@ -451,3 +451,90 @@ body {
     cursor: pointer;
 
 }
+
+/* ==========================================
+   CONTRACTKAARTEN
+========================================== */
+
+#contracts {
+
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+}
+
+.contract-card {
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+
+    border-radius: var(--radius);
+
+    padding: 20px;
+
+    transition: .25s;
+
+}
+
+.contract-card:hover {
+
+    transform: translateY(-2px);
+
+    border-color: rgba(34,197,94,.35);
+
+    box-shadow: 0 8px 20px rgba(0,0,0,.20);
+
+}
+
+.contract-info h4 {
+
+    font-size: 18px;
+    font-weight: 600;
+
+    margin-bottom: 4px;
+
+}
+
+.contract-info p {
+
+    color: var(--text-secondary);
+
+    font-size: 14px;
+
+    margin-bottom: 6px;
+
+}
+
+.contract-info small {
+
+    display: inline-block;
+
+    padding: 4px 10px;
+
+    border-radius: 999px;
+
+    background: rgba(34,197,94,.15);
+
+    color: var(--green);
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+}
+
+.contract-price {
+
+    font-size: 22px;
+
+    font-weight: 700;
+
+    color: white;
+
+}
