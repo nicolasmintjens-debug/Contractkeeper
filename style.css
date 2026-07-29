@@ -1163,6 +1163,14 @@ input[type=date]{
 
 }
 
+.modal-header-spacer{
+
+    width:42px;
+
+    height:42px;
+
+}
+
 .modal-title{
 
     flex:1;
