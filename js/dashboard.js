@@ -1,3 +1,5 @@
+console.log("dashboard.js geladen");
+
 /* ===========================================
    ContractKeeper
    dashboard.js
