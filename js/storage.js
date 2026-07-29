@@ -17,9 +17,42 @@ function loadContracts() {
 
     if (savedContracts) {
 
-        contracts = JSON.parse(savedContracts);
+        try {
 
-        return;
+            contracts = JSON.parse(savedContracts);
+
+            // Zorg dat alle verplichte velden bestaan
+            contracts = contracts.map(contract => ({
+
+                id: contract.id ?? Date.now() + Math.random(),
+
+                name: contract.name ?? "Onbekend contract",
+
+                supplier: contract.supplier ?? contract.name ?? "",
+
+                category: contract.category ?? "Overig",
+
+                amount: Number(contract.amount) || 0,
+
+                frequency: contract.frequency ?? "monthly",
+
+                endDate: contract.endDate ?? "",
+
+                notes: contract.notes ?? ""
+
+            }));
+
+            saveContracts();
+
+            return;
+
+        } catch (error) {
+
+            console.error("Fout bij laden van contracten:", error);
+
+            localStorage.removeItem("contracts");
+
+        }
 
     }
 
@@ -75,5 +108,24 @@ function saveContracts() {
 function getContracts() {
 
     return contracts;
+
+}
+
+/* ===========================================
+   Alle contracten verwijderen
+   (handig tijdens ontwikkeling)
+=========================================== */
+
+function resetContracts() {
+
+    localStorage.removeItem("contracts");
+
+    loadContracts();
+
+    renderContracts();
+
+    updateDashboard();
+
+    console.log("Contracten opnieuw geladen.");
 
 }
