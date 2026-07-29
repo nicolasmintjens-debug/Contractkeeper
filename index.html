@@ -479,31 +479,31 @@
 
     <div id="addContractModal" class="modal">
 
-        <div class="modal-content">
+        <div class="modal-header">
 
-            <div class="modal-handle"></div>
+    <button
+        id="closeModal"
+        class="modal-close"
+        aria-label="Sluiten">
 
-            <div class="modal-header">
+        <i class="bi bi-x-lg"></i>
 
-                <h2 class="modal-title">
+    </button>
 
-                    Nieuw contract
+    <h2 class="modal-title">
 
-                </h2>
+        Nieuw contract
 
-                <button
-                    id="closeModal"
-                    class="modal-close"
-                    aria-label="Sluiten">
+    </h2>
 
-                    <i class="bi bi-x-lg"></i>
+    <div class="modal-header-spacer"></div>
 
-                </button>
+</div>
 
-            </div>
+<div class="modal-body">
 
-            <form id="contractForm">
-
+    <form id="contractForm">
+        
                 <div class="form-group">
 
                     <label for="name">
