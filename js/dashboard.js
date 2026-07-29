@@ -3,10 +3,12 @@
    dashboard.js
 =========================================== */
 
+/**
+ * Dashboard volledig vernieuwen
+ */
 function updateDashboard() {
 
     updateMonthlyCosts();
-
     updateStatistics();
 
 }
@@ -23,26 +25,28 @@ function updateMonthlyCosts() {
 
     contracts.forEach(contract => {
 
-        if (contract.frequency === "yearly") {
+        const amount = Number(contract.amount) || 0;
 
-            total += contract.amount / 12;
+        switch (contract.frequency) {
 
-        } else {
+            case "yearly":
+                total += amount / 12;
+                break;
 
-            total += contract.amount;
+            case "monthly":
+            default:
+                total += amount;
+                break;
 
         }
 
     });
 
-    const element = document.querySelector(".card h1");
+    const element = document.querySelector(".stats .card h1");
 
-    if (element) {
+    if (!element) return;
 
-        element.textContent =
-            "€" + total.toFixed(2).replace(".", ",");
-
-    }
+    element.textContent = "€" + total.toFixed(2).replace(".", ",");
 
 }
 
@@ -52,23 +56,25 @@ function updateMonthlyCosts() {
 
 function updateStatistics() {
 
+    const contracts = getContracts();
+
     const cards = document.querySelectorAll(".mini-card h2");
 
     if (cards.length < 2) return;
 
-    const contracts = getContracts();
-
+    // Actieve contracten
     cards[0].textContent = contracts.length;
 
-    cards[1].textContent = contractsEndingSoon();
+    // Binnen 30 dagen
+    cards[1].textContent = getEndingSoonCount();
 
 }
 
 /* ===========================================
-   Contracten die binnenkort aflopen
+   Binnen 30 dagen
 =========================================== */
 
-function contractsEndingSoon() {
+function getEndingSoonCount() {
 
     const today = new Date();
 
@@ -78,12 +84,12 @@ function contractsEndingSoon() {
 
         if (!contract.endDate) return;
 
-        const end = new Date(contract.endDate);
+        const endDate = new Date(contract.endDate);
 
-        const diff =
-            (end - today) / (1000 * 60 * 60 * 24);
+        const days =
+            (endDate - today) / (1000 * 60 * 60 * 24);
 
-        if (diff >= 0 && diff <= 30) {
+        if (days >= 0 && days <= 30) {
 
             count++;
 
