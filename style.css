@@ -891,10 +891,13 @@ button{
 
 .fab i{
 
-    font-size:34px;
+    font-size:40px;
+
+    line-height:1;
+
+    font-weight:700;
 
 }
-
 
 /* ===========================
    ICON BACKGROUNDS
