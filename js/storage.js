@@ -1,3 +1,5 @@
+console.log("storage.js geladen");
+
 /* ===========================================
    ContractKeeper
    storage.js
