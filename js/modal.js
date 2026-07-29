@@ -6,53 +6,35 @@
 let modal = null;
 let addButton = null;
 
-/* ===========================================
-   Modal initialiseren
-=========================================== */
-
 function initModal() {
+
+    console.log("initModal uitgevoerd");
 
     modal = document.getElementById("addContractModal");
     addButton = document.getElementById("nav-add");
 
-    if (!modal) {
-        console.error("Modal niet gevonden.");
-        return;
-    }
+    console.log(modal);
+    console.log(addButton);
 
-    if (!addButton) {
-        console.error("Plusknop niet gevonden.");
+    if (!modal || !addButton) {
+        console.error("Modal of knop niet gevonden.");
         return;
     }
 
     addButton.addEventListener("click", openModal);
 
     modal.addEventListener("click", function (event) {
-
         if (event.target === modal) {
             closeModal();
         }
-
     });
 
 }
 
-/* ===========================================
-   Open
-=========================================== */
-
 function openModal() {
-
     modal.classList.add("show");
-
 }
 
-/* ===========================================
-   Sluiten
-=========================================== */
-
 function closeModal() {
-
     modal.classList.remove("show");
-
 }
