@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="nl">
+
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
     <title>ContractKeeper</title>
 
     <meta name="theme-color" content="#0F172A">
+
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="ContractKeeper">
@@ -18,15 +21,18 @@
 
     <link rel="stylesheet" href="style.css">
 
-<link rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
 </head>
+
 <body>
 
 <div class="app">
 
-    <!-- Header -->
-    <header id="home-header" class="header">
+    <!-- HEADER -->
+
+    <header class="header">
 
         <img src="assets/logo.png" class="logo" alt="ContractKeeper">
 
@@ -37,26 +43,36 @@
 
     </header>
 
-    <!-- Dashboard -->
+    <!-- HOME -->
+
     <main id="screen-home">
 
         <section class="stats">
 
-            <div class="card">
+            <div class="card total-card">
+
                 <span class="label">Maandelijkse kosten</span>
-                <h1>€0,00</h1>
+
+                <h1 id="monthlyTotal">€0,00</h1>
+
             </div>
 
             <div class="mini-cards">
 
                 <div class="mini-card">
+
                     <span>Actieve contracten</span>
-                    <h2>0</h2>
+
+                    <h2 id="activeContracts">0</h2>
+
                 </div>
 
                 <div class="mini-card">
+
                     <span>Binnen 30 dagen</span>
-                    <h2>0</h2>
+
+                    <h2 id="endingSoon">0</h2>
+
                 </div>
 
             </div>
@@ -67,8 +83,10 @@
 
             <h3>Binnenkort aflopend</h3>
 
-            <div class="empty-card">
-                Geen contracten gevonden
+            <div id="upcomingContracts" class="empty-card">
+
+                Geen contracten gevonden.
+
             </div>
 
         </section>
@@ -77,141 +95,119 @@
 
             <h3>Mijn contracten</h3>
 
-            <div id="contracts">
-
-                <div class="contract-card">
-
-                    <div>
-
-                        <h4>Netflix</h4>
-                        <p>Entertainment</p>
-
-                    </div>
-
-                    <div class="price">
-
-                        €14,99
-
-                    </div>
-
-                </div>
-
-                <div class="contract-card">
-
-                    <div>
-
-                        <h4>Proximus</h4>
-                        <p>Internet</p>
-
-                    </div>
-
-                    <div class="price">
-
-                        €69,99
-
-                    </div>
-
-                </div>
-
-            </div>
+            <div id="contracts"></div>
 
         </section>
 
     </main>
 
-    <!-- Nieuw contract -->
+    <!-- MODAL -->
 
-<div id="addContractModal" class="modal">
+    <div id="addContractModal" class="modal">
 
-    <div class="modal-content">
+        <div class="modal-content">
 
-        <div class="modal-handle"></div>
+            <div class="modal-handle"></div>
 
-        <h2>Nieuw contract</h2>
+            <h2>Nieuw contract</h2>
 
-        <form id="contractForm">
+            <form id="contractForm">
 
-            <label>Naam</label>
-            <input type="text" id="name" required>
+                <label>Naam</label>
+                <input type="text" id="name" required>
 
-            <label>Leverancier</label>
-            <input type="text" id="supplier">
+                <label>Leverancier</label>
+                <input type="text" id="supplier">
 
-            <label>Categorie</label>
+                <label>Categorie</label>
 
-            <select id="category">
+                <select id="category">
 
-                <option>Streaming</option>
-                <option>Internet</option>
-                <option>Verzekering</option>
-                <option>Telefonie</option>
-                <option>Software</option>
-                <option>Bank</option>
-                <option>Overig</option>
+                    <option>Streaming</option>
+                    <option>Internet</option>
+                    <option>Telefonie</option>
+                    <option>Verzekering</option>
+                    <option>Software</option>
+                    <option>Bank</option>
+                    <option>Overig</option>
 
-            </select>
+                </select>
 
-            <label>Bedrag (€)</label>
-            <input type="number" id="amount" step="0.01">
+                <label>Bedrag (€)</label>
+                <input type="number" id="amount" step="0.01">
 
-            <label>Frequentie</label>
+                <label>Frequentie</label>
 
-            <select id="frequency">
+                <select id="frequency">
 
-                <option value="monthly">Maandelijks</option>
-                <option value="yearly">Jaarlijks</option>
+                    <option value="monthly">Maandelijks</option>
+                    <option value="yearly">Jaarlijks</option>
 
-            </select>
+                </select>
 
-            <label>Einddatum</label>
-            <input type="date" id="endDate">
+                <label>Einddatum</label>
+                <input type="date" id="endDate">
 
-            <label>Notities</label>
+                <label>Notities</label>
 
-            <textarea id="notes"></textarea>
+                <textarea id="notes"></textarea>
 
-            <button type="submit" class="save-button">
+                <button type="submit" class="save-button">
 
-                Contract opslaan
+                    Contract opslaan
 
-            </button>
+                </button>
 
-        </form>
+            </form>
+
+        </div>
 
     </div>
 
-</div>
-    
-    <!-- Navigatie -->
+    <!-- NAVIGATIE -->
 
     <nav class="bottom-nav">
 
-<button type="button" id="nav-home" class="active">
-    <i class="fas fa-house"></i>
-    <span>Overzicht</span>
-</button>
+        <button id="nav-home" class="active" type="button">
 
-<button type="button" id="nav-contracts">
-    <i class="fas fa-file-contract"></i>
-    <span>Contracten</span>
-</button>
+            <i class="fa-solid fa-house"></i>
 
-<button type="button" id="nav-add" class="add-button">
-    <i class="fas fa-plus"></i>
-</button>
+            <span>Home</span>
 
-<button type="button" id="nav-calendar">
-    <i class="fas fa-calendar"></i>
-    <span>Kalender</span>
-</button>
+        </button>
 
-<button type="button" id="nav-profile">
-    <i class="fas fa-user"></i>
-    <span>Profiel</span>
-</button>
+        <button id="nav-contracts" type="button">
 
-</nav>
-    
+            <i class="fa-solid fa-file-contract"></i>
+
+            <span>Contracten</span>
+
+        </button>
+
+        <button id="nav-add" class="add-button" type="button">
+
+            <i class="fa-solid fa-plus"></i>
+
+        </button>
+
+        <button id="nav-calendar" type="button">
+
+            <i class="fa-solid fa-calendar"></i>
+
+            <span>Kalender</span>
+
+        </button>
+
+        <button id="nav-profile" type="button">
+
+            <i class="fa-solid fa-user"></i>
+
+            <span>Profiel</span>
+
+        </button>
+
+    </nav>
+
 </div>
 
 <script src="js/storage.js"></script>
@@ -220,8 +216,8 @@
 <script src="js/modal.js"></script>
 <script src="js/updates.js"></script>
 <script src="js/utils.js"></script>
-
 <script src="js/app.js"></script>
 
 </body>
+
 </html>
