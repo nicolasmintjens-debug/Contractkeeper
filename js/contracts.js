@@ -5,19 +5,23 @@ console.log("contracts.js geladen");
    contracts.js
 =========================================== */
 
+/* ===========================================
+   Contracten weergeven
+=========================================== */
+
 function renderContracts() {
 
     const container = document.getElementById("contracts");
 
     if (!container) return;
 
-const contracts = getContracts();
+    const contracts = getContracts();
 
-console.log("Contracten:", contracts);
+    console.log("Contracten:", contracts);
 
     container.innerHTML = "";
 
-    if (contracts.length === 0) {
+    if (!contracts || contracts.length === 0) {
 
         container.innerHTML = `
             <div class="empty-card">
@@ -26,31 +30,32 @@ console.log("Contracten:", contracts);
         `;
 
         return;
-
     }
 
     contracts.forEach(contract => {
 
-        container.innerHTML += `
+        console.log("Contract:", contract);
 
+        const name = contract.name || "Onbekend contract";
+        const supplier = contract.supplier || "-";
+        const category = contract.category || "-";
+        const amount = Number(contract.amount) || 0;
+        const endDate = contract.endDate || "-";
+
+        container.innerHTML += `
             <div class="contract-card">
 
-                <div>
-
-                    <h4>${contract.name}</h4>
-
-                    <p>${contract.supplier}</p>
-
+                <div class="contract-info">
+                    <h4>${name}</h4>
+                    <p>${supplier}</p>
+                    <small>${category}</small>
                 </div>
 
-                <div class="price">
-
-                    €${contract.amount.toFixed(2).replace(".", ",")}
-
+                <div class="contract-price">
+                    €${amount.toFixed(2).replace(".", ",")}
                 </div>
 
             </div>
-
         `;
 
     });
@@ -62,8 +67,6 @@ console.log("Contracten:", contracts);
 =========================================== */
 
 function addContract(contract) {
-
-    const contracts = getContracts();
 
     contracts.push(contract);
 
