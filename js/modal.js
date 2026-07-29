@@ -14,10 +14,15 @@ function initModal() {
 
     const modal = document.getElementById("addContractModal");
     const openButton = document.getElementById("addContract");
+    const closeButton = document.getElementById("closeModal");
     const form = document.getElementById("contractForm");
 
     if (openButton) {
         openButton.addEventListener("click", openAddModal);
+    }
+
+    if (closeButton) {
+        closeButton.addEventListener("click", closeModal);
     }
 
     if (form) {
@@ -33,7 +38,6 @@ function initModal() {
     });
 
 }
-
 
 /* ==========================================================
    OPEN NIEUW CONTRACT
