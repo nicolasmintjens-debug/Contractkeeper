@@ -25,7 +25,7 @@
 <div class="app">
 
     <!-- Header -->
-    <header class="header">
+    <header id="home-header" class="header">
 
         <img src="assets/logo.png" class="logo" alt="ContractKeeper">
 
@@ -37,7 +37,7 @@
     </header>
 
     <!-- Dashboard -->
-    <main>
+    <main id="screen-home">
 
         <section class="stats">
 
@@ -118,36 +118,99 @@
 
     </main>
 
+    <!-- Nieuw contract -->
+
+<div id="addContractModal" class="modal">
+
+    <div class="modal-content">
+
+        <div class="modal-handle"></div>
+
+        <h2>Nieuw contract</h2>
+
+        <form id="contractForm">
+
+            <label>Naam</label>
+            <input type="text" id="name" required>
+
+            <label>Leverancier</label>
+            <input type="text" id="supplier">
+
+            <label>Categorie</label>
+
+            <select id="category">
+
+                <option>Streaming</option>
+                <option>Internet</option>
+                <option>Verzekering</option>
+                <option>Telefonie</option>
+                <option>Software</option>
+                <option>Bank</option>
+                <option>Overig</option>
+
+            </select>
+
+            <label>Bedrag (€)</label>
+            <input type="number" id="amount" step="0.01">
+
+            <label>Frequentie</label>
+
+            <select id="frequency">
+
+                <option value="monthly">Maandelijks</option>
+                <option value="yearly">Jaarlijks</option>
+
+            </select>
+
+            <label>Einddatum</label>
+            <input type="date" id="endDate">
+
+            <label>Notities</label>
+
+            <textarea id="notes"></textarea>
+
+            <button type="submit" class="save-button">
+
+                Contract opslaan
+
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+    
     <!-- Navigatie -->
 
     <nav class="bottom-nav">
 
-        <button class="active">
-            <i class="fas fa-house"></i>
-            <span>Overzicht</span>
-        </button>
+    <button id="nav-home" class="active">
+        <i class="fas fa-house"></i>
+        <span>Overzicht</span>
+    <button type="button">
 
-        <button>
-            <i class="fas fa-file-contract"></i>
-            <span>Contracten</span>
-        </button>
+    <button id="nav-contracts">
+        <i class="fas fa-file-contract"></i>
+        <span>Contracten</span>
+    <button type="button">
 
-        <button class="add-button">
-            <i class="fas fa-plus"></i>
-        </button>
+    <button id="nav-add" class="add-button">
+        <i class="fas fa-plus"></i>
+    <button type="button">
 
-        <button>
-            <i class="fas fa-calendar"></i>
-            <span>Kalender</span>
-        </button>
+    <button id="nav-calendar">
+        <i class="fas fa-calendar"></i>
+        <span>Kalender</span>
+    <button type="button">
 
-        <button>
-            <i class="fas fa-user"></i>
-            <span>Profiel</span>
-        </button>
+    <button id="nav-profile">
+        <i class="fas fa-user"></i>
+        <span>Profiel</span>
+    <button type="button">
 
-    </nav>
-
+</nav>
+    
 </div>
 
 <script src="app.js"></script>
