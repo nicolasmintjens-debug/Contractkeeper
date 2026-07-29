@@ -1,3 +1,5 @@
+console.log("contracts.js geladen");
+
 /* ===========================================
    ContractKeeper
    contracts.js
