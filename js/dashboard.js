@@ -1,104 +1,90 @@
-console.log("dashboard.js geladen");
-
-/* ===========================================
+/* ==========================================================
    ContractKeeper
    dashboard.js
-=========================================== */
+========================================================== */
 
-/**
- * Dashboard volledig vernieuwen
- */
 function updateDashboard() {
 
-    updateMonthlyCosts();
-    updateStatistics();
+    updateMonthlyTotal();
+
+    updateActiveContracts();
+
+    updateEndingSoon();
 
 }
 
-/* ===========================================
-   Maandelijkse kosten
-=========================================== */
 
-function updateMonthlyCosts() {
 
-    const contracts = getContracts();
+/* ==========================================================
+   MAANDELIJKSE KOST
+========================================================== */
 
-    let total = 0;
+function updateMonthlyTotal() {
 
-    contracts.forEach(contract => {
+    const element = document.getElementById("monthlyTotal");
 
-        const amount = Number(contract.amount) || 0;
+    if (!element) {
 
-        switch (contract.frequency) {
+        return;
 
-            case "yearly":
-                total += amount / 12;
-                break;
+    }
 
-            case "monthly":
-            default:
-                total += amount;
-                break;
+    element.textContent = ContractService.formatPrice(
 
-        }
+        ContractService.getMonthlyTotal()
 
-    });
-
-    const element = document.querySelector(".stats .card h1");
-
-    if (!element) return;
-
-    element.textContent = "€" + total.toFixed(2).replace(".", ",");
+    );
 
 }
 
-/* ===========================================
-   Statistieken
-=========================================== */
 
-function updateStatistics() {
 
-    const contracts = getContracts();
+/* ==========================================================
+   ACTIEVE CONTRACTEN
+========================================================== */
 
-    const cards = document.querySelectorAll(".mini-card h2");
+function updateActiveContracts() {
 
-    if (cards.length < 2) return;
+    const element = document.getElementById("activeContracts");
 
-    // Actieve contracten
-    cards[0].textContent = contracts.length;
+    if (!element) {
 
-    // Binnen 30 dagen
-    cards[1].textContent = getEndingSoonCount();
+        return;
+
+    }
+
+    element.textContent = ContractService.getActiveCount();
 
 }
 
-/* ===========================================
-   Binnen 30 dagen
-=========================================== */
 
-function getEndingSoonCount() {
 
-    const today = new Date();
+/* ==========================================================
+   LOOPT BINNENKORT AF
+========================================================== */
 
-    let count = 0;
+function updateEndingSoon() {
 
-    getContracts().forEach(contract => {
+    const element = document.getElementById("endingSoon");
 
-        if (!contract.endDate) return;
+    if (!element) {
 
-        const endDate = new Date(contract.endDate);
+        return;
 
-        const days =
-            (endDate - today) / (1000 * 60 * 60 * 24);
+    }
 
-        if (days >= 0 && days <= 30) {
+    element.textContent = ContractService.getEndingSoonCount();
 
-            count++;
+}
 
-        }
 
-    });
 
-    return count;
+/* ==========================================================
+   DASHBOARD VERVERSEN
+========================================================== */
+
+function refreshDashboard() {
+
+    updateDashboard();
 
 }
