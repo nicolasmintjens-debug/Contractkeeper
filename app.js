@@ -11,17 +11,15 @@ const APP = {
     debug: true
 };
 
-/* ===========================================
-   Data
-=========================================== */
-
 let contracts = [];
 
 /* ===========================================
-   Opstarten
+   START
 =========================================== */
 
-document.addEventListener("DOMContentLoaded", async () => {
+document.addEventListener("DOMContentLoaded", initApp);
+
+async function initApp() {
 
     console.log(`${APP.name} v${APP.version}`);
 
@@ -29,51 +27,45 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     loadContracts();
 
+    renderContracts();
+
     updateDashboard();
 
     registerServiceWorker();
 
-});
+    initModal();
+
+}
 
 /* ===========================================
-   Dashboard
+   DASHBOARD
 =========================================== */
 
 function updateDashboard() {
 
-    updateStatistics();
-
-    renderContracts();
-
-}
-
-function updateStatistics() {
-
-    const monthlyCosts = calculateMonthlyCosts();
-
     const monthlyElement = document.querySelector(".card h1");
+    const miniCards = document.querySelectorAll(".mini-card h2");
+
+    const monthly = calculateMonthlyCosts();
 
     if (monthlyElement) {
 
         monthlyElement.textContent =
-            "€" + monthlyCosts.toFixed(2).replace(".", ",");
+            "€" + monthly.toFixed(2).replace(".", ",");
 
     }
 
-    const cards = document.querySelectorAll(".mini-card h2");
+    if (miniCards.length >= 2) {
 
-    if (cards.length >= 2) {
-
-        cards[0].textContent = contracts.length;
-
-        cards[1].textContent = contractsEndingSoon();
+        miniCards[0].textContent = contracts.length;
+        miniCards[1].textContent = contractsEndingSoon();
 
     }
 
 }
 
 /* ===========================================
-   Contracten
+   CONTRACTEN
 =========================================== */
 
 function renderContracts() {
@@ -81,6 +73,8 @@ function renderContracts() {
     const container = document.getElementById("contracts");
 
     if (!container) return;
+
+    container.innerHTML = "";
 
     if (contracts.length === 0) {
 
@@ -94,8 +88,6 @@ function renderContracts() {
 
     }
 
-    container.innerHTML = "";
-
     contracts.forEach(contract => {
 
         container.innerHTML += `
@@ -105,7 +97,6 @@ function renderContracts() {
             <div>
 
                 <h4>${contract.name}</h4>
-
                 <p>${contract.category}</p>
 
             </div>
@@ -125,7 +116,7 @@ function renderContracts() {
 }
 
 /* ===========================================
-   Berekeningen
+   BEREKENINGEN
 =========================================== */
 
 function calculateMonthlyCosts() {
@@ -134,18 +125,13 @@ function calculateMonthlyCosts() {
 
     contracts.forEach(contract => {
 
-        switch (contract.frequency) {
+        if (contract.frequency === "yearly") {
 
-            case "monthly":
-                total += contract.amount;
-                break;
+            total += contract.amount / 12;
 
-            case "yearly":
-                total += contract.amount / 12;
-                break;
+        } else {
 
-            default:
-                total += contract.amount;
+            total += contract.amount;
 
         }
 
@@ -157,11 +143,13 @@ function calculateMonthlyCosts() {
 
 function contractsEndingSoon() {
 
-    const today = new Date();
-
     let count = 0;
 
+    const today = new Date();
+
     contracts.forEach(contract => {
+
+        if (!contract.endDate) return;
 
         const end = new Date(contract.endDate);
 
@@ -180,16 +168,16 @@ function contractsEndingSoon() {
 }
 
 /* ===========================================
-   Local Storage
+   LOCAL STORAGE
 =========================================== */
 
 function loadContracts() {
 
-    const savedContracts = localStorage.getItem("contracts");
+    const saved = localStorage.getItem("contracts");
 
-    if (savedContracts) {
+    if (saved) {
 
-        contracts = JSON.parse(savedContracts);
+        contracts = JSON.parse(saved);
 
         return;
 
@@ -224,17 +212,14 @@ function loadContracts() {
 function saveContracts() {
 
     localStorage.setItem(
-
         "contracts",
-
         JSON.stringify(contracts)
-
     );
 
 }
 
 /* ===========================================
-   Contractbeheer
+   CONTRACTBEHEER
 =========================================== */
 
 function addContract(contract) {
@@ -243,61 +228,90 @@ function addContract(contract) {
 
     saveContracts();
 
+    renderContracts();
+
     updateDashboard();
 
 }
 
 function deleteContract(id) {
 
-    contracts = contracts.filter(contract => contract.id !== id);
+    contracts = contracts.filter(c => c.id !== id);
 
     saveContracts();
+
+    renderContracts();
 
     updateDashboard();
 
 }
 
 /* ===========================================
-   Service Worker
+   MODAL
+=========================================== */
+
+function initModal() {
+
+    const modal = document.getElementById("addContractModal");
+    const button = document.getElementById("nav-add");
+
+    if (!modal || !button) {
+
+        console.warn("Modal niet gevonden.");
+        return;
+
+    }
+
+    button.addEventListener("click", () => {
+
+        modal.classList.add("show");
+
+    });
+
+    modal.addEventListener("click", (e) => {
+
+        if (e.target === modal) {
+
+            modal.classList.remove("show");
+
+        }
+
+    });
+
+}
+
+/* ===========================================
+   SERVICE WORKER
 =========================================== */
 
 function registerServiceWorker() {
 
     if (!("serviceWorker" in navigator)) return;
 
-    navigator.serviceWorker
-        .register("./sw.js")
-        .then(registration => {
+    navigator.serviceWorker.register("./sw.js")
+        .then(() => {
 
-            console.log("Service Worker geregistreerd");
-
-            registration.update();
+            console.log("Service Worker actief");
 
         })
-        .catch(error => {
-
-            console.error(error);
-
-        });
+        .catch(console.error);
 
 }
 
 /* ===========================================
-   Versiecontrole
+   VERSIECONTROLE
 =========================================== */
 
 async function checkAppVersion() {
 
     try {
 
-        const response = await fetch("./version.json?t=" + Date.now());
+        const response =
+            await fetch("./version.json?t=" + Date.now());
 
         const online = await response.json();
 
         if (APP.debug) {
-
-            console.log("Lokale versie :", APP.version);
-            console.log("Online versie :", online.version);
 
             console.log("Lokale build :", APP.build);
             console.log("Online build :", online.build);
@@ -306,71 +320,16 @@ async function checkAppVersion() {
 
         if (online.build > APP.build) {
 
-            const update = confirm(
-
-                `Er is een nieuwe versie van ContractKeeper beschikbaar.
-
-Versie ${online.version}
-
-Wil je de app vernieuwen?`
-
-            );
-
-            if (update) {
-
-                if ("serviceWorker" in navigator) {
-
-                    const registrations =
-                        await navigator.serviceWorker.getRegistrations();
-
-                    for (const registration of registrations) {
-
-                        await registration.unregister();
-
-                    }
-
-                }
-
-                localStorage.clear();
-
-                caches.keys().then(keys => {
-
-                    keys.forEach(key => caches.delete(key));
-
-                });
-
-                window.location.reload();
-
-            }
+            console.log("Nieuwe versie beschikbaar.");
 
         }
 
-    } catch (error) {
+    }
 
-        console.warn("Versiecontrole niet beschikbaar.");
+    catch {
+
+        console.log("Geen versiecontrole.");
 
     }
 
 }
-
-/* ===========================================
-   Modal
-=========================================== */
-
-const modal = document.getElementById("addContractModal");
-
-document.getElementById("nav-add").addEventListener("click", () => {
-
-    modal.classList.add("show");
-
-});
-
-modal.addEventListener("click", (e) => {
-
-    if(e.target === modal){
-
-        modal.classList.remove("show");
-
-    }
-
-});
