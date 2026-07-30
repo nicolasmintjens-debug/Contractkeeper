@@ -253,7 +253,13 @@ function showDetailModal(contract) {
         return;
     }
 
-    console.log(contract);
+    document.getElementById("detailName").textContent = contract.name;
+
+    document.getElementById("detailPrice").textContent =
+        ContractService.formatPrice(contract.amount);
+
+    document.getElementById("detailFrequency").textContent =
+        translateFrequency(contract.frequency);
 
     modal.classList.add("show");
 
