@@ -192,7 +192,13 @@ function createContractCard(contract) {
     </div>
 
 `;
-   
+
+    card.addEventListener("click", () => {
+
+        showDetailModal();
+
+    });
+
     return card;
 
 }
