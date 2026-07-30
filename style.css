@@ -2229,3 +2229,8 @@ input[type="date"]{
     color:var(--text);
     font-weight:600;
 }
+
+.modal-header{
+    position: relative;
+    z-index: 1000;
+}
