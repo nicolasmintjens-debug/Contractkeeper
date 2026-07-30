@@ -15,6 +15,7 @@ function initModal() {
     const modal = document.getElementById("addContractModal");
     const openButton = document.getElementById("addContract");
     const closeButton = document.getElementById("closeModal");
+   const closeDetailButton = document.getElementById("closeDetailModal");
     const form = document.getElementById("contractForm");
 
     if (openButton) {
@@ -25,6 +26,10 @@ function initModal() {
         closeButton.addEventListener("click", closeModal);
     }
 
+   if (closeDetailButton) {
+    closeDetailButton.addEventListener("click", closeDetailModal);
+}
+   
     if (form) {
         form.addEventListener("submit", saveContract);
     }
@@ -240,6 +245,29 @@ function closeModal() {
 
 }
 
+function showDetailModal() {
+
+    const modal = document.getElementById("contractDetailModal");
+
+    if (!modal) {
+        return;
+    }
+
+    modal.classList.add("show");
+
+}
+
+function closeDetailModal() {
+
+    const modal = document.getElementById("contractDetailModal");
+
+    if (!modal) {
+        return;
+    }
+
+    modal.classList.remove("show");
+
+}
 
 function setModalTitle(title) {
 
