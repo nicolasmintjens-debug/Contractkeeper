@@ -253,7 +253,8 @@ function showDetailModal(contract) {
         return;
     }
 
-    document.getElementById("detailName").textContent = contract.name;
+    document.getElementById("detailName").textContent =
+        contract.name;
 
     document.getElementById("detailPrice").textContent =
         ContractService.formatPrice(contract.amount);
@@ -261,19 +262,19 @@ function showDetailModal(contract) {
     document.getElementById("detailFrequency").textContent =
         translateFrequency(contract.frequency);
 
+    // NIEUW
+    document.getElementById("detailSupplier").textContent =
+        contract.supplier || "-";
+
+    document.getElementById("detailCategory").textContent =
+        contract.category || "-";
+
+    document.getElementById("detailEndDate").textContent =
+        contract.endDate
+            ? ContractService.formatDate(contract.endDate)
+            : "-";
+
     modal.classList.add("show");
-
-}
-
-function closeDetailModal() {
-
-    const modal = document.getElementById("contractDetailModal");
-
-    if (!modal) {
-        return;
-    }
-
-    modal.classList.remove("show");
 
 }
 
