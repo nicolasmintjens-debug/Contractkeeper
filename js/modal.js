@@ -278,6 +278,18 @@ function showDetailModal(contract) {
 
 }
 
+function closeDetailModal() {
+
+    const modal = document.getElementById("contractDetailModal");
+
+    if (!modal) {
+        return;
+    }
+
+    modal.classList.remove("show");
+
+}
+
 function setModalTitle(title) {
 
     const element = document.querySelector("#addContractModal h2");
