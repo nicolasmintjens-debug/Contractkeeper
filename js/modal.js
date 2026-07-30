@@ -245,13 +245,15 @@ function closeModal() {
 
 }
 
-function showDetailModal() {
+function showDetailModal(contract) {
 
     const modal = document.getElementById("contractDetailModal");
 
     if (!modal) {
         return;
     }
+
+    console.log(contract);
 
     modal.classList.add("show");
 
