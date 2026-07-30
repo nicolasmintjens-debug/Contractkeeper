@@ -515,6 +515,17 @@ button{
 
 }
 
+.contract-price{
+
+    font-size:28px;
+
+    font-weight:700;
+
+    color:var(--accent);
+
+    white-space:nowrap;
+
+}
 
 /* ===========================
    LINKER GEDEELTE
