@@ -2194,3 +2194,38 @@ input[type="date"]{
     border-radius:50%;
     background:#4ade80;
 }
+
+.detail-section{
+    margin-top:28px;
+    background:var(--card-bg);
+    border-radius:24px;
+    padding:22px;
+    border:1px solid rgba(255,255,255,.05);
+}
+
+.detail-section h3{
+    margin:0 0 20px;
+    font-size:18px;
+    font-weight:700;
+}
+
+.detail-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:14px 0;
+    border-bottom:1px solid rgba(255,255,255,.06);
+}
+
+.detail-row:last-child{
+    border-bottom:none;
+}
+
+.detail-row span{
+    color:var(--text-secondary);
+}
+
+.detail-row strong{
+    color:var(--text);
+    font-weight:600;
+}
