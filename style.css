@@ -879,7 +879,7 @@ button{
 
     left:50%;
 
-    top:-37px;
+    top:-22px;
 
     transform:translateX(-50%);
 
@@ -1356,7 +1356,7 @@ input[type="date"]{
 
     max-width:510px;
 
-    height:84px;
+    height:92px;
 
     border-radius:28px;
 
