@@ -161,90 +161,38 @@ function createContractCard(contract) {
 
     card.innerHTML = `
 
-        <div class="contract-card-header">
+    <div class="contract-top">
 
-            <div class="contract-icon">
+        <div class="contract-name">
 
-                <i class="bi ${icon}"></i>
+            <i class="bi ${icon}"></i>
 
-            </div>
-
-            <div class="contract-title">
-
-                <h3>${escapeHtml(contract.name)}</h3>
-
-                <p>${escapeHtml(contract.supplier)}</p>
-
-            </div>
+            <span>${escapeHtml(contract.name)}</span>
 
         </div>
 
-        <div class="contract-card-body">
+        <div class="contract-price">
 
-            <div class="contract-row">
-
-                <span>Categorie</span>
-
-                <strong>${contract.category}</strong>
-
-            </div>
-
-            <div class="contract-row">
-
-                <span>Bedrag</span>
-
-                <strong>${ContractService.formatPrice(contract.amount)}</strong>
-
-            </div>
-
-            <div class="contract-row">
-
-                <span>Frequentie</span>
-
-                <strong>${translateFrequency(contract.frequency)}</strong>
-
-            </div>
-
-            <div class="contract-row">
-
-                <span>Einddatum</span>
-
-                <strong>${ContractService.formatDate(contract.endDate)}</strong>
-
-            </div>
+            ${ContractService.formatPrice(contract.amount)}
 
         </div>
 
-        <div class="contract-card-footer">
+    </div>
 
-            <span class="status ${status}">
-                ${translateStatus(status)}
-            </span>
+    <div class="contract-period">
 
-            <div class="actions">
+        ${translateFrequency(contract.frequency)}
 
-                <button
-                    class="icon-btn"
-                    onclick="editContract('${contract.id}')">
+    </div>
 
-                    <i class="bi bi-pencil"></i>
+    <div class="contract-bottom">
 
-                </button>
+        ${escapeHtml(contract.category)} • Eindigt ${ContractService.formatDate(contract.endDate)}
 
-                <button
-                    class="icon-btn danger"
-                    onclick="deleteContract('${contract.id}')">
+    </div>
 
-                    <i class="bi bi-trash"></i>
-
-                </button>
-
-            </div>
-
-        </div>
-
-    `;
-
+`;
+   
     return card;
 
 }
