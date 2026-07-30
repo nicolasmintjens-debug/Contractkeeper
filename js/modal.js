@@ -270,11 +270,70 @@ function showDetailModal(contract) {
         contract.category || "-";
 
     document.getElementById("detailEndDate").textContent =
-        contract.endDate
-            ? ContractService.formatDate(contract.endDate)
-            : "-";
+    contract.endDate
+        ? ContractService.formatDate(contract.endDate)
+        : "-";
 
-    modal.classList.add("show");
+/* STATUS */
+
+const status = document.getElementById("detailStatus");
+
+if (status) {
+
+    if (!contract.endDate) {
+
+        status.innerHTML =
+            '<span class="status-dot"></span>Geen einddatum';
+
+status.style.background = "rgba(59,130,246,.12)";
+status.style.color = "#60A5FA";
+status.querySelector(".status-dot").style.background = "#60A5FA";
+
+    } else {
+
+        const today = new Date();
+        const endDate = new Date(contract.endDate);
+
+        today.setHours(0,0,0,0);
+        endDate.setHours(0,0,0,0);
+
+        const days =
+            Math.ceil((endDate - today) / 86400000);
+
+        if (days < 0) {
+
+            status.innerHTML =
+                '<span class="status-dot"></span>Verlopen';
+
+            status.style.background = "rgba(239,68,68,.12)";
+            status.style.color = "#F87171";
+           status.querySelector(".status-dot").style.background = "#F87171";
+
+        } else if (days <= 30) {
+
+            status.innerHTML =
+                '<span class="status-dot"></span>Eindigt binnenkort';
+
+status.style.background = "rgba(245,158,11,.12)";
+status.style.color = "#FBBF24";
+status.querySelector(".status-dot").style.background = "#FBBF24";
+
+        } else {
+
+            status.innerHTML =
+                '<span class="status-dot"></span>Actief';
+
+status.style.background = "rgba(34,197,94,.12)";
+status.style.color = "#4ADE80";
+status.querySelector(".status-dot").style.background = "#4ADE80";
+
+        }
+
+    }
+
+}
+
+modal.classList.add("show");
 
 }
 
