@@ -183,6 +183,16 @@ function createContractCard(contract) {
 
     const icon = ContractService.getCategoryIcon(contract.category);
 
+   let statusClass = "green";
+
+if (status === "ending") {
+    statusClass = "yellow";
+}
+
+if (status === "expired") {
+    statusClass = "red";
+}
+   
     card.innerHTML = `
 
     <div class="contract-top">
@@ -197,9 +207,11 @@ function createContractCard(contract) {
 
         <div class="contract-price">
 
-            ${ContractService.formatPrice(contract.amount)}
+    <span class="status-dot ${statusClass}"></span>
 
-        </div>
+    ${ContractService.formatPrice(contract.amount)}
+
+</div>
 
     </div>
 
