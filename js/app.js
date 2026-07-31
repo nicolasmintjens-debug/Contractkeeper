@@ -63,3 +63,21 @@ function registerServiceWorker() {
         });
 
 }
+
+const sortButton = document.getElementById("sortContracts");
+const sortSheet = document.getElementById("sortSheet");
+const closeSortSheet = document.getElementById("closeSortSheet");
+
+sortButton.addEventListener("click", () => {
+    sortSheet.classList.add("show");
+});
+
+closeSortSheet.addEventListener("click", () => {
+    sortSheet.classList.remove("show");
+});
+
+sortSheet.addEventListener("click", (e) => {
+    if (e.target === sortSheet) {
+        sortSheet.classList.remove("show");
+    }
+});
