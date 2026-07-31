@@ -877,6 +877,9 @@ button{
 
     position:relative;
 
+   flex: 0 0 64px;
+aspect-ratio: 1;
+   
     left:auto;
     top:auto;
 
