@@ -81,3 +81,17 @@ sortSheet.addEventListener("click", (e) => {
         sortSheet.classList.remove("show");
     }
 });
+
+document.querySelectorAll(".sort-option").forEach(button => {
+
+    button.addEventListener("click", () => {
+
+        currentSort = button.dataset.sort;
+
+        sortSheet.classList.remove("show");
+
+        renderContracts();
+
+    });
+
+});
