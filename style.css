@@ -875,17 +875,15 @@ button{
 
 .fab{
 
-    position:absolute;
+    position:relative;
 
-    left:50%;
+    left:auto;
+    top:auto;
 
-    top:-10px;
+    transform:none;
 
-    transform:translateX(-50%);
-
-    width:74px;
-
-    height:74px;
+    width:64px;
+    height:64px;
 
     border-radius:50%;
 
@@ -895,36 +893,32 @@ button{
         #22C55E
     );
 
-    color:white;
+    color:#fff;
 
     display:flex;
-
+    align-items:center;
     justify-content:center;
 
-    align-items:center;
+    margin-top:-32px;
 
     box-shadow:
-        0 15px 35px rgba(34,197,94,.45);
-
-    z-index:1000;
+        0 10px 24px rgba(34,197,94,.35);
 
     transition:.25s;
+
+    z-index:2;
 
 }
 
 .fab:hover{
 
-    transform:
-        translateX(-50%)
-        translateY(-4px);
+    transform:translateY(-2px);
 
 }
 
 .fab:active{
 
-    transform:
-        translateX(-50%)
-        scale(.95);
+    transform:scale(.96);
 
 }
 
