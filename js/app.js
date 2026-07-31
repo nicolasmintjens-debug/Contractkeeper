@@ -88,6 +88,12 @@ document.querySelectorAll(".sort-option").forEach(button => {
 
         currentSort = button.dataset.sort;
 
+        document.querySelectorAll(".sort-option").forEach(btn => {
+            btn.classList.remove("active");
+        });
+
+        button.classList.add("active");
+
         sortSheet.classList.remove("show");
 
         renderContracts();
