@@ -93,18 +93,24 @@ function getFilteredContracts() {
 /* Sorteren */
 contracts.sort((a, b) => {
 
-    switch (currentSort) {
+   switch (currentSort) {
 
-        case "name-asc":
-            return a.name.localeCompare(b.name);
+    case "name-asc":
+        return a.name.localeCompare(b.name);
 
-        case "price-asc":
-            return Number(a.amount) - Number(b.amount);
+    case "price-asc":
+        return Number(a.amount) - Number(b.amount);
 
-        default:
-            return 0;
+    case "price-desc":
+        return Number(b.amount) - Number(a.amount);
 
-    }
+    case "date":
+        return new Date(a.endDate || "9999-12-31") - new Date(b.endDate || "9999-12-31");
+
+    default:
+        return 0;
+
+}
 
 });
 
