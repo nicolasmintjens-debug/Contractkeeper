@@ -2301,3 +2301,15 @@ input[type="date"]{
 .sort-option + .sort-option{
     border-top:1px solid rgba(255,255,255,.08);
 }
+
+.sort-option.active{
+    color:#22C55E;
+    font-weight:600;
+}
+
+.sort-option.active::after{
+    content:"✓";
+    margin-left:auto;
+    font-size:18px;
+    font-weight:700;
+}
