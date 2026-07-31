@@ -6,6 +6,7 @@
 let currentContracts = [];
 let currentCategory = "all";
 let currentSearch = "";
+let currentSort = "name-asc";
 
 
 /* ==========================================================
@@ -75,22 +76,36 @@ function getFilteredContracts() {
 
     if (currentSearch.trim() !== "") {
 
-        const value = currentSearch.toLowerCase();
+    const value = currentSearch.toLowerCase();
 
-        contracts = contracts.filter(contract =>
+    contracts = contracts.filter(contract =>
 
-            contract.name.toLowerCase().includes(value) ||
+        contract.name.toLowerCase().includes(value) ||
 
-            contract.supplier.toLowerCase().includes(value) ||
+        contract.supplier.toLowerCase().includes(value) ||
 
-            contract.category.toLowerCase().includes(value)
+        contract.category.toLowerCase().includes(value)
 
-        );
+    );
+
+}
+
+/* Sorteren */
+contracts.sort((a, b) => {
+
+    switch (currentSort) {
+
+        case "name-asc":
+            return a.name.localeCompare(b.name);
+
+        default:
+            return 0;
 
     }
 
-    return contracts;
+});
 
+return contracts;
 }
 
 
