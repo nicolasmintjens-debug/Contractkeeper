@@ -98,6 +98,9 @@ contracts.sort((a, b) => {
         case "name-asc":
             return a.name.localeCompare(b.name);
 
+        case "price-asc":
+            return Number(a.amount) - Number(b.amount);
+
         default:
             return 0;
 
