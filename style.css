@@ -2313,3 +2313,33 @@ input[type="date"]{
     font-size:18px;
     font-weight:700;
 }
+
+/* =========================================
+   STATUS DOT OP CONTRACTKAART
+========================================= */
+
+.contract-price{
+    display:flex;
+    align-items:center;
+    justify-content:flex-end;
+    gap:8px;
+}
+
+.status-dot{
+    width:10px;
+    height:10px;
+    border-radius:50%;
+    display:inline-block;
+}
+
+.status-dot.green{
+    background:#22C55E;
+}
+
+.status-dot.yellow{
+    background:#FACC15;
+}
+
+.status-dot.red{
+    background:#EF4444;
+}
