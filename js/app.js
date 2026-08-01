@@ -111,6 +111,16 @@ document.querySelectorAll(".sort-option").forEach(button => {
    NAVIGATIE
 ========================================================== */
 
+function setActiveNav(buttonId) {
+
+    document.querySelectorAll(".bottom-nav button").forEach(button => {
+        button.classList.remove("active");
+    });
+
+    document.getElementById(buttonId)?.classList.add("active");
+
+}
+
 function initNavigation() {
 
     const homeButton = document.getElementById("nav-home");
@@ -128,6 +138,8 @@ function initNavigation() {
         homeSection.style.display = "none";
         contractsSection.style.display = "block";
 
+      setActiveNav("nav-contracts");
+       
     });
 
 }
@@ -138,6 +150,8 @@ function initNavigation() {
 
         homeSection.style.display = "block";
         contractsSection.style.display = "block";
+
+       setActiveNav("nav-home");
 
     });
 
