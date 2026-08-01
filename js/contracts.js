@@ -183,6 +183,8 @@ function createContractCard(contract) {
 
     const icon = ContractService.getCategoryIcon(contract.category);
 
+   const logo = ContractService.getLogo(contract.name);
+   
    let statusClass = "green";
 
 if (status === "ending") {
