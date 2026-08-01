@@ -49,11 +49,12 @@ function initModal() {
             image.src = `assets/logos/${logo}`;
             preview.hidden = false;
 
-        } else {
+       } else {
 
-            preview.hidden = true;
+    image.removeAttribute("src");
+    preview.hidden = true;
 
-        }
+}
 
     });
 
