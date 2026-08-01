@@ -304,8 +304,6 @@ heroIcon.innerHTML = logo
     : `<i class="bi ${icon}"></i>`;
 
     // NIEUW
-    document.getElementById("detailSupplier").textContent =
-        contract.supplier || "-";
 
     document.getElementById("detailCategory").textContent =
         contract.category || "-";
