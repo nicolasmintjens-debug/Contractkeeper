@@ -17,6 +17,7 @@ function initModal() {
     const closeButton = document.getElementById("closeModal");
    const closeDetailButton = document.getElementById("closeDetailModal");
     const form = document.getElementById("contractForm");
+   const nameInput = document.getElementById("name");
 
     if (openButton) {
         openButton.addEventListener("click", openAddModal);
@@ -34,6 +35,30 @@ function initModal() {
         form.addEventListener("submit", saveContract);
     }
 
+   if (nameInput) {
+
+    nameInput.addEventListener("input", () => {
+
+        const logo = ContractService.getLogo(nameInput.value);
+
+        const preview = document.getElementById("nameLogoPreview");
+        const image = document.getElementById("nameLogoImage");
+
+        if (logo) {
+
+            image.src = `assets/logos/${logo}`;
+            preview.hidden = false;
+
+        } else {
+
+            preview.hidden = true;
+
+        }
+
+    });
+
+}
+   
     modal?.addEventListener("click", e => {
 
         if (e.target === modal) {
@@ -184,6 +209,11 @@ function resetForm() {
 
     document.getElementById("contractForm")?.reset();
 
+   const preview = document.getElementById("nameLogoPreview");
+
+if (preview) {
+    preview.hidden = true;
+}
 }
 
 
