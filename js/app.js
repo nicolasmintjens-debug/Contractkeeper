@@ -32,6 +32,11 @@ async function initApp() {
         initModal();
     }
 
+   // Navigatie initialiseren
+if (typeof initNavigation === "function") {
+    initNavigation();
+}
+
     // Service Worker registreren
     registerServiceWorker();
 
@@ -101,3 +106,11 @@ document.querySelectorAll(".sort-option").forEach(button => {
     });
 
 });
+
+/* ==========================================================
+   NAVIGATIE
+========================================================== */
+
+function initNavigation() {
+
+}
