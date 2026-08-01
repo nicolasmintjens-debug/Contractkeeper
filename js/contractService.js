@@ -461,7 +461,7 @@ const ContractService = {
 
         return "active";
 
-    }
+    },
 
    getLogo(name) {
 
