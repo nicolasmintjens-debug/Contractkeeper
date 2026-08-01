@@ -2348,3 +2348,18 @@ input[type="date"]{
 .status-dot.red{
     background:#EF4444;
 }
+
+/* =========================================
+   CONTRACT LOGO
+========================================= */
+
+.contract-logo{
+
+    width:28px;
+    height:28px;
+
+    object-fit:contain;
+
+    flex-shrink:0;
+
+}
