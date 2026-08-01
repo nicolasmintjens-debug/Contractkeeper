@@ -113,4 +113,22 @@ document.querySelectorAll(".sort-option").forEach(button => {
 
 function initNavigation() {
 
+    const homeButton = document.getElementById("nav-home");
+    const contractsButton = document.getElementById("nav-contracts");
+    const insightsButton = document.getElementById("nav-insights");
+    const settingsButton = document.getElementById("nav-settings");
+
+    const homeSection = document.getElementById("homeSection");
+    const contractsSection = document.getElementById("contractsSection");
+
+   if (contractsButton) {
+
+    contractsButton.addEventListener("click", () => {
+
+        homeSection.style.display = "none";
+        contractsSection.style.display = "block";
+
+    });
+
+}
 }
