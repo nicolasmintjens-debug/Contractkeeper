@@ -46,16 +46,16 @@ function initModal() {
 
         if (logo) {
 
-            image.src = `assets/logos/${logo}`;
-            preview.hidden = false;
+    image.src = `assets/logos/${logo}`;
+    preview.style.display = "flex";
 
-       } else {
+} else {
 
     image.removeAttribute("src");
-    preview.hidden = true;
+    preview.style.display = "none";
 
 }
-
+       
     });
 
 }
