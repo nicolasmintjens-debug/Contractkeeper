@@ -82,8 +82,6 @@ function getFilteredContracts() {
 
         contract.name.toLowerCase().includes(value) ||
 
-        contract.supplier.toLowerCase().includes(value) ||
-
         contract.category.toLowerCase().includes(value)
 
     );
