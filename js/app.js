@@ -131,4 +131,15 @@ function initNavigation() {
     });
 
 }
+
+   if (homeButton) {
+
+    homeButton.addEventListener("click", () => {
+
+        homeSection.style.display = "block";
+        contractsSection.style.display = "block";
+
+    });
+
+}
 }
