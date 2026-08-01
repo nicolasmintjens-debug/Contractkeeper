@@ -201,9 +201,13 @@ if (status === "expired") {
 
         <div class="contract-name">
 
-            <i class="bi ${icon}"></i>
+            ${
+    logo
+        ? `<img src="assets/logos/${logo}" class="contract-logo" alt="${escapeHtml(contract.name)}">`
+        : `<i class="bi ${icon}"></i>`
+}
 
-            <span>${escapeHtml(contract.name)}</span>
+<span>${escapeHtml(contract.name)}</span>
 
         </div>
 
