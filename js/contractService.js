@@ -473,6 +473,7 @@ const ContractService = {
         "proximus": "proximus.png",
         "telenet": "telenet.png",
         "basic-fit": "basic-fit.png",
+        "basic fit": "basic-fit.png",
         "disney+": "disney-plus.webp",
         "prime video": "prime-video.webp",
         "youtube premium": "youtube-premium.png",
