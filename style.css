@@ -2363,3 +2363,25 @@ input[type="date"]{
     flex-shrink:0;
 
 }
+
+/* =========================================
+   LIVE LOGO PREVIEW
+========================================= */
+
+.name-logo-preview{
+
+    margin-top:12px;
+
+    display:flex;
+    justify-content:center;
+
+}
+
+.name-logo-preview img{
+
+    width:48px;
+    height:48px;
+
+    object-fit:contain;
+
+}
