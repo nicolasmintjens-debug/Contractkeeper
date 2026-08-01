@@ -210,10 +210,15 @@ function resetForm() {
 
     document.getElementById("contractForm")?.reset();
 
-   const preview = document.getElementById("nameLogoPreview");
+  const preview = document.getElementById("nameLogoPreview");
+const image = document.getElementById("nameLogoImage");
 
 if (preview) {
     preview.hidden = true;
+}
+
+if (image) {
+    image.removeAttribute("src");
 }
 }
 
