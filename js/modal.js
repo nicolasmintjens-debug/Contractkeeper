@@ -260,7 +260,16 @@ function showDetailModal(contract) {
         ContractService.formatPrice(contract.amount);
 
     document.getElementById("detailFrequency").textContent =
-        translateFrequency(contract.frequency);
+    translateFrequency(contract.frequency);
+
+const icon = ContractService.getCategoryIcon(contract.category);
+const logo = ContractService.getLogo(contract.name);
+
+const heroIcon = document.getElementById("detailHeroIcon");
+
+heroIcon.innerHTML = logo
+    ? `<img src="assets/logos/${logo}" class="contract-logo" alt="${contract.name}">`
+    : `<i class="bi ${icon}"></i>`;
 
     // NIEUW
     document.getElementById("detailSupplier").textContent =
