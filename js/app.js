@@ -130,30 +130,73 @@ function initNavigation() {
 
     const homeSection = document.getElementById("homeSection");
     const contractsSection = document.getElementById("contractsSection");
+    const insightsSection = document.getElementById("insightsSection");
+    const settingsSection = document.getElementById("settingsSection");
 
-   if (contractsButton) {
-
-    contractsButton.addEventListener("click", () => {
+    function hideAllPages() {
 
         homeSection.style.display = "none";
-        contractsSection.style.display = "block";
+        contractsSection.style.display = "none";
+        insightsSection.style.display = "none";
+        settingsSection.style.display = "none";
 
-      setActiveNav("nav-contracts");
-       
-    });
+    }
 
-}
+    if (homeButton) {
 
-   if (homeButton) {
+        homeButton.addEventListener("click", () => {
 
-    homeButton.addEventListener("click", () => {
+            hideAllPages();
 
-        homeSection.style.display = "block";
-        contractsSection.style.display = "block";
+            homeSection.style.display = "block";
+            contractsSection.style.display = "block";
 
-       setActiveNav("nav-home");
+            setActiveNav("nav-home");
 
-    });
+        });
 
-}
+    }
+
+    if (contractsButton) {
+
+        contractsButton.addEventListener("click", () => {
+
+            hideAllPages();
+
+            contractsSection.style.display = "block";
+
+            setActiveNav("nav-contracts");
+
+        });
+
+    }
+
+    if (insightsButton) {
+
+        insightsButton.addEventListener("click", () => {
+
+            hideAllPages();
+
+            insightsSection.style.display = "block";
+
+            setActiveNav("nav-insights");
+
+        });
+
+    }
+
+    if (settingsButton) {
+
+        settingsButton.addEventListener("click", () => {
+
+            hideAllPages();
+
+            settingsSection.style.display = "block";
+
+            setActiveNav("nav-settings");
+
+        });
+
+    }
+
 }
