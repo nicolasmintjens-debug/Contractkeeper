@@ -160,8 +160,6 @@ function readForm() {
 
         name: value("name"),
 
-        supplier: value("supplier"),
-
         category: value("category"),
 
         frequency: value("frequency"),
@@ -184,8 +182,6 @@ function readForm() {
 function fillForm(contract) {
 
     setValue("name", contract.name);
-
-    setValue("supplier", contract.supplier);
 
     setValue("category", contract.category);
 
