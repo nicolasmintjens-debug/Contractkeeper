@@ -2368,19 +2368,37 @@ input[type="date"]{
    LIVE LOGO PREVIEW
 ========================================= */
 
+.name-input-wrapper{
+
+    position:relative;
+
+}
+
+.name-input-wrapper input{
+
+    padding-right:60px;
+
+}
+
 .name-logo-preview{
 
-    margin-top:12px;
+    position:absolute;
+
+    top:50%;
+    right:16px;
+
+    transform:translateY(-50%);
 
     display:flex;
+    align-items:center;
     justify-content:center;
 
 }
 
 .name-logo-preview img{
 
-    width:48px;
-    height:48px;
+    width:28px;
+    height:28px;
 
     object-fit:contain;
 
