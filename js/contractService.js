@@ -495,8 +495,23 @@ const ContractService = {
         "total energies": "total-energies.png"
     };
 
-    return logos[name.toLowerCase()] || null;
+    const value = name.toLowerCase().trim();
 
+if (value.length < 3) {
+    return null;
+}
+
+for (const key in logos) {
+
+    if (key.includes(value) || value.includes(key)) {
+
+        return logos[key];
+
+    }
+
+}
+
+return null;
 },
 
 };
