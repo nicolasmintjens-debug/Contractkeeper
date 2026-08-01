@@ -214,7 +214,7 @@ function resetForm() {
 const image = document.getElementById("nameLogoImage");
 
 if (preview) {
-    preview.hidden = true;
+    preview.style.display = "none";
 }
 
 if (image) {
