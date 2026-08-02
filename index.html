@@ -13,22 +13,21 @@
     <meta name="theme-color" content="#22C55E">
 
     <meta name="apple-mobile-web-app-capable" content="yes">
-
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-
     <meta name="apple-mobile-web-app-title" content="ContractKeeper">
 
     <link rel="manifest" href="manifest.json">
 
     <link rel="icon" href="assets/icon.png">
-
     <link rel="apple-touch-icon" href="assets/icon.png">
 
     <link rel="stylesheet" href="style.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
 
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
           rel="stylesheet">
@@ -63,236 +62,73 @@
 
     </header>
 
-
-    <!-- =========================================
-         HOME
-    ========================================== -->
-
     <main>
 
-        <section
-            id="page-home"
-            class="page active">
+       <!DOCTYPE html>
+<html lang="nl">
 
+<head>
 
-            <!-- ===========================
-                 Dashboard
-            ============================ -->
+    <meta charset="UTF-8">
 
-            <section id="homeSection" class="stats">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
-                <div class="total-card">
+    <title>ContractKeeper</title>
 
-                    <span class="label">
-                        Maandelijkse kosten
-                    </span>
+    <meta name="theme-color" content="#22C55E">
 
-                    <h1 id="monthlyTotal">
-                        € 0,00
-                    </h1>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="ContractKeeper">
 
-                    <small>
+    <link rel="manifest" href="manifest.json">
 
-                        Alle actieve abonnementen
+    <link rel="icon" href="assets/icon.png">
+    <link rel="apple-touch-icon" href="assets/icon.png">
 
-                    </small>
+    <link rel="stylesheet" href="style.css">
 
-                </div>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
 
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
 
-                <div class="mini-cards">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
 
-                    <div class="mini-card">
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 
-                        <span>
+</head>
 
-                            Actieve contracten
+<body>
 
-                        </span>
+<div class="app">
 
-                        <h2 id="activeContracts">
+    <!-- =========================================
+         HEADER
+    ========================================== -->
 
-                            0
+    <header id="homeHeader" class="header">
 
-                        </h2>
+        <img
+            src="assets/logo.png"
+            class="logo"
+            alt="ContractKeeper">
 
-                    </div>
+        <div class="welcome">
 
+            <h2>Hallo 👋</h2>
 
-                    <div class="mini-card">
+            <p>Welkom bij ContractKeeper</p>
 
-                        <span>
+        </div>
 
-                            Binnenkort opzegbaar
+    </header>
 
-                        </span>
-
-                        <h2 id="endingSoon">
-
-                            0
-
-                        </h2>
-
-                    </div>
-
-                </div>
-
-            </section>
-
-
-            <!-- ===========================
-                 Search
-            ============================ -->
-
-            <div id="contractsSection">
-                
-            <section class="search-container">
-
-                <div class="search-box">
-
-                    <i class="bi bi-search"></i>
-
-                    <input
-
-                        id="searchContracts"
-
-                        type="text"
-
-                        placeholder="Zoek contract..."
-
-                        autocomplete="off">
-
-                </div>
-
-            </section>
-
-
-            <!-- ===========================
-                 Filters
-            ============================ -->
-
-         <div class="filter-row">
-
-    <button class="filter-card active" data-filter="all">
-        <span class="icon">📂</span>
-        <span class="label">Alle</span>
-    </button>
-
-    <button class="filter-card" data-filter="Elektriciteit">
-        <span class="icon">⚡</span>
-        <span class="label">Elektriciteit</span>
-    </button>
-
-    <button class="filter-card" data-filter="Gas">
-        <span class="icon">🔥</span>
-        <span class="label">Gas</span>
-    </button>
-
-    <button class="filter-card" data-filter="Water">
-        <span class="icon">💧</span>
-        <span class="label">Water</span>
-    </button>
-
-    <button class="filter-card" data-filter="Internet">
-        <span class="icon">🌐</span>
-        <span class="label">Internet</span>
-    </button>
-
-    <button class="filter-card" data-filter="Mobiel">
-        <span class="icon">📱</span>
-        <span class="label">Mobiel</span>
-    </button>
-
-    <button class="filter-card" data-filter="TV">
-        <span class="icon">📺</span>
-        <span class="label">TV</span>
-    </button>
-
-    <button class="filter-card" data-filter="Streaming">
-        <span class="icon">🎬</span>
-        <span class="label">Streaming</span>
-    </button>
-
-    <button class="filter-card" data-filter="Muziek">
-        <span class="icon">🎵</span>
-        <span class="label">Muziek</span>
-    </button>
-
-    <button class="filter-card" data-filter="Gaming">
-        <span class="icon">🎮</span>
-        <span class="label">Gaming</span>
-    </button>
-
-    <button class="filter-card" data-filter="Verzekering">
-        <span class="icon">🛡️</span>
-        <span class="label">Verzekering</span>
-    </button>
-
-    <button class="filter-card" data-filter="Overig">
-        <span class="icon">📂</span>
-        <span class="label">Overig</span>
-    </button>
-
-</div>
-                
-                        <!-- ===========================
-                 Contracten
-            ============================ -->
-
-            <section class="section">
-
-                <div class="flex-between">
-
-                    <h3>
-
-                        Mijn contracten
-
-                    </h3>
-
-                    <button
-                        id="sortContracts"
-                        class="btn-secondary">
-
-                        <i class="bi bi-sort-down"></i>
-
-                    </button>
-
-                </div>
-
-                <div
-                    id="contracts">
-
-                </div>
-
-            </section>
-
-
-            <!-- ===========================
-                 Empty state
-            ============================ -->
-
-            <section
-                id="emptyContracts"
-                class="empty-state hidden">
-
-                <i class="bi bi-wallet2"></i>
-
-                <h3>
-
-                    Nog geen contracten
-
-                </h3>
-
-                <p>
-
-                    Voeg je eerste abonnement toe en houd eenvoudig al je contracten bij.
-
-                </p>
-
-</section>
-
-</div>
-
+    <main>
 
         <!-- =========================================
              CONTRACTEN PAGINA
@@ -319,145 +155,138 @@
 
         </section>
 
+    <!-- =========================================
+         INZICHTEN PAGINA
+    ========================================== -->
 
-        <!-- =========================================
-             KALENDER
-        ========================================== -->
+    <section id="insightsSection" style="display:none;">
 
-        <section
-            id="page-calendar"
-            class="page hidden">
+        <div class="insights-header">
 
-            <section class="section">
+            <h2>
 
-                <h2>
+                <i class="bi bi-graph-up"></i>
 
-                    Kalender
+                Inzichten
 
-                </h2>
+            </h2>
 
-                <p class="mt-16">
+            <p>
+                Je uitgaven in één oogopslag.
+            </p>
 
-                    Hier verschijnen binnenkort alle opzegdata.
+        </div>
 
-                </p>
+        <div class="insights-grid">
 
-                <div
-                    id="calendarView"
-                    class="mt-24">
+            <div class="insight-card">
 
+                <div class="insight-icon">💶</div>
+
+                <div class="insight-title">
+                    Jij betaalt
                 </div>
 
-            </section>
-
-        </section>
-
-
-        <!-- =========================================
-             INSTELLINGEN
-        ========================================== -->
-
-        <section
-            id="page-settings"
-            class="page hidden">
-
-            <section class="section">
-
-                <h2>
-
-                    Instellingen
-
-                </h2>
-
-                <div class="mt-24">
-
-                    <button class="btn w-100 btn-secondary">
-
-                        <i class="bi bi-download"></i>
-
-                        Exporteer contracten
-
-                    </button>
-
+                <div class="insight-value" id="monthlyTotalInsights">
+                    €0,00
                 </div>
 
-                <div class="mt-16">
-
-                    <button class="btn w-100 btn-secondary">
-
-                        <i class="bi bi-upload"></i>
-
-                        Importeer contracten
-
-                    </button>
-
+                <div class="insight-subtitle">
+                    per maand
                 </div>
 
-                <div class="mt-16">
+            </div>
 
-                    <button class="btn w-100 btn-secondary">
+            <div class="insight-card">
 
-                        <i class="bi bi-bell"></i>
+                <div class="insight-icon">📅</div>
 
-                        Meldingen
-
-                    </button>
-
+                <div class="insight-title">
+                    Op jaarbasis
                 </div>
 
-                <div class="mt-16">
-
-                    <button class="btn w-100 btn-secondary">
-
-                        <i class="bi bi-moon-stars"></i>
-
-                        Thema
-
-                    </button>
-
+                <div class="insight-value" id="yearlyTotal">
+                    €0,00
                 </div>
 
-                <div class="mt-16">
+            </div>
 
-                    <button class="btn w-100 btn-secondary">
+            <div class="insight-card">
 
-                        <i class="bi bi-info-circle"></i>
+                <div class="insight-icon">📄</div>
 
-                        Over ContractKeeper
-
-                    </button>
-
+                <div class="insight-title">
+                    Actieve contracten
                 </div>
 
-            </section>
+                <div class="insight-value" id="activeContractsInsights">
+                    0
+                </div>
 
-        </section>
+            </div>
 
-    </main>
+            <div class="insight-card">
+
+                <div class="insight-icon">⏳</div>
+
+                <div class="insight-title">
+                    Eerstvolgende einddatum
+                </div>
+
+                <div class="insight-value" id="nextEnding">
+                    -
+                </div>
+
+                <div class="insight-subtitle" id="nextEndingDate">
+                    -
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
 
 
     <!-- =========================================
-         Toast
+         INSTELLINGEN
     ========================================== -->
 
-    <div
+    <section id="settingsSection" style="display:none;">
 
-        id="toast"
+        <div class="empty-state">
 
-        class="toast">
+            <i class="bi bi-gear"></i>
 
-    </div>
+            <h3>Instellingen</h3>
+
+            <p>
+                Deze pagina is momenteel in ontwikkeling.
+            </p>
+
+            <small>
+                Binnenkort vind je hier login,
+                back-ups, meldingen en thema's.
+            </small>
+
+        </div>
+
+    </section>
+
+</main>
+
+        <!-- =========================================
+         TOAST
+    ========================================== -->
+
+    <div id="toast" class="toast"></div>
 
 
     <!-- =========================================
-         Loader
+         LOADER
     ========================================== -->
 
-    <div
-
-        id="loader"
-
-        class="hidden flex-center mt-24">
+    <div id="loader" class="hidden flex-center mt-24">
 
         <div class="loader"></div>
 
@@ -469,162 +298,327 @@
 
     <div id="addContractModal" class="modal">
 
-    <div class="modal-content">
+        <div class="modal-content">
 
-        <div class="modal-header">
+            <div class="modal-header">
+
+                <button
+                    id="closeModal"
+                    class="modal-close"
+                    aria-label="Sluiten">
+
+                    <i class="bi bi-x-lg"></i>
+
+                </button>
+
+                <h2 class="modal-title">
+
+                    Nieuw contract
+
+                </h2>
+
+                <div class="modal-header-spacer"></div>
+
+            </div>
+
+            <div class="modal-body">
+
+                <form id="contractForm">
+
+                    <div class="form-group">
+
+                        <label for="name">
+                            Naam
+                        </label>
+
+                        <div class="name-input-wrapper">
+
+                            <input
+                                id="name"
+                                type="text"
+                                placeholder="Bijvoorbeeld Netflix"
+                                required>
+
+                            <div id="nameLogoPreview"
+                                 class="name-logo-preview"
+                                 hidden>
+
+                                <img id="nameLogoImage"
+                                     alt="Logo">
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label for="category">
+                            Categorie
+                        </label>
+
+                        <select id="category">
+
+                            <option value="Elektriciteit">⚡ Elektriciteit</option>
+                            <option value="Gas">🔥 Gas</option>
+                            <option value="Water">💧 Water</option>
+
+                            <option value="Internet">🌐 Internet</option>
+                            <option value="Mobiel">📱 Mobiel</option>
+                            <option value="TV">📺 TV</option>
+
+                            <option value="Streaming">🎬 Streaming</option>
+                            <option value="Muziek">🎵 Muziek</option>
+                            <option value="Gaming">🎮 Gaming</option>
+
+                            <option value="Cloud">☁️ Cloud</option>
+                            <option value="Software">💻 Software</option>
+                            <option value="Verzekering">🛡️ Verzekering</option>
+                            <option value="Bank">🏦 Bank</option>
+                            <option value="Lidmaatschap">📦 Lidmaatschap</option>
+
+                            <option value="Fitness">🏋️ Fitness</option>
+                            <option value="Voertuig">🚗 Voertuig</option>
+                            <option value="Gezondheid">❤️ Gezondheid</option>
+
+                            <option value="Overig">📂 Overig</option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label for="frequency">
+                            Betaling
+                        </label>
+
+                        <select id="frequency">
+
+                            <option value="monthly">Maandelijks</option>
+                            <option value="quarterly">Per kwartaal</option>
+                            <option value="yearly">Jaarlijks</option>
+                            <option value="once">Eenmalig</option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label for="amount">
+                            Bedrag (€)
+                        </label>
+
+                        <input
+                            id="amount"
+                            type="number"
+                            min="0"
+                            step="0.01"
+                            placeholder="0,00">
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label for="endDate">
+                            Einddatum
+                        </label>
+
+                        <input
+                            id="endDate"
+                            type="date">
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label for="notes">
+                            Notities
+                        </label>
+
+                        <textarea
+                            id="notes"
+                            placeholder="Extra informatie..."></textarea>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button
+                    id="saveContractButton"
+                    type="submit"
+                    form="contractForm"
+                    class="save-button">
+
+                    <i class="bi bi-check-lg"></i>
+
+                    Contract opslaan
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+        <!-- =========================================
+         MODAL - CONTRACT DETAILS
+    ========================================== -->
+
+    <div id="contractDetailModal" class="modal">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <button id="closeDetailModal" class="modal-close">
+
+                    <i class="bi bi-arrow-left"></i>
+
+                </button>
+
+                <h2 class="modal-title">
+
+                    Contract
+
+                </h2>
+
+                <div class="modal-header-spacer"></div>
+
+            </div>
+
+            <div class="modal-body">
+
+                <div class="detail-hero">
+
+                    <div id="detailHeroIcon" class="detail-hero-icon">
+
+                        <i class="bi bi-film"></i>
+
+                    </div>
+
+                    <div id="detailName" class="detail-hero-name">
+
+                        Netflix
+
+                    </div>
+
+                    <div id="detailPrice" class="detail-hero-price">
+
+                        €14,99
+
+                    </div>
+
+                    <div id="detailFrequency" class="detail-hero-frequency">
+
+                        per maand
+
+                    </div>
+
+                    <div id="detailStatus" class="detail-hero-status">
+
+                        <span class="status-dot"></span>
+
+                        Actief
+
+                    </div>
+
+                </div>
+
+                <div class="detail-section">
+
+                    <h3>Contractgegevens</h3>
+
+                    <div class="detail-row">
+
+                        <span>Categorie</span>
+
+                        <strong id="detailCategory">-</strong>
+
+                    </div>
+
+                    <div class="detail-row">
+
+                        <span>Einddatum</span>
+
+                        <strong id="detailEndDate">-</strong>
+
+                    </div>
+
+                    <div class="detail-actions">
+
+                        <button
+                            id="deleteContractBtn"
+                            class="btn-danger">
+
+                            <i class="bi bi-trash"></i>
+
+                            Verwijderen
+
+                        </button>
+
+                        <button
+                            id="editContractBtn"
+                            class="btn-primary">
+
+                            <i class="bi bi-pencil"></i>
+
+                            Bewerken
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+        <!-- =========================================
+         SORT SHEET
+    ========================================== -->
+
+    <div id="sortSheet" class="sort-sheet">
+
+        <div class="sort-sheet-content">
+
+            <h3>Sorteer op</h3>
+
+            <button class="sort-option" data-sort="name-asc">
+                <i class="bi bi-sort-alpha-down"></i>
+                Naam (A-Z)
+            </button>
+
+            <button class="sort-option" data-sort="price-asc">
+                <i class="bi bi-currency-euro"></i>
+                Prijs (laag → hoog)
+            </button>
+
+            <button class="sort-option" data-sort="price-desc">
+                <i class="bi bi-currency-euro"></i>
+                Prijs (hoog → laag)
+            </button>
+
+            <button class="sort-option" data-sort="date">
+                <i class="bi bi-calendar-event"></i>
+                Einddatum
+            </button>
 
             <button
-                id="closeModal"
-                class="modal-close"
-                aria-label="Sluiten">
+                id="closeSortSheet"
+                class="btn-secondary w-100 mt-16">
 
-                <i class="bi bi-x-lg"></i>
-
-            </button>
-
-            <h2 class="modal-title">
-
-                Nieuw contract
-
-            </h2>
-
-            <div class="modal-header-spacer"></div>
-
-        </div>
-
-        <div class="modal-body">
-
-            <form id="contractForm">
-
-                <div class="form-group">
-
-                    <label for="name">
-                        Naam
-                    </label>
-
-                    <div class="name-input-wrapper">
-
-    <input
-        id="name"
-        type="text"
-        placeholder="Bijvoorbeeld Netflix"
-        required>
-
-    <div id="nameLogoPreview" class="name-logo-preview" hidden>
-        <img id="nameLogoImage" alt="Logo">
-    </div>
-
-</div>
-                    
-                </div>
-
-                <div class="form-group">
-
-                    <label for="category">
-                        Categorie
-                    </label>
-
-                    <select id="category">
-
-    <option value="Elektriciteit">⚡ Elektriciteit</option>
-    <option value="Gas">🔥 Gas</option>
-    <option value="Water">💧 Water</option>
-
-    <option value="Internet">🌐 Internet</option>
-    <option value="Mobiel">📱 Mobiel</option>
-    <option value="TV">📺 TV</option>
-
-    <option value="Streaming">🎬 Streaming</option>
-    <option value="Muziek">🎵 Muziek</option>
-    <option value="Gaming">🎮 Gaming</option>
-
-    <option value="Cloud">☁️ Cloud</option>
-    <option value="Software">💻 Software</option>
-    <option value="Verzekering">🛡️ Verzekering</option>
-    <option value="Bank">🏦 Bank</option>
-    <option value="Lidmaatschap">📦 Lidmaatschap</option>
-
-    <option value="Fitness">🏋️ Fitness</option>
-    <option value="Voertuig">🚗 Voertuig</option>
-    <option value="Gezondheid">❤️ Gezondheid</option>
-
-    <option value="Overig">📂 Overig</option>
-
-                    </select>
-
-                </div>
-
-                <div class="form-group">
-
-                    <label for="frequency">
-                        Betaling
-                    </label>
-
-                    <select id="frequency">
-
-                        <option value="monthly">Maandelijks</option>
-                        <option value="quarterly">Per kwartaal</option>
-                        <option value="yearly">Jaarlijks</option>
-                        <option value="once">Eenmalig</option>
-
-                    </select>
-
-                </div>
-
-                <div class="form-group">
-
-                    <label for="amount">
-                        Bedrag (€)
-                    </label>
-
-                    <input
-                        id="amount"
-                        type="number"
-                        min="0"
-                        step="0.01"
-                        placeholder="0,00">
-
-                </div>
-
-                <div class="form-group">
-
-                    <label for="endDate">
-                        Einddatum
-                    </label>
-
-                    <input
-                        id="endDate"
-                        type="date">
-
-                </div>
-
-                <div class="form-group">
-
-                    <label for="notes">
-                        Notities
-                    </label>
-
-                    <textarea
-                        id="notes"
-                        placeholder="Extra informatie..."></textarea>
-
-                </div>
-
-            </form>
-
-        </div>
-
-        <div class="modal-footer">
-
-           <button
-    id="saveContractButton"
-    type="submit"
-    form="contractForm"
-    class="save-button">
-
-                <i class="bi bi-check-lg"></i>
-
-                Contract opslaan
+                Annuleren
 
             </button>
 
@@ -632,258 +626,60 @@
 
     </div>
 
-</div>
-
-   <div id="contractDetailModal" class="modal">
-
-    <div class="modal-content">
-
-        <div class="modal-header">
-
-            <button id="closeDetailModal" class="modal-close">
-                <i class="bi bi-arrow-left"></i>
-            </button>
-
-            <h2 class="modal-title">
-                Contract
-            </h2>
-
-            <div class="modal-header-spacer"></div>
-
-        </div>
-
-        <div class="modal-body">
-
-            <div class="detail-hero">
-    
-                <div id="detailHeroIcon" class="detail-hero-icon">
-    <i class="bi bi-film"></i>
-</div>
-
-                <div id="detailName" class="detail-hero-name">
-                    Netflix
-                </div>
-
-                <div id="detailPrice" class="detail-hero-price">
-                    €14,99
-                </div>
-
-                <div id="detailFrequency" class="detail-hero-frequency">
-                    per maand
-                </div>
-
-                <div id="detailStatus" class="detail-hero-status">
-                    <span class="status-dot"></span>
-                    Actief
-                </div>
-
-            </div>
-
-            <div class="detail-section">
-
-                <h3>Contractgegevens</h3>
-
-                <div class="detail-row">
-                    <span>Categorie</span>
-                    <strong id="detailCategory">-</strong>
-                </div>
-
-                <div class="detail-row">
-                    <span>Einddatum</span>
-                    <strong id="detailEndDate">-</strong>
-                </div>
-
-<div class="detail-actions">
-
-    <button id="deleteContractBtn" class="btn-danger">
-        <i class="bi bi-trash"></i>
-        Verwijderen
-    </button>
-
-    <button id="editContractBtn" class="btn-primary">
-        <i class="bi bi-pencil"></i>
-        Bewerken
-    </button>
-
-</div>
-                
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
-
-    <!-- =========================================
-     SORT SHEET
-========================================= -->
-
-<div id="sortSheet" class="sort-sheet">
-
-    <div class="sort-sheet-content">
-
-        <h3>Sorteer op</h3>
-
-        <button class="sort-option" data-sort="name-asc">
-            <i class="bi bi-sort-alpha-down"></i>
-            Naam (A-Z)
-        </button>
-
-        <button class="sort-option" data-sort="price-asc">
-            <i class="bi bi-currency-euro"></i>
-            Prijs (laag → hoog)
-        </button>
-
-        <button class="sort-option" data-sort="price-desc">
-            <i class="bi bi-currency-euro"></i>
-            Prijs (hoog → laag)
-        </button>
-
-        <button class="sort-option" data-sort="date">
-            <i class="bi bi-calendar-event"></i>
-            Einddatum
-        </button>
-
-        <button id="closeSortSheet" class="btn-secondary w-100 mt-16">
-            Annuleren
-        </button>
-
-    </div>
-
-</div>
-
-<!-- =========================================
-     INZICHTEN PAGINA
-========================================== -->
-
-<section id="insightsSection" style="display:none;">
-
-    <div class="insights-header">
-    <h2>
-        <i class="bi bi-graph-up"></i>
-        Inzichten
-    </h2>
-    <p>Je uitgaven in één oogopslag.</p>
-</div>
-
-    <div class="insights-grid">
-
-        <div class="insight-card">
-            <div class="insight-icon">💶</div>
-            <div class="insight-title">Jij betaalt</div>
-            <div class="insight-value" id="monthlyTotal">
-                €0,00
-            </div>
-            <div class="insight-subtitle">
-                per maand
-            </div>
-        </div>
-
-        <div class="insight-card">
-            <div class="insight-icon">📅</div>
-            <div class="insight-title">Op jaarbasis</div>
-            <div class="insight-value" id="yearlyTotal">
-                €0,00
-            </div>
-        </div>
-
-        <div class="insight-card">
-            <div class="insight-icon">📄</div>
-            <div class="insight-title">Actieve contracten</div>
-            <div class="insight-value" id="activeContracts">
-                0
-            </div>
-        </div>
-
-        <div class="insight-card">
-            <div class="insight-icon">⏳</div>
-            <div class="insight-title">
-                Eerstvolgende einddatum
-            </div>
-
-            <div class="insight-value" id="nextEnding">
-                -
-            </div>
-
-            <div class="insight-subtitle" id="nextEndingDate">
-                -
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-    
-    <!-- =========================================
-     INSTELLINGEN PAGINA
-========================================== -->
-
-<section id="settingsSection" style="display:none;">
-
-    <div class="empty-state">
-
-        <i class="bi bi-gear"></i>
-
-        <h3>Instellingen</h3>
-
-        <p>
-            Deze pagina is momenteel in ontwikkeling.
-        </p>
-
-        <small>
-            Binnenkort vind je hier login,
-            back-ups, meldingen en thema's.
-        </small>
-
-    </div>
-
-</section>
-    
-    <!-- =========================================
+        <!-- =========================================
          BOTTOM NAVIGATION
     ========================================== -->
 
-<nav class="bottom-nav">
+    <nav class="bottom-nav">
 
-    <button id="nav-home" class="active">
-        <i class="bi bi-house-fill"></i>
-        <span>Home</span>
-    </button>
+        <button id="nav-home" class="active">
 
-    <button id="nav-contracts">
-        <i class="bi bi-file-earmark-text"></i>
-        <span>Contracten</span>
-    </button>
+            <i class="bi bi-house-fill"></i>
 
-    <button
-        id="addContract"
-        class="fab"
-        aria-label="Contract toevoegen">
+            <span>Home</span>
 
-        <i class="bi bi-plus-lg"></i>
+        </button>
 
-    </button>
+        <button id="nav-contracts">
 
-   <button id="nav-insights">
-    <i class="bi bi-graph-up"></i>
-    <span>Inzichten</span>
-</button>
+            <i class="bi bi-file-earmark-text"></i>
 
-    <button id="nav-settings">
-        <i class="bi bi-gear"></i>
-        <span>Instellingen</span>
-    </button>
+            <span>Contracten</span>
 
-</nav>
-    
+        </button>
+
+        <button
+            id="addContract"
+            class="fab"
+            aria-label="Contract toevoegen">
+
+            <i class="bi bi-plus-lg"></i>
+
+        </button>
+
+        <button id="nav-insights">
+
+            <i class="bi bi-graph-up"></i>
+
+            <span>Inzichten</span>
+
+        </button>
+
+        <button id="nav-settings">
+
+            <i class="bi bi-gear"></i>
+
+            <span>Instellingen</span>
+
+        </button>
+
+    </nav>
+
 </div>
 
-
-<!-- =========================================
+    <!-- =========================================
      JAVASCRIPT
-========================================= -->
+========================================== -->
 
 <script src="js/storage.js"></script>
 <script src="js/contractService.js"></script>
@@ -896,3 +692,5 @@
 
 </body>
 </html>
+
+ 
