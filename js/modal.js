@@ -16,6 +16,8 @@ function initModal() {
     const openButton = document.getElementById("addContract");
     const closeButton = document.getElementById("closeModal");
    const closeDetailButton = document.getElementById("closeDetailModal");
+   const editButton = document.getElementById("editContractBtn");
+const deleteButton = document.getElementById("deleteContractBtn");
     const form = document.getElementById("contractForm");
    const nameInput = document.getElementById("name");
 
@@ -29,6 +31,22 @@ function initModal() {
 
    if (closeDetailButton) {
     closeDetailButton.addEventListener("click", closeDetailModal);
+}
+
+   if (editButton) {
+
+    editButton.addEventListener("click", () => {
+
+        if (!selectedContract) {
+            return;
+        }
+
+        closeDetailModal();
+
+        openEditModal(selectedContract.id);
+
+    });
+
 }
    
     if (form) {
