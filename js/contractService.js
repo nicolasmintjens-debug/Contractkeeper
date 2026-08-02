@@ -281,6 +281,28 @@ getNextEndingContract() {
 
 },
 
+   /* ======================================================
+   GROOTSTE UITGAVE
+====================================================== */
+
+getMostExpensiveContract() {
+
+    const contracts = this.getAll();
+
+    if (!contracts.length) {
+
+        return null;
+
+    }
+
+    return [...contracts].sort(
+
+        (a, b) => b.amount - a.amount
+
+    )[0];
+
+},
+   
     /* ======================================================
        RECENT
     ====================================================== */
