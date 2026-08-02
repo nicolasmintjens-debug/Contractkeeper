@@ -12,9 +12,50 @@ function updateDashboard() {
     updateAttentionCard();
     updateNextEnding();
     updateMostExpensiveContract();
+    updateCategoryTotals();
 
 }
 
+/* ==========================================================
+   UITGAVEN PER CATEGORIE
+========================================================== */
+
+function updateCategoryTotals() {
+
+    const container =
+        document.getElementById("categoryTotals");
+
+    if (!container) return;
+
+    const categories =
+        ContractService.getCategoryTotals();
+
+    if (!categories.length) {
+
+        container.innerHTML =
+            "<p>Geen categorieën gevonden.</p>";
+
+        return;
+
+    }
+
+    container.innerHTML = categories.map(category => `
+
+        <div class="category-row">
+
+            <span class="category-name">
+                ${category.category}
+            </span>
+
+            <span class="category-price">
+                ${ContractService.formatPrice(category.total)}
+            </span>
+
+        </div>
+
+    `).join("");
+
+}
 
 /* ==========================================================
    MAANDELIJKSE KOST
