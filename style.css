@@ -2544,3 +2544,109 @@ border-radius:28px 28px 0 0;
     opacity:.9;
 
 }
+
+/* ==========================================================
+   INSIGHTS
+========================================================== */
+
+.section-header{
+
+    margin-bottom:24px;
+
+}
+
+.section-header h2{
+
+    font-size:28px;
+
+    font-weight:700;
+
+    margin-bottom:6px;
+
+}
+
+.section-header p{
+
+    color:#8EA2BE;
+
+    font-size:14px;
+
+}
+
+.insights-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:16px;
+
+}
+
+.insight-card{
+
+    background:#16233B;
+
+    border:1px solid rgba(255,255,255,.08);
+
+    border-radius:22px;
+
+    padding:20px;
+
+    transition:.25s;
+
+}
+
+.insight-card:hover{
+
+    transform:translateY(-2px);
+
+}
+
+.insight-icon{
+
+    font-size:28px;
+
+    margin-bottom:14px;
+
+}
+
+.insight-title{
+
+    font-size:13px;
+
+    color:#8EA2BE;
+
+    margin-bottom:8px;
+
+}
+
+.insight-value{
+
+    font-size:24px;
+
+    font-weight:700;
+
+    color:white;
+
+}
+
+.insight-subtitle{
+
+    margin-top:6px;
+
+    font-size:13px;
+
+    color:#8EA2BE;
+
+}
+
+@media (max-width:600px){
+
+    .insights-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
