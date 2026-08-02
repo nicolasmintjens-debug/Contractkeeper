@@ -2488,3 +2488,55 @@ border-radius:28px 28px 0 0;
     object-fit:contain;
 
 }
+
+/* ==========================================
+   DETAIL ACTIES
+========================================== */
+
+.detail-actions{
+
+    display:flex;
+
+    gap:12px;
+
+    margin-top:24px;
+
+}
+
+.detail-actions button{
+
+    flex:1;
+
+}
+
+.btn-danger{
+
+    height:52px;
+
+    border:none;
+
+    border-radius:16px;
+
+    background:#E74C3C;
+
+    color:white;
+
+    font-weight:600;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:8px;
+
+    transition:.25s;
+
+}
+
+.btn-danger:hover{
+
+    opacity:.9;
+
+}
