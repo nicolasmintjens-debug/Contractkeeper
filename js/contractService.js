@@ -302,6 +302,53 @@ getMostExpensiveContract() {
     )[0];
 
 },
+
+/* ======================================================
+   UITGAVEN PER CATEGORIE
+====================================================== */
+
+getCategoryTotals() {
+
+    const totals = {};
+
+    this.getAll().forEach(contract => {
+
+        let monthly = contract.amount;
+
+        switch (contract.frequency) {
+
+            case "quarterly":
+                monthly = contract.amount / 3;
+                break;
+
+            case "yearly":
+                monthly = contract.amount / 12;
+                break;
+
+        }
+
+        if (!totals[contract.category]) {
+
+            totals[contract.category] = 0;
+
+        }
+
+        totals[contract.category] += monthly;
+
+    });
+
+    return Object.entries(totals)
+
+        .map(([category, total]) => ({
+
+            category,
+            total
+
+        }))
+
+        .sort((a, b) => b.total - a.total);
+
+},
    
     /* ======================================================
        RECENT
