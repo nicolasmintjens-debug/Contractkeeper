@@ -130,6 +130,11 @@ function openAddModal() {
 
     setModalTitle("Nieuw contract");
 
+    document.getElementById("saveContractButton").innerHTML = `
+        <i class="bi bi-check-lg"></i>
+        Contract opslaan
+    `;
+
     showModal();
 
 }
@@ -153,6 +158,11 @@ function openEditModal(id) {
 
     setModalTitle("Contract bewerken");
 
+   document.getElementById("saveContractButton").innerHTML = `
+    <i class="bi bi-check-lg"></i>
+    Wijzigingen opslaan
+`;
+   
     showModal();
 
 }
