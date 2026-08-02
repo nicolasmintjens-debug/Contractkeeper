@@ -2589,9 +2589,9 @@ border-radius:28px 28px 0 0;
 
     border:1px solid rgba(255,255,255,.08);
 
-    border-radius:22px;
+    border-radius:18px;
 
-    padding:20px;
+    padding:14px;
 
     transition:.25s;
 
@@ -2605,9 +2605,9 @@ border-radius:28px 28px 0 0;
 
 .insight-icon{
 
-    font-size:28px;
+    font-size:24px;
 
-    margin-bottom:14px;
+    margin-bottom:10px;
 
 }
 
@@ -2623,7 +2623,7 @@ border-radius:28px 28px 0 0;
 
 .insight-value{
 
-    font-size:24px;
+    font-size:18px;
 
     font-weight:700;
 
@@ -2641,12 +2641,3 @@ border-radius:28px 28px 0 0;
 
 }
 
-@media (max-width:600px){
-
-    .insights-grid{
-
-        grid-template-columns:1fr;
-
-    }
-
-}
