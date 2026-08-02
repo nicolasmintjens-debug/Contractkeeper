@@ -277,8 +277,12 @@ function closeModal() {
 
 }
 
+let selectedContract = null;
+
 function showDetailModal(contract) {
 
+   selectedContract = contract;
+   
     const modal = document.getElementById("contractDetailModal");
 
     if (!modal) {
