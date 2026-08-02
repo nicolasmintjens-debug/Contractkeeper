@@ -6,13 +6,11 @@
 function updateDashboard() {
 
     updateMonthlyTotal();
-
     updateActiveContracts();
-
     updateEndingSoon();
+    updateYearlyTotal();
 
 }
-
 
 
 /* ==========================================================
@@ -21,22 +19,50 @@ function updateDashboard() {
 
 function updateMonthlyTotal() {
 
-    const element = document.getElementById("monthlyTotal");
+    const total =
+        ContractService.getMonthlyTotal();
 
-    if (!element) {
+    const home =
+        document.getElementById("monthlyTotal");
 
-        return;
+    const insights =
+        document.getElementById("monthlyTotalInsights");
+
+    if (home) {
+
+        home.textContent =
+            ContractService.formatPrice(total);
 
     }
 
-    element.textContent = ContractService.formatPrice(
+    if (insights) {
 
-        ContractService.getMonthlyTotal()
+        insights.textContent =
+            ContractService.formatPrice(total);
 
-    );
+    }
 
 }
 
+
+/* ==========================================================
+   JAARBEDRAG
+========================================================== */
+
+function updateYearlyTotal() {
+
+    const element =
+        document.getElementById("yearlyTotal");
+
+    if (!element) return;
+
+    const yearly =
+        ContractService.getMonthlyTotal() * 12;
+
+    element.textContent =
+        ContractService.formatPrice(yearly);
+
+}
 
 
 /* ==========================================================
@@ -45,18 +71,28 @@ function updateMonthlyTotal() {
 
 function updateActiveContracts() {
 
-    const element = document.getElementById("activeContracts");
+    const total =
+        ContractService.getActiveCount();
 
-    if (!element) {
+    const home =
+        document.getElementById("activeContracts");
 
-        return;
+    const insights =
+        document.getElementById("activeContractsInsights");
+
+    if (home) {
+
+        home.textContent = total;
 
     }
 
-    element.textContent = ContractService.getActiveCount();
+    if (insights) {
+
+        insights.textContent = total;
+
+    }
 
 }
-
 
 
 /* ==========================================================
@@ -65,7 +101,8 @@ function updateActiveContracts() {
 
 function updateEndingSoon() {
 
-    const element = document.getElementById("endingSoon");
+    const element =
+        document.getElementById("endingSoon");
 
     if (!element) {
 
@@ -73,10 +110,10 @@ function updateEndingSoon() {
 
     }
 
-    element.textContent = ContractService.getEndingSoonCount();
+    element.textContent =
+        ContractService.getEndingSoonCount();
 
 }
-
 
 
 /* ==========================================================
