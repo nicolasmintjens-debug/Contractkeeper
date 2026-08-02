@@ -154,7 +154,6 @@ const settingsSection = document.getElementById("settingsSection");
 
         homeHeader.style.display = "flex";
         homeSection.style.display = "block";
-        contractsSection.style.display = "block";
 
         setActiveNav("nav-home");
 
