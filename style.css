@@ -1758,7 +1758,7 @@ border-radius:28px 28px 0 0;
 
     display:flex;
 
-    gap:14px;
+    gap:10px;
 
     overflow-x:auto;
 
@@ -1776,11 +1776,11 @@ border-radius:28px 28px 0 0;
 
 .filter-card{
 
-    flex:0 0 92px;
+    flex:0 0 76px;
 
-    height:86px;
+    height:72px;
 
-    border-radius:22px;
+    border-radius:18px;
 
     background:#16233B;
 
@@ -1808,13 +1808,13 @@ border-radius:28px 28px 0 0;
 
 .filter-card .icon{
 
-    font-size:24px;
+    font-size:20px;
 
 }
 
 .filter-card .label{
 
-    font-size:13px;
+    font-size:11px;
 
     font-weight:600;
 
