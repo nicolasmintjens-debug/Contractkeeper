@@ -4,7 +4,7 @@
 ========================================================== */
 
 let currentContracts = [];
-let currentCategory = "all";
+let selectedCategories = [];
 let currentSearch = "";
 let currentSort = "name-asc";
 
@@ -40,12 +40,45 @@ function initContractEvents() {
 
     card.addEventListener("click", () => {
 
-        document.querySelectorAll(".filter-card")
-            .forEach(c => c.classList.remove("active"));
+        const filter = card.dataset.filter;
 
-        card.classList.add("active");
+        if (filter === "all") {
 
-        currentCategory = card.dataset.filter || "all";
+            selectedCategories = [];
+
+            document.querySelectorAll(".filter-card")
+                .forEach(c => c.classList.remove("active"));
+
+            card.classList.add("active");
+
+        } else {
+
+            document.querySelector('[data-filter="all"]')
+                ?.classList.remove("active");
+
+            if (selectedCategories.includes(filter)) {
+
+                selectedCategories =
+                    selectedCategories.filter(c => c !== filter);
+
+                card.classList.remove("active");
+
+            } else {
+
+                selectedCategories.push(filter);
+
+                card.classList.add("active");
+
+            }
+
+            if (selectedCategories.length === 0) {
+
+                document.querySelector('[data-filter="all"]')
+                    ?.classList.add("active");
+
+            }
+
+        }
 
         renderContracts();
 
@@ -64,15 +97,15 @@ function getFilteredContracts() {
 
     let contracts = ContractService.getAll();
 
-    if (currentCategory !== "all") {
+    if (selectedCategories.length > 0) {
 
-        contracts = contracts.filter(
+    contracts = contracts.filter(contract =>
 
-            c => c.category === currentCategory
+        selectedCategories.includes(contract.category)
 
-        );
+    );
 
-    }
+}
 
     if (currentSearch.trim() !== "") {
 
