@@ -11,6 +11,7 @@ function updateDashboard() {
     updateYearlyTotal();
     updateAttentionCard();
     updateNextEnding();
+    updateMostExpensiveContract();
 
 }
 
@@ -148,6 +149,40 @@ function updateNextEnding() {
 
     subtitle.textContent =
         contract.name;
+
+}
+
+/* ==========================================================
+   DUURSTE CONTRACT
+========================================================== */
+
+function updateMostExpensiveContract() {
+
+    const value =
+        document.getElementById("highestContract");
+
+    const subtitle =
+        document.getElementById("highestContractPrice");
+
+    if (!value || !subtitle) return;
+
+    const contract =
+        ContractService.getMostExpensiveContract();
+
+    if (!contract) {
+
+        value.textContent = "-";
+        subtitle.textContent = "Geen contracten";
+
+        return;
+
+    }
+
+    value.textContent =
+        contract.name;
+
+    subtitle.textContent =
+        ContractService.formatPrice(contract.amount);
 
 }
 
