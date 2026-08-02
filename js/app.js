@@ -153,7 +153,8 @@ const settingsSection = document.getElementById("settingsSection");
         hideAllPages();
 
         homeHeader.style.display = "flex";
-        homeSection.style.display = "block";
+       homeSection.style.display = "block";
+      contractsSection.style.display = "block";
 
         setActiveNav("nav-home");
 
