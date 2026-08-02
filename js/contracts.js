@@ -36,23 +36,23 @@ function initContractEvents() {
 
     }
 
-    document.querySelectorAll(".category-chip").forEach(chip => {
+    document.querySelectorAll(".filter-card").forEach(card => {
 
-        chip.addEventListener("click", () => {
+    card.addEventListener("click", () => {
 
-            document.querySelectorAll(".category-chip")
-                .forEach(c => c.classList.remove("active"));
+        document.querySelectorAll(".filter-card")
+            .forEach(c => c.classList.remove("active"));
 
-            chip.classList.add("active");
+        card.classList.add("active");
 
-            currentCategory = chip.dataset.category || "all";
+        currentCategory = card.dataset.filter || "all";
 
-            renderContracts();
-
-        });
+        renderContracts();
 
     });
 
+});
+   
 }
 
 
