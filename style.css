@@ -455,6 +455,28 @@ button{
 
 }
 
+/* ==========================================================
+   HOME STATUS
+========================================================== */
+
+.info-card.success strong{
+
+    color:#43E97B;
+
+}
+
+.info-card.warning strong{
+
+    color:#FBBF24;
+
+}
+
+.info-card.danger strong{
+
+    color:#EF4444;
+
+}
+
 /* ===========================
    SECTIONS
 =========================== */
