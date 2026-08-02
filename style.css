@@ -1667,6 +1667,8 @@ border-radius:28px 28px 0 0;
 
     margin-top:24px;
 
+   margin-bottom:20px;
+
 }
 
 .search-box{
@@ -2731,12 +2733,15 @@ border-radius:28px 28px 0 0;
 
 .contracts-header{
 
+    padding-left:20px;
+    padding-right:20px;
+
     margin-top:36px;
     padding-top:28px;
 
     margin-bottom:22px;
 
-    border-top:1px solid rgba(255,255,255,.06);
+    border-top:1px solid rgba(255,255,255,.04);
 
 }
 
