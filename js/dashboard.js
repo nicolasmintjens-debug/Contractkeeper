@@ -9,6 +9,7 @@ function updateDashboard() {
     updateActiveContracts();
     updateEndingSoon();
     updateYearlyTotal();
+    updateAttentionCard();
 
 }
 
@@ -112,6 +113,58 @@ function updateEndingSoon() {
 
     element.textContent =
         ContractService.getEndingSoonCount();
+
+}
+
+/* ==========================================================
+   AANDACHTSKAART
+========================================================== */
+
+function updateAttentionCard() {
+
+    const card =
+        document.getElementById("attentionInfoCard");
+
+    const container =
+        document.getElementById("attentionCard");
+
+    if (!card || !container) return;
+
+    const endingSoon =
+        ContractService.getEndingSoonCount();
+
+    if (endingSoon === 0) {
+
+        card.className = "info-card success";
+
+        container.innerHTML = `
+            <strong>Alles in orde</strong>
+            <p>Geen contracten die binnenkort aflopen.</p>
+        `;
+
+    }
+
+    else if (endingSoon === 1) {
+
+        card.className = "info-card warning";
+
+        container.innerHTML = `
+            <strong>Opgelet</strong>
+            <p>1 contract loopt binnenkort af.</p>
+        `;
+
+    }
+
+    else {
+
+        card.className = "info-card danger";
+
+        container.innerHTML = `
+            <strong>Actie vereist</strong>
+            <p>${endingSoon} contracten lopen binnenkort af.</p>
+        `;
+
+    }
 
 }
 
