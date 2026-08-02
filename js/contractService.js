@@ -253,7 +253,33 @@ const ContractService = {
 
     },
 
+/* ======================================================
+   EERSTVOLGENDE EINDDATUM
+====================================================== */
 
+getNextEndingContract() {
+
+    const today = new Date();
+
+    const contracts = this.getAll()
+
+        .filter(contract => {
+
+            if (!contract.endDate) return false;
+
+            return new Date(contract.endDate) >= today;
+
+        })
+
+        .sort((a, b) =>
+
+            new Date(a.endDate) - new Date(b.endDate)
+
+        );
+
+    return contracts.length ? contracts[0] : null;
+
+},
 
     /* ======================================================
        RECENT
