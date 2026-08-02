@@ -10,6 +10,7 @@ function updateDashboard() {
     updateEndingSoon();
     updateYearlyTotal();
     updateAttentionCard();
+    updateNextEnding();
 
 }
 
@@ -113,6 +114,40 @@ function updateEndingSoon() {
 
     element.textContent =
         ContractService.getEndingSoonCount();
+
+}
+
+/* ==========================================================
+   EERSTVOLGENDE EINDDATUM
+========================================================== */
+
+function updateNextEnding() {
+
+    const value =
+        document.getElementById("nextEnding");
+
+    const subtitle =
+        document.getElementById("nextEndingDate");
+
+    if (!value || !subtitle) return;
+
+    const contract =
+        ContractService.getNextEndingContract();
+
+    if (!contract) {
+
+        value.textContent = "-";
+        subtitle.textContent = "Geen einddatum gevonden";
+
+        return;
+
+    }
+
+    value.textContent =
+        ContractService.formatDate(contract.endDate);
+
+    subtitle.textContent =
+        contract.name;
 
 }
 
