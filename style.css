@@ -311,23 +311,59 @@ button{
 
 }
 
-.mini-card span{
+/* NIEUW */
 
-    display:block;
+.mini-card-title{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    margin-bottom:16px;
+
+}
+
+.mini-card-title i{
+
+    color:var(--primary);
+
+    font-size:18px;
+
+}
+
+.mini-card-title span{
 
     color:var(--text-secondary);
 
     font-size:13px;
 
+    font-weight:500;
+
 }
 
 .mini-card h2{
 
-    margin-top:10px;
-
-    font-size:31px;
+    font-size:34px;
 
     font-weight:700;
+
+    margin-bottom:8px;
+
+    color:#fff;
+
+}
+
+.mini-card-status{
+
+    display:block;
+
+    color:#43E97B;
+
+    font-size:13px;
+
+    font-weight:600;
 
 }
 
