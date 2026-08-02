@@ -753,31 +753,66 @@
 
 </div>
 
-    <!-- =========================================
+<!-- =========================================
      INZICHTEN PAGINA
 ========================================== -->
 
 <section id="insightsSection" style="display:none;">
 
-    <div class="empty-state">
+    <div class="section-header">
+        <h2>💡 Inzichten</h2>
+        <p>Een overzicht van je contracten en uitgaven.</p>
+    </div>
 
-        <i class="bi bi-graph-up"></i>
+    <div class="insights-grid">
 
-        <h3>Inzichten</h3>
+        <div class="insight-card">
+            <div class="insight-icon">💶</div>
+            <div class="insight-title">Jij betaalt</div>
+            <div class="insight-value" id="monthlyTotal">
+                €0,00
+            </div>
+            <div class="insight-subtitle">
+                per maand
+            </div>
+        </div>
 
-        <p>
-            Deze pagina is momenteel in ontwikkeling.
-        </p>
+        <div class="insight-card">
+            <div class="insight-icon">📅</div>
+            <div class="insight-title">Op jaarbasis</div>
+            <div class="insight-value" id="yearlyTotal">
+                €0,00
+            </div>
+        </div>
 
-        <small>
-            Binnenkort vind je hier statistieken,
-            besparingen, AI en vergelijkingen.
-        </small>
+        <div class="insight-card">
+            <div class="insight-icon">📄</div>
+            <div class="insight-title">Actieve contracten</div>
+            <div class="insight-value" id="activeContracts">
+                0
+            </div>
+        </div>
+
+        <div class="insight-card">
+            <div class="insight-icon">⏳</div>
+            <div class="insight-title">
+                Eerstvolgende einddatum
+            </div>
+
+            <div class="insight-value" id="nextEnding">
+                -
+            </div>
+
+            <div class="insight-subtitle" id="nextEndingDate">
+                -
+            </div>
+
+        </div>
 
     </div>
 
 </section>
-
+    
     <!-- =========================================
      INSTELLINGEN PAGINA
 ========================================== -->
