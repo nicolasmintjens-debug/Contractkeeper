@@ -48,6 +48,36 @@ const deleteButton = document.getElementById("deleteContractBtn");
     });
 
 }
+
+   if (deleteButton) {
+
+    deleteButton.addEventListener("click", () => {
+
+        if (!selectedContract) {
+            return;
+        }
+
+        const confirmed = confirm(
+            `Weet je zeker dat je "${selectedContract.name}" wilt verwijderen?`
+        );
+
+        if (!confirmed) {
+            return;
+        }
+
+        ContractService.delete(selectedContract.id);
+
+        closeDetailModal();
+
+        renderContracts();
+
+        updateDashboard();
+
+        showToast("Contract verwijderd");
+
+    });
+
+}
    
     if (form) {
         form.addEventListener("submit", saveContract);
