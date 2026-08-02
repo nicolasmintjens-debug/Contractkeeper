@@ -2876,3 +2876,69 @@ border-radius:28px 28px 0 0;
     font-size:16px;
 
 }
+
+/* ==========================================================
+   CATEGORIE OVERZICHT
+========================================================== */
+
+.insight-section{
+
+    margin:32px 20px;
+
+}
+
+.insight-section h3{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    margin-bottom:18px;
+
+    font-size:20px;
+
+    font-weight:700;
+
+}
+
+.insight-section h3 i{
+
+    color:var(--primary);
+
+}
+
+.category-row{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:16px 20px;
+
+    margin-bottom:12px;
+
+    background:var(--surface);
+
+    border:1px solid var(--border);
+
+    border-radius:18px;
+
+}
+
+.category-name{
+
+    font-weight:600;
+
+}
+
+.category-price{
+
+    color:var(--accent);
+
+    font-weight:700;
+
+}
