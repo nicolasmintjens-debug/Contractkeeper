@@ -416,9 +416,34 @@ function updateSmartTip() {
 
     const container =
         document.getElementById("smartTipCard");
-
+   
     if (!container) return;
 
+container.ontouchstart = function(event) {
+
+    touchStartX = event.changedTouches[0].clientX;
+   
+};
+
+ container.ontouchend = function(event) {
+
+    const touchEndX =
+        event.changedTouches[0].clientX;
+
+    if (touchStartX - touchEndX > 50) {
+
+        nextSmartTip();
+
+    }
+
+    else if (touchEndX - touchStartX > 50) {
+
+        previousSmartTip();
+
+    }
+
+};
+   
     const tips =
         ContractService.getSmartTips();
 
