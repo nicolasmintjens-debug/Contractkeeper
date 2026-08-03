@@ -3099,9 +3099,18 @@ border-radius:28px 28px 0 0;
 
     display:none;
 
+    position:relative;
+
+    z-index:999;
+
 }
 
+
 .name-suggestion{
+
+    position:relative;
+
+    z-index:1000;
 
     padding:12px 16px;
 
@@ -3111,7 +3120,10 @@ border-radius:28px 28px 0 0;
 
     border-bottom:1px solid #F1F5F9;
 
+    pointer-events:auto;
+
 }
+
 
 .name-suggestion:last-child{
 
@@ -3119,11 +3131,13 @@ border-radius:28px 28px 0 0;
 
 }
 
+
 .name-suggestion:hover{
 
     background:#F8FAFC;
 
 }
+
 
 .name-suggestion strong{
 
@@ -3134,6 +3148,7 @@ border-radius:28px 28px 0 0;
     font-size:15px;
 
 }
+
 
 .name-suggestion small{
 
