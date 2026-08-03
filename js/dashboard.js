@@ -391,11 +391,20 @@ function updateCategoryChart() {
 
         callbacks: {
 
-            label: function(context) {
+           label: function(context) {
 
-                return ContractService.formatPrice(context.raw);
+    const category =
+        categories[context.dataIndex];
 
-            }
+    return [
+
+        ContractService.formatPrice(context.raw),
+
+        `${category.percentage.toFixed(1)}%`
+
+    ];
+
+}
 
         }
 
