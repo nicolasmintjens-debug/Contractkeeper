@@ -431,7 +431,7 @@ function updateSmartTip() {
 
     }
 
-    const tip = tips[0];
+    const tip = tips[currentSmartTip];
 
     container.innerHTML = `
 
