@@ -87,6 +87,8 @@ const deleteButton = document.getElementById("deleteContractBtn");
 
     nameInput.addEventListener("input", () => {
 
+       const suggestions = document.getElementById("nameSuggestions");
+       
         const logo = ContractService.getLogo(nameInput.value);
 
         const preview = document.getElementById("nameLogoPreview");
