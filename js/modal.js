@@ -85,35 +85,94 @@ const deleteButton = document.getElementById("deleteContractBtn");
 
    if (nameInput) {
 
-    nameInput.addEventListener("input", () => {
+   nameInput.addEventListener("input", () => {
 
-       const suggestions = document.getElementById("nameSuggestions");
+    const suggestions =
+        document.getElementById("nameSuggestions");
 
-       const matches = ContractService.findServices(nameInput.value);
+    const matches =
+        ContractService.findServices(nameInput.value);
 
-       if (!matches.length) {
+    if (!matches.length) {
 
-    suggestions.style.display = "none";
-    suggestions.innerHTML = "";
+        suggestions.style.display = "none";
+        suggestions.innerHTML = "";
 
-} else {
+    } else {
 
-    suggestions.style.display = "block";
+        suggestions.style.display = "block";
 
-    suggestions.innerHTML = matches.map(service => `
+        suggestions.innerHTML = matches.map(service => `
 
-        <div
-    class="name-suggestion"
-    data-name="${service.name}"
-    data-category="${service.category}">
+            <div
+                class="name-suggestion"
+                data-name="${service.name}"
+                data-category="${service.category}">
 
-    <strong>${service.name}</strong>
+                <strong>${service.name}</strong>
+                <small>${service.category}</small>
 
-    <small>${service.category}</small>
+            </div>
 
-</div>
+        `).join("");
 
-    `).join("");
+        suggestions.querySelectorAll(".name-suggestion").forEach(item => {
+
+            item.addEventListener("click", () => {
+
+                nameInput.value = item.dataset.name;
+
+                document.getElementById("category").value =
+                    item.dataset.category;
+
+                suggestions.style.display = "none";
+                suggestions.innerHTML = "";
+
+                const logo =
+                    ContractService.getLogo(item.dataset.name);
+
+                const preview =
+                    document.getElementById("nameLogoPreview");
+
+                const image =
+                    document.getElementById("nameLogoImage");
+
+                if (logo) {
+
+                    image.src = `assets/logos/${logo}`;
+                    preview.style.display = "flex";
+
+                }
+
+            });
+
+        });
+
+    }
+
+    const logo =
+        ContractService.getLogo(nameInput.value);
+
+    const preview =
+        document.getElementById("nameLogoPreview");
+
+    const image =
+        document.getElementById("nameLogoImage");
+
+    if (logo) {
+
+        image.src = `assets/logos/${logo}`;
+        preview.style.display = "flex";
+
+    } else {
+
+        preview.style.display = "none";
+
+    }
+
+});
+}
+          
 
 }
        
