@@ -3,6 +3,8 @@
    dashboard.js
 ========================================================== */
 
+let categoryChart = null;
+
 function updateDashboard() {
 
     updateMonthlyTotal();
@@ -13,6 +15,7 @@ function updateDashboard() {
     updateNextEnding();
     updateMostExpensiveContract();
     updateCategoryTotals();
+    updateCategoryChart();
 
 }
 
@@ -295,5 +298,94 @@ function updateAttentionCard() {
 function refreshDashboard() {
 
     updateDashboard();
+
+}
+
+/* ==========================================================
+   DONUTGRAFIEK
+========================================================== */
+
+function updateCategoryChart() {
+
+    const container =
+        document.getElementById("categoryChart");
+
+    if (!container) return;
+
+    const categories =
+        ContractService.getCategoryTotals();
+
+    if (!categories.length) {
+
+        container.innerHTML = "";
+
+        return;
+
+    }
+
+    container.innerHTML =
+        "<canvas id='categoryChartCanvas'></canvas>";
+
+    const canvas =
+        document.getElementById("categoryChartCanvas");
+
+    if (categoryChart) {
+
+        categoryChart.destroy();
+
+    }
+
+    categoryChart = new Chart(canvas, {
+
+        type: "doughnut",
+
+        data: {
+
+            labels: categories.map(c => c.category),
+
+            datasets: [{
+
+                data: categories.map(c => c.total),
+
+                backgroundColor: [
+
+                    "#34D399",
+                    "#3B82F6",
+                    "#F59E0B",
+                    "#EF4444",
+                    "#8B5CF6",
+                    "#14B8A6",
+                    "#F97316",
+                    "#EC4899"
+
+                ],
+
+                borderWidth: 0
+
+            }]
+
+        },
+
+        options: {
+
+            responsive: true,
+
+            maintainAspectRatio: false,
+
+            cutout: "70%",
+
+            plugins: {
+
+                legend: {
+
+                    display: false
+
+                }
+
+            }
+
+        }
+
+    });
 
 }
