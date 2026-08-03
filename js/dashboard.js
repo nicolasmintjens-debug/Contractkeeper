@@ -457,3 +457,26 @@ if (counter && tips.length > 1) {
 }
    
 }
+
+/* ==========================================================
+   VOLGENDE SLIMME TIP
+========================================================== */
+
+function nextSmartTip() {
+
+    const tips =
+        ContractService.getSmartTips();
+
+    if (tips.length <= 1) return;
+
+    currentSmartTip++;
+
+    if (currentSmartTip >= tips.length) {
+
+        currentSmartTip = 0;
+
+    }
+
+    updateSmartTip();
+
+}
