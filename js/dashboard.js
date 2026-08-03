@@ -5,6 +5,8 @@
 
 let categoryChart = null;
 
+let currentSmartTip = 0;
+
 function updateDashboard() {
 
     updateMonthlyTotal();
