@@ -646,6 +646,17 @@ getSmartTips() {
 
     }
 
+   tips.push({
+
+    icon: "📄",
+
+    title: "Actieve contracten",
+
+    message:
+        `Je hebt momenteel ${this.getActiveCount()} actieve contracten.`
+
+});
+
     return tips;
 
 }
