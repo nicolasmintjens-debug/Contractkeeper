@@ -573,40 +573,40 @@ const grandTotal = Object.values(totals)
 
     if (!name) return null;
 
-    const logos = {
-        "netflix": "netflix.png",
-        "spotify": "spotify.webp",
-        "proximus": "proximus.png",
-        "telenet": "telenet.png",
-        "basic-fit": "basic-fit.png",
-        "basic fit": "basic-fit.png",
-        "disney+": "disney-plus.webp",
-        "prime video": "prime-video.webp",
-        "youtube premium": "youtube-premium.png",
-        "apple music": "apple-music.png",
-        "apple tv": "apple-tv.webp",
-        "icloud": "icloud.webp",
-        "microsoft 365": "microsoft-365.png",
-        "mobile vikings": "mobile-vikings.png",
-        "orange": "orange.webp",
-        "base": "base.png",
-        "scarlet": "scarlet.webp",
-        "engie": "engie.png",
-        "luminus": "luminus.png",
-        "eneco": "eneco.png",
-        "playstation plus": "playstation-plus.png",
-        "xbox game pass": "xbox-gamepass.webp",
-        "nintendo switch": "nintendo-switch.png",
-        "streamz": "streamz.png",
-        "total energies": "total-energies.png"
-    };
+    const value =
+        name.toLowerCase().trim();
 
-    const value = name.toLowerCase().trim();
+    if (value.length < 3) {
 
-if (value.length < 3) {
+        return null;
+
+    }
+
+    for (const service of SERVICES) {
+
+        const serviceName =
+            service.name.toLowerCase();
+
+        if (
+
+            serviceName.includes(value)
+
+            ||
+
+            value.includes(serviceName)
+
+        ) {
+
+            return service.logo;
+
+        }
+
+    }
+
     return null;
-}
 
+},
+   
 for (const key in logos) {
 
     if (key.includes(value) || value.includes(key)) {
