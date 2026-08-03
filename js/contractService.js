@@ -626,16 +626,28 @@ return null;
 
 getSmartTips() {
 
-    return [
+    const tips = [];
 
-        {
+    const highest =
+        this.getMostExpensiveContract();
+
+    if (highest) {
+
+        tips.push({
+
             icon: "💰",
-            title: "Grootste uitgave",
-            message: "..."
-        }
 
-    ];
+            title: "Grootste uitgave",
+
+            message:
+                `${highest.name} kost je ${this.formatPrice(highest.amount)} per maand.`
+
+        });
+
+    }
+
+    return tips;
 
 }
-
+   
 };
