@@ -16,6 +16,7 @@ function updateDashboard() {
     updateMostExpensiveContract();
     updateCategoryTotals();
     updateCategoryChart();
+    updateSmartTip();
 
 }
 
@@ -400,5 +401,42 @@ function updateCategoryChart() {
         }
 
     });
+
+}
+
+/* ==========================================================
+   SLIMME TIP
+========================================================== */
+
+function updateSmartTip() {
+
+    const container =
+        document.getElementById("smartTipCard");
+
+    if (!container) return;
+
+    const tips =
+        ContractService.getSmartTips();
+
+    if (!tips.length) {
+
+        container.innerHTML = `
+            <strong>Geen tips beschikbaar</strong>
+            <p>Voeg meer contracten toe om slimme tips te ontvangen.</p>
+        `;
+
+        return;
+
+    }
+
+    const tip = tips[0];
+
+    container.innerHTML = `
+
+        <strong>${tip.icon} ${tip.title}</strong>
+
+        <p>${tip.message}</p>
+
+    `;
 
 }
