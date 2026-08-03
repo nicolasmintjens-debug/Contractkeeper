@@ -606,6 +606,27 @@ const grandTotal = Object.values(totals)
     return null;
 
 },
+
+   findServices(search) {
+
+    if (!search || search.length < 2) {
+
+        return [];
+
+    }
+
+    const value =
+        search.toLowerCase();
+
+    return SERVICES.filter(service =>
+
+        service.name
+            .toLowerCase()
+            .includes(value)
+
+    );
+
+},
  
 /* ======================================================
    SLIMME TIPS
