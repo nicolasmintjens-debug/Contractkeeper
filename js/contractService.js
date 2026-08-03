@@ -657,6 +657,17 @@ getSmartTips() {
 
 });
 
+tips.push({
+
+    icon: "💶",
+
+    title: "Maandelijkse kosten",
+
+    message:
+        `Je totale maandelijkse kost bedraagt ${this.formatPrice(this.getMonthlyTotal())}.`
+
+});
+   
     return tips;
 
 }
