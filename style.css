@@ -3053,8 +3053,28 @@ border-radius:28px 28px 0 0;
 
     display:flex;
 
-    justify-content:center;
+    justify-content:space-between;
 
-    gap:40px;
+    align-items:center;
+
+    width:140px;
+
+    margin:0 auto;
+
+}
+
+.smart-tip-btn{
+
+    background:none;
+
+    border:none;
+
+    color:#34D399;
+
+    font-size:26px;
+
+    padding:8px;
+
+    cursor:pointer;
 
 }
