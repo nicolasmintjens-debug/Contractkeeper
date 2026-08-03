@@ -39,22 +39,30 @@ function updateCategoryTotals() {
 
     }
 
-    container.innerHTML = categories.map(category => `
+container.innerHTML = categories.map(category => `
 
-        <div class="category-row">
+    <div class="category-row">
+
+        <div class="category-info">
 
             <span class="category-name">
                 ${category.category}
             </span>
 
-            <span class="category-price">
-                ${ContractService.formatPrice(category.total)}
+            <span class="category-percentage">
+                ${category.percentage.toFixed(1)}%
             </span>
 
         </div>
 
-    `).join("");
+        <span class="category-price">
+            ${ContractService.formatPrice(category.total)}
+        </span>
 
+    </div>
+
+`).join("");
+   
 }
 
 /* ==========================================================
