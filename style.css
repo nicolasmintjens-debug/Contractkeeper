@@ -3048,3 +3048,13 @@ border-radius:28px 28px 0 0;
     margin-bottom:14px;
 
 }
+
+.smart-tip-nav{
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:40px;
+
+}
