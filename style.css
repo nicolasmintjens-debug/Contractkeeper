@@ -3004,3 +3004,29 @@ border-radius:28px 28px 0 0;
     font-weight:700;
 
 }
+
+/* ===========================
+   DONUTGRAFIEK
+=========================== */
+
+#categoryChart{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    min-height:220px;
+
+    margin-bottom:24px;
+
+}
+
+#categoryChart canvas{
+
+    max-width:220px;
+
+    max-height:220px;
+
+}
