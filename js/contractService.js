@@ -620,4 +620,22 @@ for (const key in logos) {
 return null;
 },
 
+/* ======================================================
+   SLIMME TIPS
+====================================================== */
+
+getSmartTips() {
+
+    return [
+
+        {
+            icon: "💰",
+            title: "Grootste uitgave",
+            message: "..."
+        }
+
+    ];
+
+}
+
 };
