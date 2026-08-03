@@ -420,13 +420,21 @@ function updateSmartTip() {
     const tips =
         ContractService.getSmartTips();
 
+const counter =
+    document.getElementById("smartTipCounter");
+   
     if (!tips.length) {
 
         container.innerHTML = `
             <strong>Geen tips beschikbaar</strong>
             <p>Voeg meer contracten toe om slimme tips te ontvangen.</p>
         `;
+       
+if (counter) {
 
+    counter.textContent = "";
+
+}
         return;
 
     }
@@ -441,4 +449,11 @@ function updateSmartTip() {
 
     `;
 
+if (counter && tips.length > 1) {
+
+    counter.textContent =
+        `${currentSmartTip + 1} / ${tips.length}`;
+
+}
+   
 }
