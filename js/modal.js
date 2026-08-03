@@ -102,13 +102,16 @@ const deleteButton = document.getElementById("deleteContractBtn");
 
     suggestions.innerHTML = matches.map(service => `
 
-        <div class="name-suggestion">
+        <div
+    class="name-suggestion"
+    data-name="${service.name}"
+    data-category="${service.category}">
 
-            <strong>${service.name}</strong><br>
+    <strong>${service.name}</strong>
 
-            <small>${service.category}</small>
+    <small>${service.category}</small>
 
-        </div>
+</div>
 
     `).join("");
 
