@@ -139,7 +139,7 @@ const deleteButton = document.getElementById("deleteContractBtn");
 
                 if (logo) {
 
-                    image.src = `assets/logos/${logo}`;
+                   image.src = `assets/logos/${logo}`;
                     preview.style.display = "flex";
 
                 }
@@ -150,52 +150,7 @@ const deleteButton = document.getElementById("deleteContractBtn");
 
     }
 
-    const logo =
-        ContractService.getLogo(nameInput.value);
-
-    const preview =
-        document.getElementById("nameLogoPreview");
-
-    const image =
-        document.getElementById("nameLogoImage");
-
-    if (logo) {
-
-        image.src = `assets/logos/${logo}`;
-        preview.style.display = "flex";
-
-    } else {
-
-        preview.style.display = "none";
-
-    }
-
 });
-}
-          
-
-}
-       
-        const logo = ContractService.getLogo(nameInput.value);
-
-        const preview = document.getElementById("nameLogoPreview");
-        const image = document.getElementById("nameLogoImage");
-
-        if (logo) {
-
-    image.src = `assets/logos/${logo}`;
-    preview.style.display = "flex";
-
-} else {
-
-    image.removeAttribute("src");
-    preview.style.display = "none";
-
-}
-       
-    });
-
-}
    
     modal?.addEventListener("click", e => {
 
