@@ -2802,6 +2802,68 @@ border-radius:28px 28px 0 0;
 
 }
 
+/* ===========================
+   CATEGORIEËN
+=========================== */
+
+.category-row{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:16px 0;
+
+    border-bottom:1px solid rgba(255,255,255,.06);
+
+}
+
+.category-row:last-child{
+
+    border-bottom:none;
+
+}
+
+.category-info{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:4px;
+
+}
+
+.category-name{
+
+    font-size:15px;
+
+    font-weight:600;
+
+    color:#fff;
+
+}
+
+.category-percentage{
+
+    font-size:12px;
+
+    color:#9CA3AF;
+
+}
+
+.category-price{
+
+    font-size:15px;
+
+    font-weight:700;
+
+    color:#34D399;
+
+}
+
 /* ==========================================================
    PAGE HEADER
 ========================================================== */
