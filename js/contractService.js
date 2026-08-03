@@ -628,6 +628,10 @@ getSmartTips() {
 
     const tips = [];
 
+    /* ---------------------------------
+       Grootste uitgave
+    --------------------------------- */
+
     const highest =
         this.getMostExpensiveContract();
 
@@ -646,28 +650,180 @@ getSmartTips() {
 
     }
 
-   tips.push({
+    /* ---------------------------------
+       Actieve contracten
+    --------------------------------- */
 
-    icon: "📄",
+    tips.push({
 
-    title: "Actieve contracten",
+        icon: "📄",
 
-    message:
-        `Je hebt momenteel ${this.getActiveCount()} actieve contracten.`
+        title: "Actieve contracten",
 
-});
+        message:
+            `Je hebt momenteel ${this.getActiveCount()} actieve contracten.`
 
-tips.push({
+    });
 
-    icon: "💶",
+    /* ---------------------------------
+       Maandelijkse kosten
+    --------------------------------- */
 
-    title: "Maandelijkse kosten",
+    tips.push({
 
-    message:
-        `Je totale maandelijkse kost bedraagt ${this.formatPrice(this.getMonthlyTotal())}.`
+        icon: "💶",
 
-});
-   
+        title: "Maandelijkse kosten",
+
+        message:
+            `Je betaalt gemiddeld ${this.formatPrice(this.getMonthlyTotal())} per maand.`
+
+    });
+
+    /* ---------------------------------
+       Jaarlijkse kosten
+    --------------------------------- */
+
+    tips.push({
+
+        icon: "📅",
+
+        title: "Jaarlijkse kosten",
+
+        message:
+            `Op jaarbasis geef je ${this.formatPrice(this.getMonthlyTotal() * 12)} uit.`
+
+    });
+
+    /* ---------------------------------
+       Grootste categorie
+    --------------------------------- */
+
+    const categories =
+        this.getCategoryTotals();
+
+    if (categories.length) {
+
+        tips.push({
+
+            icon: "📊",
+
+            title: "Grootste categorie",
+
+            message:
+                `${categories[0].category} is momenteel je grootste uitgavenpost.`
+
+        });
+
+    }
+
+    /* ---------------------------------
+       Eerstvolgende einddatum
+    --------------------------------- */
+
+    const next =
+        this.getNextEndingContract();
+
+    if (next) {
+
+        tips.push({
+
+            icon: "📅",
+
+            title: "Volgende einddatum",
+
+            message:
+                `${next.name} eindigt op ${this.formatDate(next.endDate)}.`
+
+        });
+
+    }
+
+    /* ---------------------------------
+       Contracten die aflopen
+    --------------------------------- */
+
+    const endingSoon =
+        this.getEndingSoonCount();
+
+    if (endingSoon > 0) {
+
+        tips.push({
+
+            icon: "⚠️",
+
+            title: "Loopt binnenkort af",
+
+            message:
+                `${endingSoon} contract(en) lopen binnen 30 dagen af.`
+
+        });
+
+    }
+
+    /* ---------------------------------
+       Gemiddelde contractprijs
+    --------------------------------- */
+
+    const active =
+        this.getActiveCount();
+
+    if (active > 0) {
+
+        const average =
+            this.getMonthlyTotal() / active;
+
+        tips.push({
+
+            icon: "📈",
+
+            title: "Gemiddelde kost",
+
+            message:
+                `Een contract kost gemiddeld ${this.formatPrice(average)} per maand.`
+
+        });
+
+    }
+
+    /* ---------------------------------
+       Aantal categorieën
+    --------------------------------- */
+
+    if (categories.length) {
+
+        tips.push({
+
+            icon: "📂",
+
+            title: "Categorieën",
+
+            message:
+                `Je contracten zijn verdeeld over ${categories.length} categorieën.`
+
+        });
+
+    }
+
+    /* ---------------------------------
+       Alles in orde
+    --------------------------------- */
+
+    if (endingSoon === 0) {
+
+        tips.push({
+
+            icon: "✅",
+
+            title: "Alles in orde",
+
+            message:
+                "Momenteel vragen geen contracten je onmiddellijke aandacht."
+
+        });
+
+    }
+
     return tips;
 
 }
