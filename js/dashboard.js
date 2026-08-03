@@ -7,6 +7,8 @@ let categoryChart = null;
 
 let currentSmartTip = 0;
 
+let touchStartX = 0;
+
 function updateDashboard() {
 
     updateMonthlyTotal();
