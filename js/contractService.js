@@ -606,20 +606,7 @@ const grandTotal = Object.values(totals)
     return null;
 
 },
-   
-for (const key in logos) {
-
-    if (key.includes(value) || value.includes(key)) {
-
-        return logos[key];
-
-    }
-
-}
-
-return null;
-},
-
+ 
 /* ======================================================
    SLIMME TIPS
 ====================================================== */
