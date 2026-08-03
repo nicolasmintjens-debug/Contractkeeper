@@ -376,14 +376,27 @@ function updateCategoryChart() {
 
             plugins: {
 
-                legend: {
+    legend: {
 
-                    display: false
+        display: false
 
-                }
+    },
+
+    tooltip: {
+
+        callbacks: {
+
+            label: function(context) {
+
+                return ContractService.formatPrice(context.raw);
 
             }
 
+        }
+
+    }
+
+}
         }
 
     });
