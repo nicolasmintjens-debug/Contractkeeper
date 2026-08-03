@@ -337,14 +337,25 @@ getCategoryTotals() {
 
     });
 
+const grandTotal = Object.values(totals)
+
+    .reduce((sum, value) => sum + value, 0);
+   
     return Object.entries(totals)
 
-        .map(([category, total]) => ({
+       .map(([category, total]) => ({
 
-            category,
-            total
+    category,
 
-        }))
+    total,
+
+    percentage: grandTotal > 0
+
+        ? (total / grandTotal) * 100
+
+        : 0
+
+}))
 
         .sort((a, b) => b.total - a.total);
 
