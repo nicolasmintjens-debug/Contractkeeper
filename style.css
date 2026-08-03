@@ -3030,3 +3030,21 @@ border-radius:28px 28px 0 0;
     max-height:180px;
 
 }
+
+/* ===========================
+   SLIMME TIPS
+=========================== */
+
+#smartTipCounter{
+
+    text-align:center;
+
+    font-size:14px;
+
+    color:#94A3B8;
+
+    margin-top:18px;
+
+    margin-bottom:14px;
+
+}
