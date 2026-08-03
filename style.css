@@ -3025,8 +3025,8 @@ border-radius:28px 28px 0 0;
 
 #categoryChart canvas{
 
-    max-width:220px;
+    max-width:180px;
 
-    max-height:220px;
+    max-height:180px;
 
 }
