@@ -3100,3 +3100,45 @@ border-radius:28px 28px 0 0;
     display:none;
 
 }
+
+.name-suggestion{
+
+    padding:12px 16px;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+    border-bottom:1px solid #F1F5F9;
+
+}
+
+.name-suggestion:last-child{
+
+    border-bottom:none;
+
+}
+
+.name-suggestion:hover{
+
+    background:#F8FAFC;
+
+}
+
+.name-suggestion strong{
+
+    display:block;
+
+    color:#0F172A;
+
+    font-size:15px;
+
+}
+
+.name-suggestion small{
+
+    color:#64748B;
+
+    font-size:13px;
+
+}
