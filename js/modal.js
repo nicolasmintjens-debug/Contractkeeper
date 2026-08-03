@@ -90,6 +90,29 @@ const deleteButton = document.getElementById("deleteContractBtn");
        const suggestions = document.getElementById("nameSuggestions");
 
        const matches = ContractService.findServices(nameInput.value);
+
+       if (!matches.length) {
+
+    suggestions.style.display = "none";
+    suggestions.innerHTML = "";
+
+} else {
+
+    suggestions.style.display = "block";
+
+    suggestions.innerHTML = matches.map(service => `
+
+        <div class="name-suggestion">
+
+            <strong>${service.name}</strong><br>
+
+            <small>${service.category}</small>
+
+        </div>
+
+    `).join("");
+
+}
        
         const logo = ContractService.getLogo(nameInput.value);
 
