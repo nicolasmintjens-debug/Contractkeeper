@@ -480,3 +480,26 @@ function nextSmartTip() {
     updateSmartTip();
 
 }
+
+/* ==========================================================
+   VORIGE SLIMME TIP
+========================================================== */
+
+function previousSmartTip() {
+
+    const tips =
+        ContractService.getSmartTips();
+
+    if (tips.length <= 1) return;
+
+    currentSmartTip--;
+
+    if (currentSmartTip < 0) {
+
+        currentSmartTip = tips.length - 1;
+
+    }
+
+    updateSmartTip();
+
+}
