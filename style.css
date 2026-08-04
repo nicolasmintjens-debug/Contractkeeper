@@ -2966,7 +2966,7 @@ border-radius:28px 28px 0 0;
 
     display:flex;
 
-    align-items:flex-start;
+    align-items:center;
 
     justify-content:space-between;
 
@@ -2979,7 +2979,7 @@ border-radius:28px 28px 0 0;
 
     display:flex;
 
-    align-items:flex-start;
+    align-items:center;
 
     gap:14px;
 
@@ -2997,22 +2997,24 @@ border-radius:28px 28px 0 0;
 
 .page-header .header-title h2{
 
-    margin:0;
-
-    font-size:34px;
+    font-size:28px;
 
     font-weight:700;
 
-    letter-spacing:-.5px;
+    line-height:1.1;
+
+    letter-spacing:-0.5px;
+
+    margin:0;
 
 }
 
 
 .page-header .header-title p{
 
-    margin-top:6px;
+    margin-top:4px;
 
-    font-size:16px;
+    font-size:14px;
 
     color:var(--text-secondary);
 
