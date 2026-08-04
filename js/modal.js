@@ -332,197 +332,195 @@ if (image) {
 }
 
 
-/* ==========================================================
-   VALIDATIE
-========================================================== */
-
-function validate(contract) {
-
-    if (!contract.name.trim()) {
-
-        alert("Geef een naam op.");
-
-        return false;
-
-    }
-
-    if (contract.amount < 0) {
-
-        alert("Bedrag is ongeldig.");
-
-        return false;
-
-    }
-
-    return true;
-
-}
-
-
-/* ==========================================================
-   MODAL
-========================================================== */
-
-function showModal() {
-
-    const modal = document.getElementById("addContractModal");
-
-    if (!modal) {
-        return;
-    }
-
-    modal.classList.add("show");
-
-}
-
-
-function closeModal() {
-
-    const modal = document.getElementById("addContractModal");
-
-    if (!modal) {
-        return;
-    }
-
-    modal.classList.remove("show");
-
-    resetForm();
-
-}
-
-let selectedContract = null;
-
-function showDetailModal(contract) {
-
-    selectedContract = contract;
-
-    const modal = document.getElementById("contractDetailModal");
-
-    if (!modal) return;
-
-    document.getElementById("detailName").textContent = contract.name;
-
-    document.getElementById("detailPrice").textContent =
-        ContractService.formatPrice(contract.amount);
-
-    document.getElementById("detailFrequency").textContent =
-        translateFrequency(contract.frequency);
-
-    document.getElementById("detailCategory").textContent =
-        contract.category || "-";
-
-    document.getElementById("detailEndDate").textContent =
-        contract.endDate
-            ? ContractService.formatDate(contract.endDate)
-            : "-";
-
-    const icon = ContractService.getCategoryIcon(contract.category);
-    const logo = ContractService.getLogo(contract.name);
-
-    document.getElementById("detailHeroIcon").innerHTML = logo
-        ? `<img src="assets/logos/${logo}" class="contract-logo" alt="${contract.name}">`
-        : `<i class="bi ${icon}"></i>`;
-
-    const status = ContractService.getStatus(contract);
-
-    const badge = document.getElementById("detailStatus");
-
-    badge.innerHTML = "";
-
-    if (status === "active") {
-
-        badge.textContent = "Actief";
-        badge.className = "detail-hero-status active";
-
-    }
-
-    else if (status === "ending") {
-
-        badge.textContent = "Eindigt binnenkort";
-        badge.className = "detail-hero-status warning";
-
-    }
-
-    else {
-
-        badge.textContent = "Verlopen";
-        badge.className = "detail-hero-status danger";
-
-    }
-
-    modal.classList.add("show");
-
-}
+   /* ==========================================================
+      VALIDATIE
+   ========================================================== */
    
-function closeDetailModal() {
-
-    const modal = document.getElementById("contractDetailModal");
-
-    if (!modal) {
-        return;
-    }
-
-    modal.classList.remove("show");
-
-}
-
-function setModalTitle(title) {
-
-    const element = document.querySelector("#addContractModal h2");
-
-    if (element) {
-        element.textContent = title;
-    }
-
-}
-
-
-/* ==========================================================
-   TOAST
-========================================================== */
-
-function showToast(message) {
-
-    const toast = document.getElementById("toast");
-
-    if (!toast) {
-        return;
-    }
-
-    toast.textContent = message;
-
-    toast.classList.add("show");
-
-    setTimeout(() => {
-
-        toast.classList.remove("show");
-
-    }, 2500);
-
-}
-
-
-/* ==========================================================
-   HELPERS
-========================================================== */
-
-function value(id) {
-
-    return document.getElementById(id)?.value ?? "";
-
-}
-
-
-function setValue(id, value) {
-
-    const element = document.getElementById(id);
-
-    if (!element) {
-        return;
-    }
-
-    element.value = value ?? "";
-
-}
-
-}
+   function validate(contract) {
+   
+       if (!contract.name.trim()) {
+   
+           alert("Geef een naam op.");
+   
+           return false;
+   
+       }
+   
+       if (contract.amount < 0) {
+   
+           alert("Bedrag is ongeldig.");
+   
+           return false;
+   
+       }
+   
+       return true;
+   
+   }
+   
+   
+   /* ==========================================================
+      MODAL
+   ========================================================== */
+   
+   function showModal() {
+   
+       const modal = document.getElementById("addContractModal");
+   
+       if (!modal) {
+           return;
+       }
+   
+       modal.classList.add("show");
+   
+   }
+   
+   
+   function closeModal() {
+   
+       const modal = document.getElementById("addContractModal");
+   
+       if (!modal) {
+           return;
+       }
+   
+       modal.classList.remove("show");
+   
+       resetForm();
+   
+   }
+   
+   let selectedContract = null;
+   
+   function showDetailModal(contract) {
+   
+       selectedContract = contract;
+   
+       const modal = document.getElementById("contractDetailModal");
+   
+       if (!modal) return;
+   
+       document.getElementById("detailName").textContent = contract.name;
+   
+       document.getElementById("detailPrice").textContent =
+           ContractService.formatPrice(contract.amount);
+   
+       document.getElementById("detailFrequency").textContent =
+           translateFrequency(contract.frequency);
+   
+       document.getElementById("detailCategory").textContent =
+           contract.category || "-";
+   
+       document.getElementById("detailEndDate").textContent =
+           contract.endDate
+               ? ContractService.formatDate(contract.endDate)
+               : "-";
+   
+       const icon = ContractService.getCategoryIcon(contract.category);
+       const logo = ContractService.getLogo(contract.name);
+   
+       document.getElementById("detailHeroIcon").innerHTML = logo
+           ? `<img src="assets/logos/${logo}" class="contract-logo" alt="${contract.name}">`
+           : `<i class="bi ${icon}"></i>`;
+   
+       const status = ContractService.getStatus(contract);
+   
+       const badge = document.getElementById("detailStatus");
+   
+       badge.innerHTML = "";
+   
+       if (status === "active") {
+   
+           badge.textContent = "Actief";
+           badge.className = "detail-hero-status active";
+   
+       }
+   
+       else if (status === "ending") {
+   
+           badge.textContent = "Eindigt binnenkort";
+           badge.className = "detail-hero-status warning";
+   
+       }
+   
+       else {
+   
+           badge.textContent = "Verlopen";
+           badge.className = "detail-hero-status danger";
+   
+       }
+   
+       modal.classList.add("show");
+   
+   }
+      
+   function closeDetailModal() {
+   
+       const modal = document.getElementById("contractDetailModal");
+   
+       if (!modal) {
+           return;
+       }
+   
+       modal.classList.remove("show");
+   
+   }
+   
+   function setModalTitle(title) {
+   
+       const element = document.querySelector("#addContractModal h2");
+   
+       if (element) {
+           element.textContent = title;
+       }
+   
+   }
+   
+   
+   /* ==========================================================
+      TOAST
+   ========================================================== */
+   
+   function showToast(message) {
+   
+       const toast = document.getElementById("toast");
+   
+       if (!toast) {
+           return;
+       }
+   
+       toast.textContent = message;
+   
+       toast.classList.add("show");
+   
+       setTimeout(() => {
+   
+           toast.classList.remove("show");
+   
+       }, 2500);
+   
+   }
+   
+   
+   /* ==========================================================
+      HELPERS
+   ========================================================== */
+   
+   function value(id) {
+   
+       return document.getElementById(id)?.value ?? "";
+   
+   }
+   
+   
+   function setValue(id, value) {
+   
+       const element = document.getElementById(id);
+   
+       if (!element) {
+           return;
+       }
+   
+       element.value = value ?? "";
+   
+   }
