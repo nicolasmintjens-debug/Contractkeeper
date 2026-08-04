@@ -957,18 +957,26 @@
 
 </div>
 
-   <div id="contractDetailModal" class="modal">
+   <!-- =========================================
+     CONTRACT DETAIL MODAL
+========================================= -->
 
-    <div class="modal-content">
+<div id="contractDetailModal" class="modal">
+
+    <div class="modal-content detail-modal">
 
         <div class="modal-header">
 
             <button id="closeDetailModal" class="modal-close">
+
                 <i class="bi bi-arrow-left"></i>
+
             </button>
 
             <h2 class="modal-title">
-                Contract
+
+                Contractdetails
+
             </h2>
 
             <div class="modal-header-spacer"></div>
@@ -978,58 +986,83 @@
         <div class="modal-body">
 
             <div class="detail-hero">
-    
+
                 <div id="detailHeroIcon" class="detail-hero-icon">
-    <i class="bi bi-film"></i>
-</div>
 
-                <div id="detailName" class="detail-hero-name">
-                    Netflix
                 </div>
 
-                <div id="detailPrice" class="detail-hero-price">
-                    €14,99
-                </div>
+                <h2 id="detailName" class="detail-hero-name">
 
-                <div id="detailFrequency" class="detail-hero-frequency">
-                    per maand
-                </div>
+                    -
+
+                </h2>
 
                 <div id="detailStatus" class="detail-hero-status">
-                    <span class="status-dot"></span>
+
                     Actief
+
                 </div>
 
             </div>
 
-            <div class="detail-section">
-
-                <h3>Contractgegevens</h3>
+            <div class="detail-card">
 
                 <div class="detail-row">
+
+                    <span>Prijs</span>
+
+                    <strong id="detailPrice">-</strong>
+
+                </div>
+
+                <div class="detail-row">
+
+                    <span>Betaling</span>
+
+                    <strong id="detailFrequency">-</strong>
+
+                </div>
+
+                <div class="detail-row">
+
                     <span>Categorie</span>
+
                     <strong id="detailCategory">-</strong>
+
                 </div>
 
                 <div class="detail-row">
+
                     <span>Einddatum</span>
+
                     <strong id="detailEndDate">-</strong>
+
                 </div>
 
-<div class="detail-actions">
+            </div>
 
-    <button id="deleteContractBtn" class="btn-danger">
-        <i class="bi bi-trash"></i>
-        Verwijderen
-    </button>
+            <div class="detail-actions">
 
-    <button id="editContractBtn" class="btn-primary">
-        <i class="bi bi-pencil"></i>
-        Bewerken
-    </button>
+                <button
+                    id="editContractBtn"
+                    class="btn-primary">
 
-</div>
-                
+                    <i class="bi bi-pencil"></i>
+
+                    Bewerken
+
+                </button>
+
+                <button
+                    id="deleteContractBtn"
+                    class="btn-danger">
+
+                    <i class="bi bi-trash"></i>
+
+                    Verwijderen
+
+                </button>
+
             </div>
 
         </div>
@@ -1037,7 +1070,7 @@
     </div>
 
 </div>
-
+    
     <!-- =========================================
      SORT SHEET
 ========================================= -->
