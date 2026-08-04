@@ -3189,6 +3189,12 @@ border-radius:28px 28px 0 0;
 
 .name-suggestion{
 
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+
     position:relative;
 
     z-index:1000;
@@ -3205,7 +3211,6 @@ border-radius:28px 28px 0 0;
 
 }
 
-
 .name-suggestion:last-child{
 
     border-bottom:none;
@@ -3219,8 +3224,27 @@ border-radius:28px 28px 0 0;
 
 }
 
+.name-suggestion-logo{
 
-.name-suggestion strong{
+    width:34px;
+
+    height:34px;
+
+    object-fit:contain;
+
+    flex-shrink:0;
+
+}
+
+.name-suggestion-content{
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+.name-suggestion-content strong{
 
     display:block;
 
@@ -3230,11 +3254,12 @@ border-radius:28px 28px 0 0;
 
 }
 
-
-.name-suggestion small{
+.name-suggestion-content small{
 
     color:#64748B;
 
     font-size:13px;
+
+    margin-top:2px;
 
 }
