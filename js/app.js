@@ -32,13 +32,16 @@ async function initApp() {
         initModal();
     }
 
-   // Navigatie initialiseren
+  // Navigatie initialiseren
 if (typeof initNavigation === "function") {
     initNavigation();
 }
 
-    // Service Worker registreren
-    registerServiceWorker();
+// CK AI initialiseren
+initAI();
+
+// Service Worker registreren
+registerServiceWorker();
 
 updateCurrentDate();
    
@@ -246,5 +249,25 @@ function updateCurrentDate() {
 
     element.textContent =
         `${days[today.getDay()]} ${today.getDate()} ${months[today.getMonth()]}`;
+
+}
+
+/* ==========================================================
+   CK AI
+========================================================== */
+
+function initAI() {
+
+    document.querySelectorAll(".ai-button").forEach(button => {
+
+        button.addEventListener("click", openAI);
+
+    });
+
+}
+
+function openAI() {
+
+    alert("CK AI komt binnenkort 🚀");
 
 }
