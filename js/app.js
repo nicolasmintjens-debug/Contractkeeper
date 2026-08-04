@@ -40,6 +40,8 @@ if (typeof initNavigation === "function") {
     // Service Worker registreren
     registerServiceWorker();
 
+updateCurrentDate();
+   
 }
 
 
@@ -202,5 +204,47 @@ const settingsSection = document.getElementById("settingsSection");
         });
 
     }
+
+}
+
+/* ==========================================================
+   HUIDIGE DATUM
+========================================================== */
+
+function updateCurrentDate() {
+
+    const element = document.getElementById("currentDate");
+
+    if (!element) return;
+
+    const today = new Date();
+
+    const days = [
+        "Zondag",
+        "Maandag",
+        "Dinsdag",
+        "Woensdag",
+        "Donderdag",
+        "Vrijdag",
+        "Zaterdag"
+    ];
+
+    const months = [
+        "januari",
+        "februari",
+        "maart",
+        "april",
+        "mei",
+        "juni",
+        "juli",
+        "augustus",
+        "september",
+        "oktober",
+        "november",
+        "december"
+    ];
+
+    element.textContent =
+        `${days[today.getDay()]} ${today.getDate()} ${months[today.getMonth()]}`;
 
 }
