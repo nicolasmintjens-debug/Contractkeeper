@@ -42,27 +42,44 @@
 
 <div class="app">
 
-    <!-- =========================================
-         HEADER
-    ========================================== -->
+   <!-- =========================================
+     HEADER
+========================================== -->
 
-    <header id="homeHeader" class="header">
+<header id="homeHeader" class="header">
+
+    <div class="header-left">
 
         <img
             src="assets/logo.png"
-            class="logo"
+            class="logo-small"
             alt="ContractKeeper">
 
-        <div class="welcome">
+        <div class="header-title">
 
-            <h2>Hallo 👋</h2>
+            <span class="app-name">
+                ContractKeeper
+            </span>
 
-            <p>Welkom bij ContractKeeper</p>
+            <h2>Dashboard</h2>
+
+            <p id="currentDate">
+                Vandaag
+            </p>
 
         </div>
 
-    </header>
+    </div>
 
+    <button
+        id="aiButton"
+        class="ai-button">
+
+        <i class="bi bi-stars"></i>
+
+    </button>
+
+</header>
 
     <!-- =========================================
          HOME
