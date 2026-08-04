@@ -285,18 +285,30 @@ button{
 }
 
 
-.ai-button i{
-
-    font-size:22px;
-
-}
-
-
 .ai-button:hover{
 
     transform:scale(1.05);
 
     background:rgba(52,211,153,.18);
+
+}
+
+
+/* ===========================
+   CK AI LOGO
+=========================== */
+
+.ck-ai-icon{
+
+    width:30px;
+
+    height:30px;
+
+    display:block;
+
+    pointer-events:none;
+
+    user-select:none;
 
 }
 
