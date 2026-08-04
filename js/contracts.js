@@ -210,6 +210,8 @@ function createContractCard(contract) {
 
     card.className = "contract-card";
 
+    card.style.cursor = "pointer";
+
     const status = ContractService.getStatus(contract);
 
     const icon = ContractService.getCategoryIcon(contract.category);
@@ -268,7 +270,7 @@ if (status === "expired") {
 
     card.addEventListener("click", () => {
 
-    showDetailModal(contract);
+    alert(contract.name);
 
 });
 
