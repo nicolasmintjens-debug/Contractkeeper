@@ -104,18 +104,28 @@ const deleteButton = document.getElementById("deleteContractBtn");
 
         suggestions.innerHTML = matches.map(service => `
 
-            <div
-                class="name-suggestion"
-                data-name="${service.name}"
-                data-category="${service.category}">
+    <div
+        class="name-suggestion"
+        data-name="${service.name}"
+        data-category="${service.category}">
 
-                <strong>${service.name}</strong>
-                <small>${service.category}</small>
+        <img
+            class="name-suggestion-logo"
+            src="assets/logos/${service.logo}"
+            alt="${service.name}">
 
-            </div>
+        <div class="name-suggestion-content">
 
-        `).join("");
+            <strong>${service.name}</strong>
 
+            <small>${service.category}</small>
+
+        </div>
+
+    </div>
+
+`).join("");
+       
         suggestions.querySelectorAll(".name-suggestion").forEach(item => {
 
             item.addEventListener("click", () => {
