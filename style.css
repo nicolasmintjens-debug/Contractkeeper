@@ -494,9 +494,13 @@ button{
 
 }
 
-.info-card:hover{
+@media (hover: hover) {
 
-    background:var(--surface-hover);
+    .info-card:hover{
+
+        background:var(--surface-hover);
+
+    }
 
 }
 
