@@ -393,105 +393,66 @@ let selectedContract = null;
 
 function showDetailModal(contract) {
 
-   selectedContract = contract;
-   
+    selectedContract = contract;
+
     const modal = document.getElementById("contractDetailModal");
 
-    if (!modal) {
-        return;
-    }
+    if (!modal) return;
 
-    document.getElementById("detailName").textContent =
-        contract.name;
+    document.getElementById("detailName").textContent = contract.name;
 
     document.getElementById("detailPrice").textContent =
         ContractService.formatPrice(contract.amount);
 
     document.getElementById("detailFrequency").textContent =
-    translateFrequency(contract.frequency);
-
-const icon = ContractService.getCategoryIcon(contract.category);
-const logo = ContractService.getLogo(contract.name);
-
-const heroIcon = document.getElementById("detailHeroIcon");
-
-heroIcon.innerHTML = logo
-    ? `<img src="assets/logos/${logo}" class="contract-logo" alt="${contract.name}">`
-    : `<i class="bi ${icon}"></i>`;
-
-    // NIEUW
+        translateFrequency(contract.frequency);
 
     document.getElementById("detailCategory").textContent =
         contract.category || "-";
 
     document.getElementById("detailEndDate").textContent =
-    contract.endDate
-        ? ContractService.formatDate(contract.endDate)
-        : "-";
+        contract.endDate
+            ? ContractService.formatDate(contract.endDate)
+            : "-";
 
-/* STATUS */
+    const icon = ContractService.getCategoryIcon(contract.category);
+    const logo = ContractService.getLogo(contract.name);
 
-const status = document.getElementById("detailStatus");
+    document.getElementById("detailHeroIcon").innerHTML = logo
+        ? `<img src="assets/logos/${logo}" class="contract-logo" alt="${contract.name}">`
+        : `<i class="bi ${icon}"></i>`;
 
-if (status) {
+    const status = ContractService.getStatus(contract);
 
-    if (!contract.endDate) {
+    const badge = document.getElementById("detailStatus");
 
-        status.innerHTML =
-            '<span class="status-dot"></span>Geen einddatum';
+    badge.innerHTML = "";
 
-status.style.background = "rgba(59,130,246,.12)";
-status.style.color = "#60A5FA";
-status.querySelector(".status-dot").style.background = "#60A5FA";
+    if (status === "active") {
 
-    } else {
-
-        const today = new Date();
-        const endDate = new Date(contract.endDate);
-
-        today.setHours(0,0,0,0);
-        endDate.setHours(0,0,0,0);
-
-        const days =
-            Math.ceil((endDate - today) / 86400000);
-
-        if (days < 0) {
-
-            status.innerHTML =
-                '<span class="status-dot"></span>Verlopen';
-
-            status.style.background = "rgba(239,68,68,.12)";
-            status.style.color = "#F87171";
-           status.querySelector(".status-dot").style.background = "#F87171";
-
-        } else if (days <= 30) {
-
-            status.innerHTML =
-                '<span class="status-dot"></span>Eindigt binnenkort';
-
-status.style.background = "rgba(245,158,11,.12)";
-status.style.color = "#FBBF24";
-status.querySelector(".status-dot").style.background = "#FBBF24";
-
-        } else {
-
-            status.innerHTML =
-                '<span class="status-dot"></span>Actief';
-
-status.style.background = "rgba(34,197,94,.12)";
-status.style.color = "#4ADE80";
-status.querySelector(".status-dot").style.background = "#4ADE80";
-
-        }
+        badge.textContent = "Actief";
+        badge.className = "detail-hero-status active";
 
     }
 
+    else if (status === "ending") {
+
+        badge.textContent = "Eindigt binnenkort";
+        badge.className = "detail-hero-status warning";
+
+    }
+
+    else {
+
+        badge.textContent = "Verlopen";
+        badge.className = "detail-hero-status danger";
+
+    }
+
+    modal.classList.add("show");
+
 }
-
-modal.classList.add("show");
-
-}
-
+   
 function closeDetailModal() {
 
     const modal = document.getElementById("contractDetailModal");
