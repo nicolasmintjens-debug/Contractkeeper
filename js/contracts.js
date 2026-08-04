@@ -270,7 +270,7 @@ if (status === "expired") {
 
     card.addEventListener("click", () => {
 
-    alert(contract.name);
+    showDetailModal(contract);
 
 });
 
