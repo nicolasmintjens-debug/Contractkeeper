@@ -2536,12 +2536,14 @@ border-radius:28px 28px 0 0;
 
 .detail-hero-icon{
 
-    width:120px;
-    height:120px;
+    width:130px;
+    height:130px;
 
-    border-radius:32px;
+    border-radius:36px;
 
-    background:#162235;
+    background:rgba(255,255,255,.03);
+
+    backdrop-filter:blur(10px);
 
     display:flex;
 
@@ -2551,17 +2553,18 @@ border-radius:28px 28px 0 0;
 
     overflow:hidden;
 
+    border:1px solid rgba(255,255,255,.05);
+
     box-shadow:
-        0 0 40px rgba(52,211,153,.18),
-        inset 0 1px 0 rgba(255,255,255,.05);
+        0 0 55px rgba(52,211,153,.12);
 
 }
 
 .detail-hero-icon img{
 
-    width:82px;
+    width:96px;
 
-    height:82px;
+    height:96px;
 
     object-fit:contain;
 
