@@ -70,6 +70,10 @@ body{
 
     --info:#38BDF8;
 
+    --accent:var(--primary);
+   
+    --accent-soft:rgba(34,197,94,.15);
+
     --text:#FFFFFF;
 
     --text-secondary:#A8B4C6;
@@ -2569,22 +2573,37 @@ border-radius:28px 28px 0 0;
 }
 
 .detail-hero-status{
+
     margin-top:10px;
+
     display:flex;
+
     align-items:center;
+
     gap:8px;
+
     padding:8px 14px;
+
     border-radius:999px;
-    background:rgba(39,174,96,.12);
-    color:#4ade80;
+
+    background:var(--accent-soft);
+
+    color:var(--accent);
+
     font-weight:600;
+
 }
 
 .status-dot{
+
     width:8px;
+
     height:8px;
+
     border-radius:50%;
-    background:#4ade80;
+
+    background:var(--accent);
+
 }
 
 .detail-section{
@@ -2601,11 +2620,30 @@ border-radius:28px 28px 0 0;
     font-weight:700;
 }
 
+.detail-card{
+
+    background:rgba(255,255,255,.03);
+
+    border:1px solid rgba(255,255,255,.05);
+
+    border-radius:24px;
+
+    padding:0 22px;
+
+    margin-bottom:28px;
+
+    backdrop-filter:blur(10px);
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,.15);
+
+}
+
 .detail-row{
     display:flex;
     justify-content:space-between;
     align-items:center;
-    padding:14px 0;
+    padding:18px 0;
     border-bottom:1px solid rgba(255,255,255,.06);
 }
 
