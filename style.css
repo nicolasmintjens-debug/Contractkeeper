@@ -166,6 +166,8 @@ button{
 
     padding:18px 22px;
 
+    min-height:96px;
+
     margin-bottom:8px;
 
 }
@@ -2971,6 +2973,8 @@ border-radius:28px 28px 0 0;
     justify-content:space-between;
 
     margin:24px 20px 24px;
+
+    min-height:96px;
 
 }
 
