@@ -206,13 +206,25 @@ button{
 
 .app-name{
 
-    font-size:13px;
+    font-size:20px;
 
-    font-weight:600;
+    font-weight:800;
 
-    color:#94A3B8;
+    letter-spacing:-0.4px;
 
-    margin-bottom:2px;
+    margin-bottom:14px;
+
+}
+
+.brand-white{
+
+    color:#FFFFFF;
+
+}
+
+.brand-green{
+
+    color:#34D399;
 
 }
 
