@@ -1830,11 +1830,13 @@ border-radius:28px 28px 0 0;
 
 @media (max-width:420px){
 
-    .header{
+    .page-header{
 
-        padding:20px 16px;
+        margin:20px 16px 24px;
 
     }
+
+}
 
     .total-card h1{
 
