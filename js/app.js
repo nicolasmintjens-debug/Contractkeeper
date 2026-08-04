@@ -133,8 +133,6 @@ function initNavigation() {
     const insightsButton = document.getElementById("nav-insights");
     const settingsButton = document.getElementById("nav-settings");
 
-   const homeHeader = document.getElementById("homeHeader");
-
 const homeSection = document.getElementById("homeSection");
 const contractsSection = document.getElementById("contractsSection");
 const insightsSection = document.getElementById("insightsSection");
@@ -142,27 +140,24 @@ const settingsSection = document.getElementById("settingsSection");
    
    function hideAllPages() {
 
-       homeHeader.style.display = "none";
-       
-        homeSection.style.display = "none";
-        contractsSection.style.display = "none";
-        insightsSection.style.display = "none";
-        settingsSection.style.display = "none";
+    homeSection.style.display = "none";
+    contractsSection.style.display = "none";
+    insightsSection.style.display = "none";
+    settingsSection.style.display = "none";
 
-    }
+}
 
     if (homeButton) {
 
-    homeButton.addEventListener("click", () => {
+   homeButton.addEventListener("click", () => {
 
-        hideAllPages();
+    hideAllPages();
 
-        homeHeader.style.display = "flex";
-       homeSection.style.display = "block";
+    homeSection.style.display = "block";
 
-        setActiveNav("nav-home");
+    setActiveNav("nav-home");
 
-    });
+});
 
 }
    
