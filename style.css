@@ -2640,6 +2640,70 @@ border-radius:28px 28px 0 0;
     font-weight:600;
 }
 
+/* NIEUW */
+.detail-label{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+}
+
+.detail-icon{
+
+    width:34px;
+
+    height:34px;
+
+    border-radius:12px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:15px;
+
+    flex-shrink:0;
+
+}
+
+.detail-icon.purple{
+
+    background:rgba(168,85,247,.15);
+
+    color:#A855F7;
+
+}
+
+.detail-icon.blue{
+
+    background:rgba(59,130,246,.15);
+
+    color:#3B82F6;
+
+}
+
+.detail-icon.green{
+
+    background:rgba(34,197,94,.15);
+
+    color:#22C55E;
+
+}
+
+.detail-icon.orange{
+
+    background:rgba(249,115,22,.15);
+
+    color:#F97316;
+
+}
+/* EINDE NIEUW */
+
 .modal-header{
     position: relative;
     z-index: 1000;
