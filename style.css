@@ -268,7 +268,7 @@ button{
 
     border-radius:14px;
 
-    background:rgba(52,211,153,.12);
+    background:transparent;
 
     color:#34D399;
 
@@ -289,7 +289,7 @@ button{
 
     transform:scale(1.05);
 
-    background:rgba(52,211,153,.18);
+    background:rgba(255,255,255,.05);
 
 }
 
