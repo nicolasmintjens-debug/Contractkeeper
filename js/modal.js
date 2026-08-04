@@ -5,6 +5,7 @@
 
 let editingContractId = null;
 
+console.log("MODAL.JS WORDT GELADEN");
 
 /* ==========================================================
    INITIALISATIE
