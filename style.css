@@ -3544,3 +3544,107 @@ a,
     font-size:22px;
 
 }
+
+/* ===========================
+   CK AI HEADER
+=========================== */
+
+.ckai-header{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:18px;
+
+    margin-bottom:30px;
+
+}
+
+.ckai-logo{
+
+    width:72px;
+
+    height:72px;
+
+    flex-shrink:0;
+
+}
+
+.ckai-header-text{
+
+    flex:1;
+
+}
+
+.ckai-brand{
+
+    margin:0;
+
+    font-size:44px;
+
+    font-weight:800;
+
+    line-height:1.05;
+
+}
+
+.brand-ai{
+
+    color:#FFFFFF;
+
+    margin-left:8px;
+
+}
+
+.ckai-subtitle{
+
+    margin-top:12px;
+
+    color:#A7B3C7;
+
+    font-size:22px;
+
+    line-height:1.5;
+
+}@media (max-width:768px){
+
+    .ckai-header{
+
+        gap:14px;
+
+        margin-bottom:26px;
+
+    }
+
+    .ckai-logo{
+
+        width:56px;
+
+        height:56px;
+
+    }
+
+    .ckai-brand{
+
+        font-size:28px;
+
+        white-space:nowrap;
+
+    }
+
+    .brand-ai{
+
+        margin-left:6px;
+
+    }
+
+    .ckai-subtitle{
+
+        font-size:16px;
+
+        margin-top:8px;
+
+    }
+
+}
