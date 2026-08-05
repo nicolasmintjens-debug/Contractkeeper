@@ -3660,7 +3660,7 @@ a,
 
     align-items:flex-start;
 
-    gap:10px;
+    gap:8px;
 
 }
 
@@ -3678,13 +3678,13 @@ a,
 
 .ckai-card-icon{
 
-    width:42px;
+    width:36px;
 
-    height:42px;
+    height:36px;
 
-    min-width:42px;
+    min-width:36px;
 
-    min-height:42px;
+    min-height:36px;
 
     flex-shrink:0;
 
@@ -3709,7 +3709,7 @@ a,
 
 .ckai-card-icon i{
 
-    font-size:17px;
+    font-size:15px;
 
     color:#FFFFFF;
 
