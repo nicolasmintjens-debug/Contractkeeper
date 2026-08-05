@@ -541,5 +541,3 @@ function previousSmartTip() {
     updateSmartTip();
 
 }
-
-};
