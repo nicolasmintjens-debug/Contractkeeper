@@ -541,3 +541,13 @@ function previousSmartTip() {
     updateSmartTip();
 
 }
+
+/* ==========================================================
+   OPEN ACTIEVE CONTRACTEN
+========================================================== */
+
+function openActiveContracts() {
+
+    document.getElementById("nav-contracts").click();
+
+}

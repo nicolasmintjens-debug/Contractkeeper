@@ -138,7 +138,7 @@ const contractsSection = document.getElementById("contractsSection");
 const insightsSection = document.getElementById("insightsSection");
 const settingsSection = document.getElementById("settingsSection");
    
-   function hideAllPages() {
+  function hideAllPages() {
 
     homeSection.style.display = "none";
     contractsSection.style.display = "none";
@@ -146,6 +146,42 @@ const settingsSection = document.getElementById("settingsSection");
     settingsSection.style.display = "none";
 
 }
+
+/* ==========================================================
+   OPEN PAGINA
+========================================================== */
+
+function openPage(page) {
+
+    hideAllPages();
+
+    switch (page) {
+
+        case "home":
+            homeSection.style.display = "block";
+            setActiveNav("nav-home");
+            break;
+
+        case "contracts":
+            contractsSection.style.display = "block";
+            setActiveNav("nav-contracts");
+            break;
+
+        case "insights":
+            insightsSection.style.display = "block";
+            setActiveNav("nav-insights");
+            break;
+
+        case "settings":
+            settingsSection.style.display = "block";
+            setActiveNav("nav-settings");
+            break;
+
+    }
+
+}
+
+
 
     if (homeButton) {
 
