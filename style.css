@@ -3804,3 +3804,26 @@ a,
         0 12px 24px rgba(46,204,113,.22);
 
 }
+
+/* CK AI titel */
+.ckai-card-title{
+    font-size:15px !important;
+    font-weight:700;
+    line-height:1.2;
+}
+
+.ckai-card-title .brand-white,
+.ckai-card-title .brand-green,
+.ckai-card-title .brand-ai{
+    font-size:inherit !important;
+    font-weight:inherit !important;
+    line-height:inherit !important;
+}
+
+.ck-brand{
+
+    display:inline-block;
+
+    white-space:nowrap;
+
+}
