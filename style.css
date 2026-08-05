@@ -3660,7 +3660,7 @@ a,
 
     align-items:flex-start;
 
-    gap:14px;
+    gap:10px;
 
 }
 
@@ -3725,13 +3725,15 @@ a,
 
     color:#FFFFFF;
 
-    font-size:16px;
+    font-size:15px;
 
     font-weight:700;
 
     line-height:1.25;
 
     letter-spacing:-0.2px;
+
+    white-space:nowrap;
 
 }
 
