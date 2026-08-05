@@ -3555,17 +3555,17 @@ a,
 
     align-items:center;
 
-    gap:18px;
+    gap:14px;
 
-    margin:36px 0 28px;
+    margin:28px 0 22px;
 
 }
 
 .ckai-logo{
 
-    width:54px;
+    width:48px;
 
-    height:54px;
+    height:48px;
 
     flex-shrink:0;
 
@@ -3573,11 +3573,9 @@ a,
 
 .ckai-header-content{
 
-    display:flex;
+    flex:1;
 
-    flex-direction:column;
-
-    justify-content:center;
+    min-width:0;
 
 }
 
@@ -3585,13 +3583,15 @@ a,
 
     margin:0;
 
-    font-size:34px;
+    font-size:28px;
 
     font-weight:800;
 
     line-height:1.05;
 
-    letter-spacing:-0.6px;
+    letter-spacing:-0.5px;
+
+    white-space:nowrap;
 
 }
 
@@ -3599,17 +3599,17 @@ a,
 
     color:#FFFFFF;
 
-    margin-left:3px;
+    margin-left:2px;
 
 }
 
 .ckai-subtitle{
 
-    margin-top:8px;
+    margin-top:6px;
 
-    color:#A7B3C7;
+    color:#98A7BB;
 
-    font-size:15px;
+    font-size:14px;
 
     line-height:1.45;
 
@@ -3629,7 +3629,7 @@ a,
 
 .ckai-card{
 
-    margin-top:8px;
+    margin-top:4px;
 
     padding:18px;
 
@@ -3639,7 +3639,9 @@ a,
         #122036 100%
     );
 
-    border:1px solid rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.08);
+
+    overflow:hidden;
 
     border-radius:26px;
 
@@ -3719,15 +3721,15 @@ a,
 
 .ckai-card-title{
 
-    margin:2px 0 8px;
+    margin:0;
 
     color:#FFFFFF;
 
-    font-size:17px;
+    font-size:16px;
 
     font-weight:700;
 
-    line-height:1.2;
+    line-height:1.25;
 
     letter-spacing:-0.2px;
 
@@ -3739,13 +3741,13 @@ a,
 
 .ckai-card-text{
 
-    margin:0;
-
-    color:#A7B3C7;
+    margin-top:8px;
 
     font-size:14px;
 
     line-height:1.55;
+
+    color:#98A7BB;
 
 }
 
@@ -3757,7 +3759,7 @@ a,
 
     width:100%;
 
-    height:48px;
+    height:46px;
 
     margin-top:18px;
 
@@ -3767,8 +3769,8 @@ a,
 
     background:linear-gradient(
         180deg,
-        #2FD171,
-        #24BE63
+        #289C59,
+        #208A4E
     );
 
     color:#FFFFFF;
@@ -3779,10 +3781,10 @@ a,
 
     cursor:pointer;
 
-    transition:all .25s ease;
+    transition:.25s;
 
     box-shadow:
-        0 8px 18px rgba(34,197,94,.18);
+        0 4px 10px rgba(32,138,78,.12);
 
 }
 
@@ -3791,6 +3793,6 @@ a,
     transform:translateY(-2px);
 
     box-shadow:
-        0 12px 24px rgba(34,197,94,.24);
+        0 12px 24px rgba(46,204,113,.22);
 
 }
