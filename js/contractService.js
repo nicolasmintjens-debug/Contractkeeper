@@ -629,11 +629,11 @@ const grandTotal = Object.values(totals)
 },
  
 /* ======================================================
-   SLIMME TIPS
+   CK AI INSIGHTS
 ====================================================== */
 
-getSmartTips() {
-
+getCKInsights() {
+   
     const tips = [];
 
     /* ---------------------------------
@@ -645,17 +645,21 @@ getSmartTips() {
 
     if (highest) {
 
-        tips.push({
+       tips.push({
 
-            icon: "💰",
+    priority: 2,
 
-            title: "Grootste uitgave",
+    type: "analysis",
 
-            message:
-                `${highest.name} kost je ${this.formatPrice(highest.amount)} per maand.`
+    icon: "💰",
 
-        });
+    title: "CK AI Analyse",
 
+    message:
+        `Je duurste contract is ${highest.name} (${this.formatPrice(highest.amount)} per maand).`
+
+});
+       
     }
 
     /* ---------------------------------
