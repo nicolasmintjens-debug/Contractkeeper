@@ -836,4 +836,6 @@ getCKInsights() {
 
     return insights;
 
-}
+    }
+
+};
