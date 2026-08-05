@@ -3555,11 +3555,15 @@ a,
 
     align-items:center;
 
+    justify-content:center;
+
     gap:16px;
 
     margin-top:42px;
 
     margin-bottom:18px;
+
+    padding:0 20px;
 
 }
 
@@ -3610,6 +3614,10 @@ a,
     font-size:22px;
 
     line-height:1.5;
+
+    padding:0 20px;
+
+    text-align:center;
 
 }
 
