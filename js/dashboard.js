@@ -453,7 +453,7 @@ container.ontouchstart = function(event) {
 
 };
    
-    const tips =
+    const insights =
     ContractService.getCKInsights();
 
 const counter =
@@ -500,7 +500,7 @@ if (counter && tips.length > 1) {
 
 function nextSmartTip() {
 
-    const tips =
+    const insights =
     ContractService.getCKInsights();
 
     if (tips.length <= 1) return;
@@ -523,7 +523,7 @@ function nextSmartTip() {
 
 function previousSmartTip() {
 
-    const tips =
+    const insights =
         ContractService.getCKInsights();
 
     if (tips.length <= 1) return;
