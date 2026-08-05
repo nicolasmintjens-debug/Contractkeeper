@@ -93,59 +93,84 @@ function initContractEvents() {
    CONTRACTEN OPHALEN
 ========================================================== */
 
-function getFilteredContracts() {
+function getFilteredContracts(filter = null) {
 
     let contracts = ContractService.getAll();
 
+    /* Dashboardfilters */
+
+    if (filter === "attention") {
+
+        contracts = ContractService.getEndingSoon();
+
+    }
+
+    else if (filter === "active") {
+
+        contracts = ContractService.getAll().filter(contract =>
+
+            ContractService.getStatus(contract) === "active"
+
+        );
+
+    }
+
+    /* Categorieën */
+
     if (selectedCategories.length > 0) {
 
-    contracts = contracts.filter(contract =>
+        contracts = contracts.filter(contract =>
 
-        selectedCategories.includes(contract.category)
+            selectedCategories.includes(contract.category)
 
-    );
+        );
 
-}
+    }
+
+    /* Zoekfunctie */
 
     if (currentSearch.trim() !== "") {
 
-    const value = currentSearch.toLowerCase();
+        const value = currentSearch.toLowerCase();
 
-    contracts = contracts.filter(contract =>
+        contracts = contracts.filter(contract =>
 
-        contract.name.toLowerCase().includes(value) ||
+            contract.name.toLowerCase().includes(value) ||
 
-        contract.category.toLowerCase().includes(value)
+            contract.category.toLowerCase().includes(value)
 
-    );
+        );
 
-}
+    }
 
-/* Sorteren */
-contracts.sort((a, b) => {
+    /* Sorteren */
 
-   switch (currentSort) {
+    contracts.sort((a, b) => {
 
-    case "name-asc":
-        return a.name.localeCompare(b.name);
+        switch (currentSort) {
 
-    case "price-asc":
-        return Number(a.amount) - Number(b.amount);
+            case "name-asc":
+                return a.name.localeCompare(b.name);
 
-    case "price-desc":
-        return Number(b.amount) - Number(a.amount);
+            case "price-asc":
+                return Number(a.amount) - Number(b.amount);
 
-    case "date":
-        return new Date(a.endDate || "9999-12-31") - new Date(b.endDate || "9999-12-31");
+            case "price-desc":
+                return Number(b.amount) - Number(a.amount);
 
-    default:
-        return 0;
+            case "date":
+                return new Date(a.endDate || "9999-12-31") -
+                       new Date(b.endDate || "9999-12-31");
 
-}
+            default:
+                return 0;
 
-});
+        }
 
-return contracts;
+    });
+
+    return contracts;
+
 }
 
 
@@ -153,7 +178,7 @@ return contracts;
    RENDER
 ========================================================== */
 
-function renderContracts() {
+function renderContracts(filter = null) {
 
     const container = document.getElementById("contracts");
 
@@ -165,7 +190,7 @@ function renderContracts() {
 
     }
 
-    currentContracts = getFilteredContracts();
+    currentContracts = getFilteredContracts(filter);
 
     container.innerHTML = "";
 

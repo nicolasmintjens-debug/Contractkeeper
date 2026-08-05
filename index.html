@@ -141,7 +141,9 @@
 
         </div>
 
-        <div class="mini-card">
+        <div
+    class="mini-card"
+    onclick="openEndingSoonContracts()">
 
             <div class="mini-card-title">
 
@@ -173,7 +175,10 @@
 
     <div class="home-info-grid">
 
-        <div id="attentionInfoCard" class="info-card success">
+        <div
+    id="attentionInfoCard"
+    class="info-card success"
+    onclick="openAttentionContracts()">
 
             <div class="info-card-header">
 
@@ -195,7 +200,9 @@
 
         </div>
 
-       <div class="info-card">
+       <div
+    class="info-card"
+    onclick="openCKAI()">
 
     <div class="info-card-header">
 
@@ -568,6 +575,65 @@
             </section>
 
         </section>
+
+        <!-- =========================================
+             CK AI
+========================================== -->
+
+<section
+    id="page-ckai"
+    class="page hidden">
+
+    <section class="section">
+
+        <h2 class="ckai-title">
+
+    <img
+        src="assets/logos/ck-ai-logo.svg"
+        class="ckai-logo"
+        alt="ContractKeeper AI">
+
+    <span class="ckai-brand">
+
+        <span class="brand-white">Contract</span><span class="brand-green">Keeper</span>
+        <span class="brand-ai">AI</span>
+
+    </span>
+
+</h2>
+
+        <div class="info-card">
+
+            <strong>
+
+    Welkom bij
+    <span class="brand-white">Contract</span><span class="brand-green">Keeper</span>
+    <span class="brand-ai">AI</span>
+
+</strong>
+
+<p>
+
+    Ik analyseer je contracten en help je besparen.
+    Kies hieronder waarmee ik je mag helpen.
+
+</p>
+
+<button
+    id="startCKAI"
+    class="btn w-100">
+
+    🚀 Start persoonlijk advies
+
+</button>
+
+<div id="ckaiContent" class="mt-24"></div>
+
+        </div>
+
+    </section>
+
+</section>
 
 <!-- =========================================
      INZICHTEN PAGINA

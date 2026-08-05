@@ -126,6 +126,20 @@ function setActiveNav(buttonId) {
 
 }
 
+/* ==========================================================
+   VERBERG ALLE PAGINA'S
+========================================================== */
+
+function hideAllPages() {
+
+    document.getElementById("homeSection").style.display = "none";
+    document.getElementById("contractsSection").style.display = "none";
+    document.getElementById("insightsSection").style.display = "none";
+    document.getElementById("settingsSection").style.display = "none";
+    document.getElementById("page-ckai").style.display = "none";
+
+}
+
 function initNavigation() {
 
     const homeButton = document.getElementById("nav-home");
@@ -137,15 +151,6 @@ const homeSection = document.getElementById("homeSection");
 const contractsSection = document.getElementById("contractsSection");
 const insightsSection = document.getElementById("insightsSection");
 const settingsSection = document.getElementById("settingsSection");
-   
-  function hideAllPages() {
-
-    homeSection.style.display = "none";
-    contractsSection.style.display = "none";
-    insightsSection.style.display = "none";
-    settingsSection.style.display = "none";
-
-}
 
 /* ==========================================================
    OPEN PAGINA
@@ -201,13 +206,19 @@ function openPage(page) {
 
         contractsButton.addEventListener("click", () => {
 
-            hideAllPages();
+    currentDashboardFilter = "";
 
-            contractsSection.style.display = "block";
+    hideAllPages();
 
-            setActiveNav("nav-contracts");
+    contractsSection.style.display = "block";
 
-        });
+    setActiveNav("nav-contracts");
+
+    console.log("Contracten opnieuw gerenderd");
+
+renderContracts();
+
+});
 
     }
 

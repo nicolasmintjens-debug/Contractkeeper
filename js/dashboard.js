@@ -543,11 +543,169 @@ function previousSmartTip() {
 }
 
 /* ==========================================================
+   OPEN CONTRACTEN
+========================================================== */
+
+function openContracts(filter = null) {
+
+    document.getElementById("nav-contracts").click();
+
+    renderContracts(filter);
+
+}
+
+/* ==========================================================
    OPEN ACTIEVE CONTRACTEN
 ========================================================== */
 
 function openActiveContracts() {
 
-    document.getElementById("nav-contracts").click();
+    openContracts("active");
+
+}
+
+/* ==========================================================
+   OPEN AANDACHT
+========================================================== */
+
+function openAttentionContracts() {
+
+    openContracts("attention");
+
+}
+
+/* ==========================================================
+   OPEN BINNENKORT OPZEGBAAR
+========================================================== */
+
+function openEndingSoonContracts() {
+
+    openContracts("attention");
+
+}
+
+/* ==========================================================
+   OPEN CK AI
+========================================================== */
+
+function openCKAI() {
+
+    hideAllPages();
+
+    const page = document.getElementById("page-ckai");
+
+    page.classList.remove("hidden");
+
+    page.style.display = "block";
+
+    document.getElementById("startCKAI").onclick = startCKAI;
+
+}
+
+/* ==========================================================
+   START CK AI
+========================================================== */
+
+function startCKAI() {
+
+    const container = document.getElementById("ckaiContent");
+
+    if (!container) return;
+
+    const contracts = ContractService.getAll();
+
+    let buttons = "";
+
+    contracts.forEach(contract => {
+
+    const logo = ContractService.getLogo(contract.name);
+
+    buttons += `
+
+<button
+    class="btn w-100 mt-16 ckai-contract-btn"
+    onclick="selectCKAIContract('${contract.id}')">
+
+    ${
+        logo
+            ? `<img src="assets/logos/${logo}" class="contract-logo" alt="${contract.name}">`
+            : `<i class="bi ${ContractService.getCategoryIcon(contract.category)}"></i>`
+    }
+
+    ${contract.name}
+
+</button>
+
+`;
+
+});
+
+    container.innerHTML = `
+
+        <div class="info-card">
+
+            <strong>🤖 Kies een contract</strong>
+
+<p>
+
+    Voor welk contract wil je persoonlijk advies?
+
+</p>
+
+${buttons}
+
+        </div>
+
+    `;
+
+}
+
+/* ==========================================================
+   CK AI CONTRACT GEKOZEN
+========================================================== */
+
+function selectCKAIContract(contractId) {
+
+    const contract = ContractService.getAll().find(
+
+        c => c.id === contractId
+
+    );
+
+    if (!contract) return;
+
+    const container = document.getElementById("ckaiContent");
+
+    container.innerHTML = `
+
+        <div class="info-card">
+
+            <strong>
+
+    🤖 ${contract.name}
+
+    <br>
+
+    <small>${contract.category}</small>
+
+</strong>
+
+            <p>
+
+                Ik ga je enkele vragen stellen zodat ik je
+                persoonlijk advies kan geven.
+
+            </p>
+
+            <button
+                class="btn w-100 mt-16">
+
+                🚀 Start vragen
+
+            </button>
+
+        </div>
+
+    `;
 
 }

@@ -3460,3 +3460,87 @@ a,
     touch-action:manipulation;
 
 }
+
+/* ===========================
+   CK AI
+=========================== */
+
+.ckai-title{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+
+    margin-bottom:28px;
+
+}
+
+.ckai-logo{
+
+    width:40px;
+
+    height:40px;
+
+}
+
+.ckai-brand{
+
+    font-size:34px;
+    font-weight:700;
+    line-height:1;
+
+}
+
+.brand-white{
+
+    color:#FFFFFF;
+
+}
+
+.brand-green{
+
+    color:var(--primary);
+
+}
+
+.brand-ai{
+
+    color:#FFFFFF;
+
+    margin-left:10px;
+
+}
+
+/* ===========================
+   CK AI CONTRACT BUTTONS
+=========================== */
+
+.ckai-contract-btn{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:12px;
+
+}
+
+.ckai-contract-btn img{
+
+    width:28px;
+
+    height:28px;
+
+    object-fit:contain;
+
+}
+
+.ckai-contract-btn i{
+
+    font-size:22px;
+
+}

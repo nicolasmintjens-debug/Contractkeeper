@@ -629,6 +629,30 @@ const grandTotal = Object.values(totals)
 },
  
 /* ======================================================
+   CATEGORIE ADVIES
+====================================================== */
+
+getCategoryAdvice(category) {
+
+    switch (category) {
+
+       case "Internet":
+    return "Hoeveel personen gebruiken thuis het internet? CK AI gebruikt dat om het juiste abonnement voor te stellen.";
+
+        case "Elektriciteit":
+            return "Vergelijk zeker de stroomprijs en kijk of een vast of variabel tarief beter past.";
+
+        case "Verzekering":
+            return "Vergelijk niet alleen de prijs, maar ook de waarborgen.";
+
+        default:
+            return "Dit is een goed moment om prijzen en voorwaarden te vergelijken.";
+
+    }
+
+},
+
+/* ======================================================
    CK AI INSIGHTS
 ====================================================== */
 
@@ -666,27 +690,30 @@ getCKInsights() {
 
     }
 
-    /* ---------------------------------
-       Herinnering
-    --------------------------------- */
+   /* ---------------------------------
+   Herinnering
+--------------------------------- */
 
-    if (next) {
+if (next) {
 
-        insights.push({
+    insights.push({
 
-            priority: 2,
+        priority: 2,
 
-            type: "reminder",
+        type: "reminder",
 
-            icon: "📅",
+        icon: "🤖",
 
-            title: "Herinnering",
+        title: "CK AI Advies",
 
-            message: `${next.name} eindigt op ${this.formatDate(next.endDate)}.`
+        message:
+`Je ${next.category.toLowerCase()}-contract "${next.name}" loopt af op ${this.formatDate(next.endDate)}.
 
-        });
+💡 ${this.getCategoryAdvice(next.category)}`
 
-    }
+    });
+
+}
 
     /* ---------------------------------
        Analyse
