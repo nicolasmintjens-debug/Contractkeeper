@@ -3687,7 +3687,7 @@ a,
 
     border-radius:28px;
 
-    padding:32px;
+    padding:24px;
 
     box-shadow:
         0 14px 36px rgba(0,0,0,.28);
@@ -3700,14 +3700,20 @@ a,
 
 .ckai-card-icon{
 
-    width:50px;
+    width:48px;
 
-    height:50px;
+    height:48px;
+
+    min-width:48px;
+
+    min-height:48px;
+
+    flex-shrink:0;
 
     border-radius:50%;
 
     background:linear-gradient(
-        135deg,
+        180deg,
         #34D399,
         #22C55E
     );
@@ -3719,13 +3725,13 @@ a,
     justify-content:center;
 
     box-shadow:
-        0 8px 24px rgba(34,197,94,.25);
+        0 8px 20px rgba(34,197,94,.22);
 
 }
 
 .ckai-card-icon i{
 
-    font-size:22px;
+    font-size:20px;
 
     color:#FFFFFF;
 
