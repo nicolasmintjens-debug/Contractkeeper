@@ -633,185 +633,178 @@ const grandTotal = Object.values(totals)
 ====================================================== */
 
 getCKInsights() {
-   
-    const tips = [];
+
+    const insights = [];
+
+    const monthlyTotal = this.getMonthlyTotal();
+    const yearlyTotal = monthlyTotal * 12;
+    const activeCount = this.getActiveCount();
+    const highest = this.getMostExpensiveContract();
+    const categories = this.getCategoryTotals();
+    const next = this.getNextEndingContract();
+    const endingSoon = this.getEndingSoonCount();
 
     /* ---------------------------------
-       Grootste uitgave
+       Actie vereist
     --------------------------------- */
-
-    const highest =
-        this.getMostExpensiveContract();
-
-    if (highest) {
-
-       tips.push({
-
-    priority: 2,
-
-    type: "analysis",
-
-    icon: "💰",
-
-    title: "CK AI Analyse",
-
-    message:
-        `Je duurste contract is ${highest.name} (${this.formatPrice(highest.amount)} per maand).`
-
-});
-       
-    }
-
-    /* ---------------------------------
-       Actieve contracten
-    --------------------------------- */
-
-    tips.push({
-
-        icon: "📄",
-
-        title: "Actieve contracten",
-
-        message:
-            `Je hebt momenteel ${this.getActiveCount()} actieve contracten.`
-
-    });
-
-    /* ---------------------------------
-       Maandelijkse kosten
-    --------------------------------- */
-
-    tips.push({
-
-        icon: "💶",
-
-        title: "Maandelijkse kosten",
-
-        message:
-            `Je betaalt gemiddeld ${this.formatPrice(this.getMonthlyTotal())} per maand.`
-
-    });
-
-    /* ---------------------------------
-       Jaarlijkse kosten
-    --------------------------------- */
-
-    tips.push({
-
-        icon: "📅",
-
-        title: "Jaarlijkse kosten",
-
-        message:
-            `Op jaarbasis geef je ${this.formatPrice(this.getMonthlyTotal() * 12)} uit.`
-
-    });
-
-    /* ---------------------------------
-       Grootste categorie
-    --------------------------------- */
-
-    const categories =
-        this.getCategoryTotals();
-
-    if (categories.length) {
-
-        tips.push({
-
-            icon: "📊",
-
-            title: "Grootste categorie",
-
-            message:
-                `${categories[0].category} is momenteel je grootste uitgavenpost.`
-
-        });
-
-    }
-
-    /* ---------------------------------
-       Eerstvolgende einddatum
-    --------------------------------- */
-
-    const next =
-        this.getNextEndingContract();
-
-    if (next) {
-
-        tips.push({
-
-            icon: "📅",
-
-            title: "Volgende einddatum",
-
-            message:
-                `${next.name} eindigt op ${this.formatDate(next.endDate)}.`
-
-        });
-
-    }
-
-    /* ---------------------------------
-       Contracten die aflopen
-    --------------------------------- */
-
-    const endingSoon =
-        this.getEndingSoonCount();
 
     if (endingSoon > 0) {
 
-        tips.push({
+        insights.push({
+
+            priority: 1,
+
+            type: "warning",
 
             icon: "⚠️",
 
-            title: "Loopt binnenkort af",
+            title: "Actie vereist",
 
-            message:
-                `${endingSoon} contract(en) lopen binnen 30 dagen af.`
+            message: `${endingSoon} contract(en) lopen binnen 30 dagen af.`
 
         });
 
     }
 
     /* ---------------------------------
-       Gemiddelde contractprijs
+       Herinnering
     --------------------------------- */
 
-    const active =
-        this.getActiveCount();
+    if (next) {
 
-    if (active > 0) {
+        insights.push({
 
-        const average =
-            this.getMonthlyTotal() / active;
+            priority: 2,
 
-        tips.push({
+            type: "reminder",
+
+            icon: "📅",
+
+            title: "Herinnering",
+
+            message: `${next.name} eindigt op ${this.formatDate(next.endDate)}.`
+
+        });
+
+    }
+
+    /* ---------------------------------
+       Analyse
+    --------------------------------- */
+
+    if (highest) {
+
+        insights.push({
+
+            priority: 3,
+
+            type: "analysis",
+
+            icon: "🤖",
+
+            title: "Analyse",
+
+            message: `Je duurste contract is ${highest.name} (${this.formatPrice(highest.amount)} per maand).`
+
+        });
+
+    }
+
+    /* ---------------------------------
+       Uitgaven
+    --------------------------------- */
+
+    insights.push({
+
+        priority: 4,
+
+        type: "finance",
+
+        icon: "💶",
+
+        title: "Uitgaven",
+
+        message: `Je betaalt momenteel ${this.formatPrice(monthlyTotal)} per maand.`
+
+    });
+
+    insights.push({
+
+        priority: 4,
+
+        type: "finance",
+
+        icon: "💰",
+
+        title: "Jaaroverzicht",
+
+        message: `Op jaarbasis geef je ${this.formatPrice(yearlyTotal)} uit aan abonnementen.`
+
+    });
+
+    /* ---------------------------------
+       Statistieken
+    --------------------------------- */
+
+    insights.push({
+
+        priority: 5,
+
+        type: "statistics",
+
+        icon: "📄",
+
+        title: "Contracten",
+
+        message: `Je hebt momenteel ${activeCount} actieve contracten.`
+
+    });
+
+    if (activeCount > 0) {
+
+        insights.push({
+
+            priority: 5,
+
+            type: "statistics",
 
             icon: "📈",
 
             title: "Gemiddelde kost",
 
-            message:
-                `Een contract kost gemiddeld ${this.formatPrice(average)} per maand.`
+            message: `Een contract kost gemiddeld ${this.formatPrice(monthlyTotal / activeCount)} per maand.`
 
         });
 
     }
 
-    /* ---------------------------------
-       Aantal categorieën
-    --------------------------------- */
-
     if (categories.length) {
 
-        tips.push({
+        insights.push({
+
+            priority: 5,
+
+            type: "statistics",
+
+            icon: "📊",
+
+            title: "Categorie",
+
+            message: `${categories[0].category} is momenteel je grootste uitgavenpost.`
+
+        });
+
+        insights.push({
+
+            priority: 5,
+
+            type: "statistics",
 
             icon: "📂",
 
-            title: "Categorieën",
+            title: "Verdeling",
 
-            message:
-                `Je contracten zijn verdeeld over ${categories.length} categorieën.`
+            message: `Je contracten zijn verdeeld over ${categories.length} categorieën.`
 
         });
 
@@ -823,21 +816,24 @@ getCKInsights() {
 
     if (endingSoon === 0) {
 
-        tips.push({
+        insights.push({
+
+            priority: 6,
+
+            type: "success",
 
             icon: "✅",
 
             title: "Alles in orde",
 
-            message:
-                "Momenteel vragen geen contracten je onmiddellijke aandacht."
+            message: "Er zijn momenteel geen contracten die je onmiddellijke aandacht vragen."
 
         });
 
     }
 
-    return tips;
+    insights.sort((a, b) => a.priority - b.priority);
+
+    return insights;
 
 }
-   
-};
