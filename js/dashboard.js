@@ -425,89 +425,91 @@ function updateSmartTip() {
 
     const container =
         document.getElementById("smartTipCard");
-   
+
     if (!container) return;
 
-container.ontouchstart = function(event) {
+    container.ontouchstart = function(event) {
 
-    touchStartX = event.changedTouches[0].clientX;
-   
-};
+        touchStartX = event.changedTouches[0].clientX;
 
- container.ontouchend = function(event) {
+    };
 
-    const touchEndX =
-        event.changedTouches[0].clientX;
+    container.ontouchend = function(event) {
 
-    if (touchStartX - touchEndX > 50) {
+        const touchEndX =
+            event.changedTouches[0].clientX;
 
-        nextSmartTip();
+        if (touchStartX - touchEndX > 50) {
 
-    }
+            nextSmartTip();
 
-    else if (touchEndX - touchStartX > 50) {
+        }
 
-        previousSmartTip();
+        else if (touchEndX - touchStartX > 50) {
 
-    }
+            previousSmartTip();
 
-};
-   
+        }
+
+    };
+
     const insights =
-    ContractService.getCKInsights();
+        ContractService.getCKInsights();
 
-const counter =
-    document.getElementById("smartTipCounter");
-   
-    if (!tips.length) {
+    const counter =
+        document.getElementById("smartTipCounter");
+
+    if (!insights.length) {
 
         container.innerHTML = `
-            <strong>Geen tips beschikbaar</strong>
-            <p>Voeg meer contracten toe om slimme tips te ontvangen.</p>
+            <strong>Geen inzichten beschikbaar</strong>
+            <p>Voeg meer contracten toe om CK AI inzichten te ontvangen.</p>
         `;
-       
-if (counter) {
 
-    counter.textContent = "";
+        if (counter) {
 
-}
+            counter.textContent = "";
+
+        }
+
         return;
 
     }
 
-    const tip = tips[currentSmartTip];
+    const insight =
+        insights[currentSmartTip];
 
     container.innerHTML = `
 
-        <strong>${tip.icon} ${tip.title}</strong>
+        <strong>${insight.icon} ${insight.title}</strong>
 
-        <p>${tip.message}</p>
+        <p>${insight.message}</p>
 
     `;
 
-if (counter && tips.length > 1) {
+    if (counter && insights.length > 1) {
 
-    counter.textContent =
-        `${currentSmartTip + 1} / ${tips.length}`;
+        counter.textContent =
+            `${currentSmartTip + 1} / ${insights.length}`;
 
-}
-   
+    }
+
 }
 
 /* ==========================================================
-   VOLGENDE SLIMME TIP
+   VOLGENDE INSIGHT
 ========================================================== */
 
 function nextSmartTip() {
 
     const insights =
-    ContractService.getCKInsights();
+        ContractService.getCKInsights();
 
-    if (tips.length <= 1) return;
+    if (insights.length <= 1) return;
 
     currentSmartTip++;
 
-    if (currentSmartTip >= tips.length) {
+    if (currentSmartTip >= insights.length) {
 
         currentSmartTip = 0;
 
@@ -518,7 +520,7 @@ function nextSmartTip() {
 }
 
 /* ==========================================================
-   VORIGE SLIMME TIP
+   VORIGE INSIGHT
 ========================================================== */
 
 function previousSmartTip() {
@@ -526,16 +528,18 @@ function previousSmartTip() {
     const insights =
         ContractService.getCKInsights();
 
-    if (tips.length <= 1) return;
+    if (insights.length <= 1) return;
 
     currentSmartTip--;
 
     if (currentSmartTip < 0) {
 
-        currentSmartTip = tips.length - 1;
+        currentSmartTip = insights.length - 1;
 
     }
 
     updateSmartTip();
 
 }
+
+};
