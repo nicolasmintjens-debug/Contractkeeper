@@ -310,6 +310,6 @@ function initAI() {
 
 function openAI() {
 
-    alert("CK AI komt binnenkort 🚀");
+    openCKAI();
 
 }
