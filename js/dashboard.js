@@ -620,21 +620,41 @@ function startCKAI() {
 
     const logo = ContractService.getLogo(contract.name);
 
-    buttons += `
+   buttons += `
 
-<button
-    class="btn w-100 mt-16 ckai-contract-btn"
+<div
+    class="ckai-contract-card"
     onclick="selectCKAIContract('${contract.id}')">
 
-    ${
-        logo
-            ? `<img src="assets/logos/${logo}" class="contract-logo" alt="${contract.name}">`
-            : `<i class="bi ${ContractService.getCategoryIcon(contract.category)}"></i>`
-    }
+    <div class="ckai-contract-left">
 
-    ${contract.name}
+        ${
+            logo
+                ? `<img src="assets/logos/${logo}" class="contract-logo" alt="${contract.name}">`
+                : `<i class="bi ${ContractService.getCategoryIcon(contract.category)}"></i>`
+        }
 
-</button>
+        <div class="ckai-contract-content">
+
+            <div class="ckai-contract-title">
+
+                ${contract.name}
+
+            </div>
+
+            <div class="ckai-contract-category">
+
+                ${contract.category}
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <i class="bi bi-chevron-right ckai-contract-chevron"></i>
+
+</div>
 
 `;
 
@@ -642,21 +662,29 @@ function startCKAI() {
 
     container.innerHTML = `
 
-        <div class="info-card">
+<div class="ckai-contract-selector">
 
-            <strong>🤖 Kies een contract</strong>
+    <div class="ckai-selector-header">
 
-<p>
+        <h2 class="ckai-selector-title">
+            Waar wil je advies over?
+        </h2>
 
-    Voor welk contract wil je persoonlijk advies?
+        <p class="ckai-selector-subtitle">
+            Kies een contract en ContractKeeper AI analyseert het voor jou.
+        </p>
 
-</p>
+    </div>
 
-${buttons}
+    <div class="ckai-contract-list">
 
-        </div>
+        ${buttons}
 
-    `;
+    </div>
+
+</div>
+
+`;
 
 }
 

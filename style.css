@@ -3827,3 +3827,183 @@ a,
     white-space:nowrap;
 
 }
+
+/* ==========================================================
+   CK AI - Contract Selector
+========================================================== */
+
+.ckai-contract-selector {
+
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+
+    margin-top: 30px;
+
+}
+
+.ckai-selector-header {
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+}
+
+.ckai-selector-title {
+
+    margin: 0;
+
+    font-size: 28px;
+
+    font-weight: 700;
+
+    line-height: 1.15;
+
+    color: #ffffff;
+
+    letter-spacing: -0.02em;
+
+}
+
+.ckai-selector-subtitle {
+
+    margin: 0;
+
+    font-size: 15px;
+
+    line-height: 1.6;
+
+    color: rgba(255,255,255,.70);
+
+}
+
+/* ==========================================================
+   CK AI - Contract Cards
+========================================================== */
+
+.ckai-contract-list {
+
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+}
+
+.ckai-contract-card {
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 22px 20px;
+
+    border-radius: 22px;
+
+    background: rgba(255,255,255,.045);
+
+    border: 1px solid rgba(255,255,255,.06);
+
+    transition:
+        transform .18s ease,
+        box-shadow .18s ease,
+        border-color .18s ease,
+        background .18s ease;
+
+    cursor: pointer;
+
+}
+
+.ckai-contract-card:hover {
+
+    transform: translateY(-2px);
+
+    background: rgba(255,255,255,.06);
+
+    border-color: rgba(70,185,120,.35);
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,.25);
+
+}
+
+.ckai-contract-card:active {
+
+    transform: scale(.98);
+
+}
+
+.ckai-contract-left {
+
+    display: flex;
+    align-items: center;
+    gap: 18px;
+
+    flex: 1;
+
+}
+
+.ckai-contract-content {
+
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+}
+
+.ckai-contract-title {
+
+    color: #fff;
+
+    font-size: 18px;
+
+    font-weight: 600;
+
+    line-height: 1.2;
+
+}
+
+.ckai-contract-category {
+
+    color: rgba(255,255,255,.55);
+
+    font-size: 14px;
+
+    margin-top: 3px;
+
+}
+
+.ckai-contract-chevron {
+
+    color: rgba(255,255,255,.28);
+
+    font-size: 24px;
+
+    margin-left: 20px;
+
+    transition:
+        transform .18s ease,
+        color .18s ease;
+
+}
+
+.ckai-contract-card:hover
+.ckai-contract-chevron {
+
+    transform: translateX(4px);
+
+    color: #46b978;
+
+}
+
+.ckai-contract-card .contract-logo {
+
+    width: 48px;
+
+    height: 48px;
+
+    object-fit: contain;
+
+    border-radius: 12px;
+
+}
