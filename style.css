@@ -3684,13 +3684,13 @@ a,
 
 .ckai-card-icon{
 
-    width:32px;
+    width:36px;
 
-    height:32px;
+    height:36px;
 
-    min-width:32px;
+    min-width:36px;
 
-    min-height:32px;
+    min-height:36px;
 
     flex-shrink:0;
 
@@ -3733,7 +3733,7 @@ a,
 
     color:#FFFFFF;
 
-    font-size:15px;
+    font-size:16px;
 
     font-weight:700;
 
