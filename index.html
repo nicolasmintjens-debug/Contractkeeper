@@ -228,23 +228,23 @@
     <div class="smart-tip-nav">
 
         <button
-            id="prevSmartTip"
-            class="smart-tip-btn"
-            onclick="previousSmartTip()">
+    id="prevSmartTip"
+    class="smart-tip-btn"
+    onclick="event.stopPropagation(); previousSmartTip();">
 
-            <i class="bi bi-chevron-left"></i>
+    <i class="bi bi-chevron-left"></i>
 
-        </button>
+</button>
 
-        <button
-            id="nextSmartTip"
-            class="smart-tip-btn"
-            onclick="nextSmartTip()">
+<button
+    id="nextSmartTip"
+    class="smart-tip-btn"
+    onclick="event.stopPropagation(); nextSmartTip();">
 
-            <i class="bi bi-chevron-right"></i>
+    <i class="bi bi-chevron-right"></i>
 
-        </button>
-
+</button>
+        
     </div>
 
 </div>
