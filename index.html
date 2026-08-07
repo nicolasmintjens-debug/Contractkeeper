@@ -675,269 +675,408 @@
     ========================================================== -->
 
     <div
-        id="ckaiQuestionScreen"
-        class="hidden">
+    id="ckaiQuestionScreen"
+    class="hidden">
 
-        <div class="ckai-question-header">
+    <!-- HEADER -->
 
-            <button
-                id="ckaiBackButton"
-                class="ckai-back-btn">
+    <div class="ckai-question-topbar">
 
-                <i class="bi bi-arrow-left"></i>
+        <button
+            id="ckaiBackButton"
+            class="ckai-back-btn">
 
-                Terug
+            <i class="bi bi-arrow-left"></i>
 
-            </button>
+            Terug
 
-            <div
-                id="ckaiQuestionContract"
-                class="ckai-question-contract">
+        </button>
 
-            </div>
+        <div class="ckai-question-brand">
 
-        </div>
-
-        <div class="ckai-progress">
-
-            <div
-                id="ckaiProgressBar"
-                class="ckai-progress-fill">
-
-            </div>
+            <span class="brand-white">Contract</span><span class="brand-green">Keeper</span>
+            <span class="brand-ai">AI</span>
 
         </div>
 
-        <div id="ckaiQuestionContent"></div>
-
-        <div class="ckai-question-footer">
-
-            <button
-                id="ckaiNextButton"
-                class="ckai-next-btn"
-                disabled>
-
-                Volgende
-
-                <i class="bi bi-arrow-right"></i>
-
-            </button>
+        <div
+            id="ckaiQuestionContract"
+            class="ckai-question-contract">
 
         </div>
 
     </div>
+
+    <!-- PROGRESS -->
+
+    <div class="ckai-progress-segments">
+
+        <div class="ckai-progress-segment"></div>
+        <div class="ckai-progress-segment"></div>
+        <div class="ckai-progress-segment"></div>
+        <div class="ckai-progress-segment"></div>
+        <div class="ckai-progress-segment"></div>
+
+    </div>
+
+    <!-- VRAAG -->
+
+    <div id="ckaiQuestionContent"></div>
+
+    <!-- VOLGENDE -->
+
+    <div class="ckai-question-footer">
+
+        <button
+            id="ckaiNextButton"
+            class="ckai-next-btn"
+            disabled>
+
+            Volgende
+
+            <i class="bi bi-arrow-right"></i>
+
+        </button>
+
+    </div>
+
+</div>
 
         <!-- ==========================================================
          ANALYSE
     ========================================================== -->
 
     <div
-        id="ckaiAnalysisScreen"
-        class="hidden">
+    id="ckaiAnalysisScreen"
+    class="hidden">
 
-        <div class="ckai-analysis-card">
+    <div class="ckai-analysis-card">
 
-            <div class="ckai-analysis-icon">
+        <div class="ckai-analysis-header">
 
-                🤖
-
+            <div class="ckai-analysis-eyebrow">
+                ContractKeeper AI
             </div>
 
             <h2
                 id="ckaiAnalysisTitle"
                 class="ckai-analysis-title">
 
-                Ik analyseer jouw contract...
+                Analyse wordt gemaakt
 
             </h2>
 
-            <div class="ckai-analysis-steps">
+            <div
+                id="ckaiAnalysisContract"
+                class="ckai-analysis-contract">
 
-                <div
-                    id="analysisStep1"
-                    class="ckai-analysis-step">
-
-                    ⏳ Contractgegevens ophalen
-
-                </div>
-
-                <div
-                    id="analysisStep2"
-                    class="ckai-analysis-step">
-
-                    ○ Gebruik analyseren
-
-                </div>
-
-                <div
-                    id="analysisStep3"
-                    class="ckai-analysis-step">
-
-                    ○ Vergelijken met actuele marktprijzen
-
-                </div>
-
-                <div
-                    id="analysisStep4"
-                    class="ckai-analysis-step">
-
-                    ○ Mogelijke besparing berekenen
-
-                </div>
-
-                <div
-                    id="analysisStep5"
-                    class="ckai-analysis-step">
-
-                    ○ Persoonlijk advies opstellen
-
-                </div>
+                Netflix
 
             </div>
 
-            <p class="ckai-analysis-note">
+        </div>
 
-                Dit duurt meestal minder dan 10 seconden.
 
-            </p>
+        <div class="ckai-analysis-progress">
+
+            <div
+                id="ckaiAnalysisProgressBar"
+                class="ckai-analysis-progress-fill">
+            </div>
 
         </div>
 
+
+        <div class="ckai-analysis-steps">
+
+            <div
+                id="analysisStep1"
+                class="ckai-analysis-step">
+
+                ⏳ Contractgegevens ophalen
+
+            </div>
+
+            <div
+                id="analysisStep2"
+                class="ckai-analysis-step">
+
+                ○ Gebruik analyseren
+
+            </div>
+
+            <div
+                id="analysisStep3"
+                class="ckai-analysis-step">
+
+                ○ Marktprijzen vergelijken
+
+            </div>
+
+            <div
+                id="analysisStep4"
+                class="ckai-analysis-step">
+
+                ○ Mogelijke besparing berekenen
+
+            </div>
+
+            <div
+                id="analysisStep5"
+                class="ckai-analysis-step">
+
+                ○ Persoonlijk advies opstellen
+
+            </div>
+
+        </div>
+
+
+        <p class="ckai-analysis-note">
+
+            Even geduld... dit duurt maar enkele seconden.
+
+        </p>
+
     </div>
+
+</div>
 
     <!-- ==========================================================
          ANALYSE VOLTOOID
     ========================================================== -->
 
     <div
-        id="ckaiResultScreen"
-        class="hidden">
+    id="ckaiResultScreen"
+    class="hidden">
 
-        <div class="ckai-analysis-card">
+    <div class="ckai-result-card">
 
-            <div class="ckai-analysis-icon">
+        <div class="ckai-result-success">
+            ✓
+        </div>
 
-                🎉
+        <div class="ckai-result-eyebrow">
+            CK AI RESULTAAT
+        </div>
+
+        <h2 class="ckai-result-title">
+            Analyse voltooid
+        </h2>
+
+        <p
+            id="ckaiResultContract"
+            class="ckai-result-contract">
+
+            Netflix is geanalyseerd
+
+        </p>
+
+        <div class="ckai-result-divider"></div>
+
+        <p class="ckai-result-text">
+
+            We hebben mogelijkheden gevonden om jouw abonnement te optimaliseren.
+
+        </p>
+
+        <div class="ckai-result-items">
+
+            <div class="ckai-result-item">
+
+                <span class="ckai-result-check">✓</span>
+
+                <span>Persoonlijk advies klaar</span>
 
             </div>
 
-            <h2 class="ckai-analysis-title">
+            <div class="ckai-result-item">
 
-                Analyse voltooid
+                <span class="ckai-result-check">✓</span>
 
-            </h2>
+                <span>Alternatieven gecontroleerd</span>
 
-            <p class="ckai-analysis-text">
+            </div>
 
-                Goed nieuws!
+            <div class="ckai-result-item">
 
-                <br><br>
+                <span class="ckai-result-check">✓</span>
 
-                ContractKeeper AI heeft jouw abonnement geanalyseerd.
+                <span>Besparingsmogelijkheden berekend</span>
 
-                <br><br>
-
-                Er zijn aanbevelingen gevonden.
-
-            </p>
-
-            <button
-                id="ckaiViewResult"
-                class="ckai-button">
-
-                Bekijk mijn analyse
-
-            </button>
+            </div>
 
         </div>
 
+        <button
+            id="ckaiViewResult"
+            class="ckai-result-button">
+
+            Bekijk mijn analyse
+
+            <i class="bi bi-arrow-right"></i>
+
+        </button>
+
     </div>
+
+</div>
 
         <!-- ==========================================================
          PREMIUM
     ========================================================== -->
 
-    <div
-        id="ckaiPremiumScreen"
-        class="hidden">
+    <!-- =========================================
+     CK AI - PREMIUM
+========================================== -->
 
-        <div class="ckai-analysis-card">
+<div
+    id="ckaiPremiumScreen"
+    class="hidden">
 
-            <div class="ckai-analysis-icon">
+    <div class="ckai-premium-card">
 
-                🔒
+        <!-- SLOT -->
 
-            </div>
+        <div class="ckai-premium-lock">
 
-            <h2 class="ckai-analysis-title">
-
-                Ontgrendel ContractKeeper Premium
-
-            </h2>
-
-            <p class="ckai-analysis-text">
-
-                Jouw persoonlijke analyse is klaar.
-
-                <br><br>
-
-                Ontgrendel Premium en bekijk:
-
-            </p>
-
-            <div class="ckai-analysis-steps">
-
-                <div class="ckai-analysis-step">
-
-                    ✅ Persoonlijk bespaaradvies
-
-                </div>
-
-                <div class="ckai-analysis-step">
-
-                    ✅ Beste alternatieven
-
-                </div>
-
-                <div class="ckai-analysis-step">
-
-                    ✅ Jaarlijkse besparing
-
-                </div>
-
-                <div class="ckai-analysis-step">
-
-                    ✅ AI aanbevelingen
-
-                </div>
-
-                <div class="ckai-analysis-step">
-
-                    ✅ Contractmonitoring
-
-                </div>
-
-            </div>
-
-            <button
-                id="startPremium"
-                class="ckai-button">
-
-                ✨ Start 30 dagen gratis
-
-            </button>
-
-            <button
-                id="premiumLater"
-                class="ckai-secondary-button">
-
-                Misschien later
-
-            </button>
+            🔒
 
         </div>
 
+
+        <!-- TITEL -->
+
+        <h2 class="ckai-premium-ready">
+
+            Jouw analyse is klaar
+
+        </h2>
+
+        <div class="ckai-premium-divider"></div>
+
+
+        <!-- PREMIUM -->
+
+        <h3 class="ckai-premium-title">
+
+            Ontgrendel ContractKeeper
+            <span>Premium</span>
+
+        </h3>
+
+        <p class="ckai-premium-intro">
+
+            Ontgrendel Premium en bekijk:
+
+        </p>
+
+
+        <!-- VOORDELEN -->
+
+        <div class="ckai-premium-features">
+
+            <div class="ckai-premium-feature">
+
+                <div class="ckai-premium-check">
+                    ✓
+                </div>
+
+                <span>
+                    Persoonlijk bespaaradvies
+                </span>
+
+                <i class="bi bi-chevron-right"></i>
+
+            </div>
+
+
+            <div class="ckai-premium-feature">
+
+                <div class="ckai-premium-check">
+                    ✓
+                </div>
+
+                <span>
+                    Beste alternatieven
+                </span>
+
+                <i class="bi bi-chevron-right"></i>
+
+            </div>
+
+
+            <div class="ckai-premium-feature">
+
+                <div class="ckai-premium-check">
+                    ✓
+                </div>
+
+                <span>
+                    Jaarlijkse besparing
+                </span>
+
+                <i class="bi bi-chevron-right"></i>
+
+            </div>
+
+
+            <div class="ckai-premium-feature">
+
+                <div class="ckai-premium-check">
+                    ✓
+                </div>
+
+                <span>
+                    AI aanbevelingen
+                </span>
+
+                <i class="bi bi-chevron-right"></i>
+
+            </div>
+
+
+            <div class="ckai-premium-feature">
+
+                <div class="ckai-premium-check">
+                    ✓
+                </div>
+
+                <span>
+                    Contractmonitoring
+                </span>
+
+                <i class="bi bi-chevron-right"></i>
+
+            </div>
+
+        </div>
+
+
+        <!-- PREMIUM KNOP -->
+
+        <button
+            id="startPremium"
+            class="ckai-premium-button">
+
+            ✨ Start 1 week gratis
+
+        </button>
+
+
+        <!-- LATER -->
+
+        <button
+            id="premiumLater"
+            class="ckai-premium-later">
+
+            Misschien later
+
+        </button>
+
     </div>
+
+</div>
 
 </section>
 

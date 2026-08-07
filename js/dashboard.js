@@ -611,7 +611,6 @@ function openCKAI() {
     if (!page) return;
 
     page.classList.remove("hidden");
-
     page.style.display = "block";
 
     // Navigatie resetten
@@ -625,7 +624,61 @@ function openCKAI() {
         .getElementById("nav-ckai")
         ?.classList.add("active");
 
-    document.getElementById("startCKAI").onclick = startCKAI;
+
+    // ===========================
+    // CK AI RESETTEN
+    // ===========================
+
+    // Welkomstkaart opnieuw tonen
+    const welcomeCard =
+        document.querySelector(".ckai-card");
+
+    if (welcomeCard) {
+        welcomeCard.style.display = "block";
+    }
+
+    // Oude contractkeuze verwijderen
+const ckaiContent =
+    document.getElementById("ckaiContent");
+
+if (ckaiContent) {
+    ckaiContent.innerHTML = "";
+}
+
+    // Vraagenscherm verbergen
+    document
+        .getElementById("ckaiQuestionScreen")
+        ?.classList.add("hidden");
+
+    // Analysescherm verbergen
+    document
+        .getElementById("ckaiAnalysisScreen")
+        ?.classList.add("hidden");
+
+    // Resultaatscherm verbergen
+    document
+        .getElementById("ckaiResultScreen")
+        ?.classList.add("hidden");
+
+    // Premiumscherm verbergen
+    document
+        .getElementById("ckaiPremiumScreen")
+        ?.classList.add("hidden");
+
+
+    // AI status resetten
+    ckaiCurrentQuestion = 0;
+    ckaiSelectedAnswer = null;
+    ckaiAnswers = {};
+
+
+    // Startknop activeren
+    const startButton =
+        document.getElementById("startCKAI");
+
+    if (startButton) {
+        startButton.onclick = startCKAI;
+    }
 
 }
 
@@ -727,8 +780,15 @@ function selectCKAIContract(contractId) {
 
     if (!contract) return;
 
-    const questions =
-        CKAI_QUESTIONS[contract.name.toLowerCase()];
+    const contractKey =
+    contract.name.toLowerCase();
+
+const categoryKey =
+    contract.category.toLowerCase();
+
+const questions =
+    CKAI_QUESTIONS[contractKey] ||
+    CKAI_QUESTIONS[categoryKey];
 
     if (!questions || !questions.length) {
 
@@ -779,8 +839,22 @@ function showCKAIQuestion(contract, questions, index) {
         contract.name;
 
     // Progressie
-    document.getElementById("ckaiProgressBar").style.width =
-        `${((index + 1) / questions.length) * 100}%`;
+const progressSegments =
+    document.querySelectorAll(".ckai-progress-segment");
+
+progressSegments.forEach((segment, segmentIndex) => {
+
+    if (segmentIndex <= index) {
+
+        segment.classList.add("active");
+
+    } else {
+
+        segment.classList.remove("active");
+
+    }
+
+});
 
     // Volgende knop resetten
     const nextButton =
@@ -919,7 +993,10 @@ document
 
 // Titel aanpassen
 document.getElementById("ckaiAnalysisTitle").textContent =
-    `Ik analyseer jouw ${ckaiCurrentContract.name}-abonnement`;
+    "Analyse wordt gemaakt";
+
+document.getElementById("ckaiAnalysisContract").textContent =
+    ckaiCurrentContract.name;
 
 // Analyse starten
 startCKAIAnalysis();
@@ -955,25 +1032,42 @@ function startCKAIAnalysis() {
 
     let currentStep = 0;
 
+    const progressBar =
+        document.getElementById("ckaiAnalysisProgressBar");
+
     function nextStep() {
 
+        // Vorige stap afronden
         if (currentStep > 0) {
 
-    const previousStep =
-        document.getElementById(`analysisStep${currentStep}`);
+            const previousStep =
+                document.getElementById(
+                    `analysisStep${currentStep}`
+                );
 
-    previousStep.innerHTML =
-        `<span class="analysis-success">✓</span> ${steps[currentStep - 1]}`;
+            previousStep.innerHTML =
+                `<span class="analysis-success">✓</span> ${steps[currentStep - 1]}`;
 
-}
+        }
 
+        // Progressiebalk bijwerken
+        if (progressBar) {
+
+            progressBar.style.width =
+                `${(currentStep / steps.length) * 100}%`;
+
+        }
+
+        // Nog stappen te gaan
         if (currentStep < steps.length) {
 
             const activeStep =
-    document.getElementById(`analysisStep${currentStep + 1}`);
+                document.getElementById(
+                    `analysisStep${currentStep + 1}`
+                );
 
-activeStep.innerHTML =
-    `<span class="analysis-loading">⏳</span> ${steps[currentStep]}`;
+            activeStep.innerHTML =
+                `<span class="analysis-loading">⏳</span> ${steps[currentStep]}`;
 
             currentStep++;
 
@@ -981,17 +1075,33 @@ activeStep.innerHTML =
 
         } else {
 
-    // Analyse verbergen
-    document
-        .getElementById("ckaiAnalysisScreen")
-        .classList.add("hidden");
+            // Progressie op 100%
+            if (progressBar) {
+                progressBar.style.width = "100%";
+            }
 
-    // Resultaat tonen
-    document
-        .getElementById("ckaiResultScreen")
-        .classList.remove("hidden");
+            // Analyse verbergen
+document
+    .getElementById("ckaiAnalysisScreen")
+    .classList.add("hidden");
+
+// Contractnaam tonen in resultaat
+const resultContract =
+    document.getElementById("ckaiResultContract");
+
+if (resultContract && ckaiCurrentContract) {
+
+    resultContract.textContent =
+        `${ckaiCurrentContract.name} is geanalyseerd`;
 
 }
+
+// Resultaat tonen
+document
+    .getElementById("ckaiResultScreen")
+    .classList.remove("hidden");
+
+        }
 
     }
 
