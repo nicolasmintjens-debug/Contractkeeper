@@ -333,8 +333,17 @@ button{
 
 .total-card{
 
-    background:
+    position:relative;
 
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    min-height:115px;
+
+    overflow:hidden;
+
+    background:
         linear-gradient(
             145deg,
             #1B304E,
@@ -343,14 +352,13 @@ button{
 
     border-radius:30px;
 
-    padding:28px;
+    padding:14px 22px;
 
     border:1px solid var(--border);
 
     box-shadow:var(--shadow);
 
     transition:var(--transition);
-
 }
 
 .total-card:hover{
@@ -391,6 +399,30 @@ button{
 
 }
 
+.total-card-content{
+    position:relative;
+    z-index:2;
+    flex:1;
+}
+
+.total-card-illustration{
+
+    width:90px;
+    height:90px;
+
+    object-fit:contain;
+
+    flex-shrink:0;
+
+    margin-right:-10px;
+    margin-left:-35px;
+
+    transform:translateY(-8px);
+
+    filter:
+        drop-shadow(0 0 18px rgba(34,197,94,.18));
+}
+
 /* ===========================
    MINI CARDS
 =========================== */
@@ -399,26 +431,28 @@ button{
 
     display:grid;
 
-    grid-template-columns:repeat(2,1fr);
+    grid-template-columns:repeat(3,1fr);
 
-    gap:16px;
+    gap:10px;
 
-    margin-top:18px;
-
+    margin-top:14px;
 }
 
 .mini-card{
 
     background:var(--surface);
 
-    border-radius:24px;
+    border-radius:20px;
 
-    padding:22px;
+    padding:14px 10px;
 
     border:1px solid var(--border);
 
     transition:var(--transition);
 
+    min-width:0;
+
+    text-align:center;
 }
 
 .mini-card:hover{
@@ -430,33 +464,25 @@ button{
 /* NIEUW */
 
 .mini-card-title{
-
     display:flex;
-
-    align-items:center;
-
-    gap:10px;
-
-    margin-bottom:16px;
-
+    align-items:flex-start;
+    justify-content:center;
+    gap:7px;
+    margin-bottom:12px;
 }
 
 .mini-card-title i{
-
     color:var(--primary);
-
-    font-size:18px;
-
+    font-size:16px;
+    margin-top:1px;
+    flex-shrink:0;
 }
 
 .mini-card-title span{
-
     color:var(--text-secondary);
-
-    font-size:13px;
-
-    font-weight:500;
-
+    font-size:11px;
+    font-weight:600;
+    line-height:1.2;
 }
 
 .mini-card h2{
@@ -472,15 +498,19 @@ button{
 }
 
 .mini-card-status{
-
     display:block;
-
     color:#43E97B;
-
-    font-size:13px;
-
+    font-size:11px;
     font-weight:600;
+    line-height:1.2;
+}
 
+.mini-card-status.warning{
+    color:#FBBF24;
+}
+
+.mini-card-status.danger{
+    color:#EF4444;
 }
 
 /* ==========================================================
@@ -5139,4 +5169,290 @@ a,
 
     transform: scale(.98);
 
+}
+
+/* ==========================================================
+   WIST JE DAT
+========================================================== */
+
+.did-you-know-card{
+
+    position:relative;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    gap:12px;
+
+    margin-top:14px;
+
+    padding:12px 16px 12px 18px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #132238,
+            #0F1B2D
+        );
+
+    border:1px solid var(--border);
+
+    border-radius:22px;
+
+    overflow:hidden;
+
+    box-shadow:
+        0 12px 30px rgba(0,0,0,.18);
+}
+
+.did-you-know-content{
+
+    position:relative;
+    z-index:2;
+
+    flex:1;
+
+    min-width:0;
+}
+
+.did-you-know-header{
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    gap:10px;
+
+    margin-bottom:8px;
+}
+
+.did-you-know-title{
+
+    font-size:15px;
+    font-weight:700;
+
+    color:#FACC15;
+}
+
+.did-you-know-counter{
+
+    font-size:11px;
+    font-weight:600;
+
+    color:var(--text-secondary);
+}
+
+.did-you-know-card p{
+
+    margin:0;
+
+    max-width:210px;
+
+    font-size:12px;
+    line-height:1.4;
+
+    color:var(--text-secondary);
+}
+
+.did-you-know-cta{
+
+    margin-top:10px;
+
+    padding:0;
+
+    color:var(--primary-light);
+
+    font-size:11px;
+    font-weight:600;
+
+    text-align:left;
+}
+
+.did-you-know-illustration{
+
+    width:74px;
+    height:74px;
+
+    object-fit:contain;
+
+    flex-shrink:0;
+
+    margin-right:-8px;
+
+    filter:
+        drop-shadow(0 0 16px rgba(250,204,21,.16));
+}
+
+/* ==========================================================
+   CK AI - HOME
+========================================================== */
+
+.ck-ai-home-card{
+
+    position:relative;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    gap:12px;
+
+   margin-top:10px;
+
+padding:14px 16px;
+
+min-height:120px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #152A42,
+            #0E1D30
+        );
+
+    border:1px solid rgba(52,211,153,.18);
+
+    border-radius:24px;
+
+    overflow:hidden;
+
+    box-shadow:
+        0 14px 35px rgba(0,0,0,.22);
+}
+
+.ck-ai-home-content{
+
+    position:relative;
+    z-index:2;
+
+    flex:1;
+    min-width:0;
+}
+
+.ck-ai-home-header{
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    gap:10px;
+
+    margin-bottom:8px;
+}
+
+.ck-ai-home-title{
+
+    color:#FFFFFF;
+
+    font-size:16px;
+    font-weight:700;
+}
+
+.ck-ai-home-counter{
+
+    color:var(--text-secondary);
+
+    font-size:11px;
+    font-weight:600;
+}
+
+.ck-ai-home-status{
+
+    margin-bottom:6px;
+
+    color:#FBBF24;
+
+    font-size:12px;
+    font-weight:700;
+}
+
+.ck-ai-home-card p{
+
+    margin:0;
+
+    max-width:210px;
+
+    color:var(--text-secondary);
+
+    font-size:12px;
+    line-height:1.4;
+}
+
+.ck-ai-home-cta{
+
+    margin-top:12px;
+
+    padding:0;
+
+    color:var(--primary-light);
+
+    font-size:12px;
+    font-weight:700;
+
+    text-align:left;
+}
+
+.ck-ai-home-illustration{
+
+    width:90px;
+    height:90px;
+
+    object-fit:contain;
+
+    flex-shrink:0;
+
+    margin-right:-10px;
+
+    filter:
+        drop-shadow(0 0 20px rgba(52,211,153,.18));
+}
+
+/* ==========================================================
+   HOME - COMPACTE VERTICALE SPACING
+========================================================== */
+
+#homeSection .stats{
+    padding-top:0px;
+}
+
+#homeSection .mini-cards{
+    margin-top:8px;
+}
+
+#homeSection .did-you-know-card{
+    margin-top:8px;
+}
+
+#homeSection .ck-ai-home-card{
+    margin-top:8px;
+}
+
+#homeSection .home-info-grid{
+    margin-top:0;
+    gap:0;
+}
+
+.ck-ai-home-status.warning{
+    color:#FBBF24;
+}
+
+.ck-ai-home-status.success{
+    color:#4ADE80;
+}
+
+.ck-ai-home-status.reminder{
+    color:#60A5FA;
+}
+
+.ck-ai-home-status.analysis{
+    color:#A78BFA;
+}
+
+.ck-ai-home-status.finance{
+    color:#34D399;
+}
+
+.ck-ai-home-status.statistics{
+    color:#94A3B8;
 }

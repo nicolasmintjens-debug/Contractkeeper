@@ -9,6 +9,176 @@ let currentSmartTip = 0;
 
 let touchStartX = 0;
 
+let currentCKAIHomeInsight = 0;
+
+/* ==========================================================
+   WIST JE DAT - TIPS
+========================================================== */
+
+const didYouKnowTips = [
+
+    "Veel mensen betalen nog maanden voor abonnementen die ze nauwelijks gebruiken.",
+
+    "Een paar euro besparen per maand kan op jaarbasis een verrassend groot verschil maken.",
+
+    "Veel abonnementen worden automatisch verlengd zonder dat je er nog bewust bij stilstaat.",
+
+    "Door je contracten regelmatig te controleren voorkom je dat kleine prijsstijgingen ongemerkt oplopen.",
+
+    "Streamingdiensten zijn vaak één van de eerste plekken waar ongebruikte abonnementen blijven doorlopen.",
+
+    "Een contract dat ooit voordelig was, is niet automatisch vandaag nog de beste keuze.",
+
+    "Jaarlijks je vaste contracten controleren kan helpen om onnodige kosten sneller te ontdekken.",
+
+    "ContractKeeper helpt je al je abonnementen en contracten op één plaats overzichtelijk te houden."
+
+];
+
+let currentDidYouKnowTip = 0;
+
+function updateDidYouKnow() {
+
+    const card =
+    document.querySelector(".did-you-know-card");
+
+if (card) {
+
+    card.ontouchstart = function(event) {
+        touchStartX = event.changedTouches[0].clientX;
+    };
+
+    card.ontouchend = function(event) {
+
+        const touchEndX =
+            event.changedTouches[0].clientX;
+
+        if (touchStartX - touchEndX > 50) {
+
+            nextDidYouKnowTip();
+
+        } else if (touchEndX - touchStartX > 50) {
+
+            previousDidYouKnowTip();
+
+        }
+
+    };
+
+}
+
+    const text =
+        document.getElementById("didYouKnowText");
+
+    const counter =
+        document.getElementById("didYouKnowCounter");
+
+    if (!text || !counter) return;
+
+    text.textContent =
+        didYouKnowTips[currentDidYouKnowTip];
+
+    counter.textContent =
+        `${currentDidYouKnowTip + 1} / ${didYouKnowTips.length}`;
+}
+
+function nextDidYouKnowTip() {
+
+    currentDidYouKnowTip++;
+
+    if (currentDidYouKnowTip >= didYouKnowTips.length) {
+        currentDidYouKnowTip = 0;
+    }
+
+    updateDidYouKnow();
+}
+
+
+function previousDidYouKnowTip() {
+
+    currentDidYouKnowTip--;
+
+    if (currentDidYouKnowTip < 0) {
+        currentDidYouKnowTip = didYouKnowTips.length - 1;
+    }
+
+    updateDidYouKnow();
+}
+
+function updateCKAIHome() {
+
+    const card =
+    document.querySelector(".ck-ai-home-card");
+
+if (card) {
+
+    card.ontouchstart = function(event) {
+        touchStartX = event.changedTouches[0].clientX;
+    };
+
+    card.ontouchend = function(event) {
+
+        const touchEndX =
+            event.changedTouches[0].clientX;
+
+        if (touchStartX - touchEndX > 50) {
+
+            nextCKAIHomeInsight();
+
+        } else if (touchEndX - touchStartX > 50) {
+
+            previousCKAIHomeInsight();
+
+        }
+
+    };
+
+}
+
+    const insights =
+        ContractService.getCKInsights();
+
+    const counter =
+        document.getElementById("ckAiHomeCounter");
+
+    const status =
+        document.querySelector(".ck-ai-home-status");
+
+    const text =
+        document.getElementById("ckAiHomeText");
+
+    if (!counter || !status || !text) return;
+
+    if (!insights.length) {
+
+        counter.textContent = "";
+        status.textContent = "✅ Alles in orde";
+        text.textContent =
+            "Er zijn momenteel geen nieuwe CK AI-signalen.";
+
+        return;
+    }
+
+    if (currentCKAIHomeInsight >= insights.length) {
+        currentCKAIHomeInsight = 0;
+    }
+
+    const insight =
+        insights[currentCKAIHomeInsight];
+
+    counter.textContent =
+        `${currentCKAIHomeInsight + 1} / ${insights.length}`;
+
+    status.textContent =
+        `${insight.icon} ${insight.title}`;
+
+        status.className =
+    `ck-ai-home-status ${insight.type}`;
+
+    text.textContent =
+        insight.message;
+}
+
 function updateDashboard() {
 
     updateMonthlyTotal();
@@ -21,7 +191,42 @@ function updateDashboard() {
     updateCategoryTotals();
     updateCategoryChart();
     updateSmartTip();
+    updateDidYouKnow();
+    updateCKAIHome();
 
+}
+
+function nextCKAIHomeInsight() {
+
+    const insights =
+        ContractService.getCKInsights();
+
+    if (insights.length <= 1) return;
+
+    currentCKAIHomeInsight++;
+
+    if (currentCKAIHomeInsight >= insights.length) {
+        currentCKAIHomeInsight = 0;
+    }
+
+    updateCKAIHome();
+}
+
+
+function previousCKAIHomeInsight() {
+
+    const insights =
+        ContractService.getCKInsights();
+
+    if (insights.length <= 1) return;
+
+    currentCKAIHomeInsight--;
+
+    if (currentCKAIHomeInsight < 0) {
+        currentCKAIHomeInsight = insights.length - 1;
+    }
+
+    updateCKAIHome();
 }
 
 /* ==========================================================
@@ -164,14 +369,34 @@ function updateEndingSoon() {
     const element =
         document.getElementById("endingSoon");
 
-    if (!element) {
+    const status =
+        document.getElementById("endingSoonStatus");
 
-        return;
+    if (!element) return;
 
-    }
-
-    element.textContent =
+    const endingSoon =
         ContractService.getEndingSoonCount();
+
+    element.textContent = endingSoon;
+
+    if (!status) return;
+
+    if (endingSoon === 0) {
+
+    status.textContent = "Geen actie nodig";
+    status.className = "mini-card-status";
+
+} else if (endingSoon === 1) {
+
+    status.textContent = "1 binnen 30 dagen";
+    status.className = "mini-card-status warning";
+
+} else {
+
+    status.textContent = `${endingSoon} binnen 30 dagen`;
+    status.className = "mini-card-status danger";
+
+}
 
 }
 
@@ -249,49 +474,35 @@ function updateMostExpensiveContract() {
 
 function updateAttentionCard() {
 
-    const card =
-        document.getElementById("attentionInfoCard");
+    const count =
+        document.getElementById("attentionCount");
 
-    const container =
-        document.getElementById("attentionCard");
+    const status =
+        document.getElementById("attentionMiniStatus");
 
-    if (!card || !container) return;
+    if (!count || !status) return;
 
     const endingSoon =
         ContractService.getEndingSoonCount();
 
+    count.textContent = endingSoon;
+
     if (endingSoon === 0) {
 
-        card.className = "info-card success";
+    status.textContent = "Alles in orde";
+    status.className = "mini-card-status";
 
-        container.innerHTML = `
-            <strong>Alles in orde</strong>
-            <p>Geen contracten die binnenkort aflopen.</p>
-        `;
+} else if (endingSoon === 1) {
 
-    }
+    status.textContent = "Opgelet";
+    status.className = "mini-card-status warning";
 
-    else if (endingSoon === 1) {
+} else {
 
-        card.className = "info-card warning";
+    status.textContent = "Actie vereist";
+    status.className = "mini-card-status danger";
 
-        container.innerHTML = `
-            <strong>Opgelet</strong>
-            <p>1 contract loopt binnenkort af.</p>
-        `;
-
-    }
-
-    else {
-
-        card.className = "info-card danger";
-
-        container.innerHTML = `
-            <strong>Actie vereist</strong>
-            <p>${endingSoon} contracten lopen binnenkort af.</p>
-        `;
-
-    }
+}
 
 }
 
