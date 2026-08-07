@@ -585,6 +585,20 @@ function openEndingSoonContracts() {
 }
 
 /* ==========================================================
+   CK AI - STATUS
+========================================================== */
+
+let ckaiCurrentContract = null;
+
+let ckaiQuestions = [];
+
+let ckaiCurrentQuestion = 0;
+
+let ckaiAnswers = {};
+
+let ckaiSelectedAnswer = null;
+
+/* ==========================================================
    OPEN CK AI
 ========================================================== */
 
@@ -594,9 +608,22 @@ function openCKAI() {
 
     const page = document.getElementById("page-ckai");
 
+    if (!page) return;
+
     page.classList.remove("hidden");
 
     page.style.display = "block";
+
+    // Navigatie resetten
+    document
+        .querySelectorAll(".bottom-nav button")
+        .forEach(button => {
+            button.classList.remove("active");
+        });
+
+    document
+        .getElementById("nav-ckai")
+        ?.classList.add("active");
 
     document.getElementById("startCKAI").onclick = startCKAI;
 
@@ -695,45 +722,307 @@ function startCKAI() {
 function selectCKAIContract(contractId) {
 
     const contract = ContractService.getAll().find(
-
         c => c.id === contractId
-
     );
 
     if (!contract) return;
 
-    const container = document.getElementById("ckaiContent");
+    const questions =
+        CKAI_QUESTIONS[contract.name.toLowerCase()];
 
-    container.innerHTML = `
+    if (!questions || !questions.length) {
 
-        <div class="info-card">
+        alert("Voor dit contract zijn nog geen vragen beschikbaar.");
 
-            <strong>
+        return;
 
-    🤖 ${contract.name}
+    }
 
-    <br>
+    ckaiCurrentContract = contract;
 
-    <small>${contract.category}</small>
+ckaiQuestions = questions;
 
-</strong>
+ckaiCurrentQuestion = 0;
 
-            <p>
+ckaiAnswers = {};
 
-                Ik ga je enkele vragen stellen zodat ik je
-                persoonlijk advies kan geven.
+ckaiSelectedAnswer = null;
 
-            </p>
+showCKAIQuestion(
+    ckaiCurrentContract,
+    ckaiQuestions,
+    ckaiCurrentQuestion
+);
 
-            <button
-                class="btn w-100 mt-16">
+}
 
-                🚀 Start vragen
+/* ==========================================================
+   CK AI - TOON VRAAG
+========================================================== */
 
-            </button>
+function showCKAIQuestion(contract, questions, index) {
+
+    const question = questions[index];
+
+    // Hero verbergen
+    document.querySelector(".ckai-card").style.display = "none";
+
+    // Vraagenscherm tonen
+    const questionScreen =
+        document.getElementById("ckaiQuestionScreen");
+
+    questionScreen.classList.remove("hidden");
+    questionScreen.classList.add("active");
+
+    // Contractnaam
+    document.getElementById("ckaiQuestionContract").textContent =
+        contract.name;
+
+    // Progressie
+    document.getElementById("ckaiProgressBar").style.width =
+        `${((index + 1) / questions.length) * 100}%`;
+
+    // Volgende knop resetten
+    const nextButton =
+        document.getElementById("ckaiNextButton");
+
+    nextButton.disabled = true;
+    nextButton.classList.remove("active");
+
+    ckaiSelectedAnswer = null;
+
+    // Vraag tonen
+    document.getElementById("ckaiQuestionContent").innerHTML = `
+
+        <div class="ckai-question-card">
+
+            <div class="ckai-question-counter">
+
+                Vraag ${index + 1} van ${questions.length}
+
+            </div>
+
+            <h2 class="ckai-question-title">
+
+                ${question.question}
+
+            </h2>
+
+            <div class="ckai-question-options">
+
+                ${question.options.map(option => `
+
+                    <button class="ckai-option-btn">
+
+                        <div class="ckai-option-radio"></div>
+
+                        <span class="ckai-option-text">
+
+                            ${option}
+
+                        </span>
+
+                    </button>
+
+                `).join("")}
+
+            </div>
 
         </div>
 
     `;
 
+    // Antwoord selecteren
+    document
+        .querySelectorAll(".ckai-option-btn")
+        .forEach((button, buttonIndex) => {
+
+            button.addEventListener("click", () => {
+
+                document
+                    .querySelectorAll(".ckai-option-btn")
+                    .forEach(btn => btn.classList.remove("selected"));
+
+                button.classList.add("selected");
+
+                // Gekozen antwoord opslaan
+                const selectedOption =
+                    question.options[buttonIndex];
+
+                ckaiSelectedAnswer = selectedOption;
+
+                ckaiAnswers[question.id] = selectedOption;
+
+                nextButton.disabled = false;
+                nextButton.classList.add("active");
+
+            });
+
+        });
+
+    // Volgende knop
+    nextButton.onclick = nextCKAIQuestion;
+
+    // Terug knop
+const backButton =
+    document.getElementById("ckaiBackButton");
+
+if (backButton) {
+
+    backButton.onclick = () => {
+
+        document
+            .getElementById("ckaiQuestionScreen")
+            .classList.add("hidden");
+
+        document
+            .querySelector(".ckai-card")
+            .style.display = "block";
+
+        ckaiCurrentQuestion = 0;
+        ckaiSelectedAnswer = null;
+
+    };
+
 }
+
+}
+
+/* ==========================================================
+   CK AI - VOLGENDE VRAAG
+========================================================== */
+
+function nextCKAIQuestion() {
+
+    // Geen antwoord gekozen?
+    if (!ckaiSelectedAnswer) {
+
+        return;
+
+    }
+
+    // Volgende vraag
+    ckaiCurrentQuestion++;
+
+    // Alle vragen beantwoord?
+    if (ckaiCurrentQuestion >= ckaiQuestions.length) {
+
+    // Vraagenscherm verbergen
+    document
+        .getElementById("ckaiQuestionScreen")
+        .classList.add("hidden");
+
+   // Analyse tonen
+document
+    .getElementById("ckaiAnalysisScreen")
+    .classList.remove("hidden");
+
+// Titel aanpassen
+document.getElementById("ckaiAnalysisTitle").textContent =
+    `Ik analyseer jouw ${ckaiCurrentContract.name}-abonnement`;
+
+// Analyse starten
+startCKAIAnalysis();
+
+    return;
+
+}
+
+    // Volgende vraag tonen
+    showCKAIQuestion(
+        ckaiCurrentContract,
+        ckaiQuestions,
+        ckaiCurrentQuestion
+    );
+
+}
+
+/* ==========================================================
+   CK AI - ANALYSE
+========================================================== */
+
+function startCKAIAnalysis() {
+
+    const steps = [
+
+        "Contractgegevens ophalen",
+        "Gebruik analyseren",
+        "Vergelijken met actuele marktprijzen",
+        "Mogelijke besparing berekenen",
+        "Persoonlijk advies opstellen"
+
+    ];
+
+    let currentStep = 0;
+
+    function nextStep() {
+
+        if (currentStep > 0) {
+
+    const previousStep =
+        document.getElementById(`analysisStep${currentStep}`);
+
+    previousStep.innerHTML =
+        `<span class="analysis-success">✓</span> ${steps[currentStep - 1]}`;
+
+}
+
+        if (currentStep < steps.length) {
+
+            const activeStep =
+    document.getElementById(`analysisStep${currentStep + 1}`);
+
+activeStep.innerHTML =
+    `<span class="analysis-loading">⏳</span> ${steps[currentStep]}`;
+
+            currentStep++;
+
+            setTimeout(nextStep, 1200);
+
+        } else {
+
+    // Analyse verbergen
+    document
+        .getElementById("ckaiAnalysisScreen")
+        .classList.add("hidden");
+
+    // Resultaat tonen
+    document
+        .getElementById("ckaiResultScreen")
+        .classList.remove("hidden");
+
+}
+
+    }
+
+    nextStep();
+
+}
+
+/* ==========================================================
+   CK AI - RESULTAAT
+========================================================== */
+
+function initCKAIResult() {
+
+    const button =
+        document.getElementById("ckaiViewResult");
+
+    if (!button) return;
+
+    button.addEventListener("click", () => {
+
+        // Resultaat verbergen
+        document
+            .getElementById("ckaiResultScreen")
+            .classList.add("hidden");
+
+        // Premium tonen
+        document
+            .getElementById("ckaiPremiumScreen")
+            .classList.remove("hidden");
+
+    });
+
+}
+

@@ -574,74 +574,39 @@
 
         </section>
 
-        <!-- =========================================
-             CK AI
-========================================== -->
+<!-- ==========================================================
+     CONTRACTKEEPER AI
+========================================================== -->
 
 <section
     id="page-ckai"
-    class="page hidden">
+    class="section"
+    style="display: none;">
 
-    <section class="section">
+    <div class="ckai-hero">
 
-        <!-- HEADER -->
+        <div class="ckai-hero-content">
 
-        <div class="ckai-hero">
+            <div class="ckai-header">
 
-            <div class="ckai-hero-content">
+                <img
+                    src="assets/logos/ck-ai-logo.svg"
+                    class="ckai-logo"
+                    alt="ContractKeeper AI">
 
-                <div class="ckai-header">
+                <div class="ckai-header-content">
 
-    <img
-        src="assets/logos/ck-ai-logo.svg"
-        class="ckai-logo"
-        alt="ContractKeeper AI">
+                    <h1 class="ckai-brand">
 
-    <div class="ckai-header-content">
+                        <span class="brand-white">Contract</span><span class="brand-green">Keeper</span>
 
-        <h1 class="ckai-brand">
+                        <span class="brand-ai">AI</span>
 
-            <span class="brand-white">Contract</span><span class="brand-green">Keeper</span>
-            <span class="brand-ai">AI</span>
+                    </h1>
 
-        </h1>
+                    <p class="ckai-subtitle">
 
-        <p class="ckai-subtitle">
-
-            Jouw slimme contractadviseur die helpt je besparen.
-
-        </p>
-
-    </div>
-
-</div>
-
-        <!-- HERO CARD -->
-
-        <div class="ckai-card">
-
-            <div class="ckai-card-header">
-
-                <div class="ckai-card-icon">
-
-                    <i class="bi bi-chat-dots"></i>
-
-                </div>
-
-                <div class="ckai-card-content">
-
-                    <h3 class="ckai-card-title">
-
-    Welkom bij <span class="ck-brand">
-        <span class="brand-white">Contract</span><span class="brand-green">Keeper</span> <span class="brand-ai">AI</span>
-    </span>
-
-</h3>
-
-                    <p class="ckai-card-text">
-
-                        Ik analyseer je contracten en help je besparen.
-                        Kies hieronder waarmee ik je mag helpen.
+                        Jouw slimme contractadviseur die helpt je besparen.
 
                     </p>
 
@@ -649,19 +614,330 @@
 
             </div>
 
-            <button
-                id="startCKAI"
-                class="ckai-button">
+            <!-- WELKOMSKAART -->
 
-                🚀 Start persoonlijk advies
+            <div class="ckai-card">
 
-            </button>
+                <div class="ckai-card-header">
 
-            <div id="ckaiContent"></div>
+                    <div class="ckai-card-icon">
+
+                        <i class="bi bi-chat-dots"></i>
+
+                    </div>
+
+                    <div class="ckai-card-content">
+
+                        <h3 class="ckai-card-title">
+
+                            Welkom bij
+
+                            <span class="ck-brand">
+
+                                <span class="brand-white">Contract</span><span class="brand-green">Keeper</span>
+
+                                <span class="brand-ai">AI</span>
+
+                            </span>
+
+                        </h3>
+
+                        <p class="ckai-card-text">
+
+                            Ik analyseer jouw contracten en geef persoonlijk bespaaradvies.
+
+                            Kies hieronder waarmee ik je mag helpen.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <button
+                    id="startCKAI"
+                    class="ckai-button">
+
+                    🚀 Start persoonlijk advies
+
+                </button>
+
+                <div id="ckaiContent"></div>
+
+            </div>
 
         </div>
 
-    </section>
+    </div>
+
+    <!-- ==========================================================
+         VRAAGENSCHERM
+    ========================================================== -->
+
+    <div
+        id="ckaiQuestionScreen"
+        class="hidden">
+
+        <div class="ckai-question-header">
+
+            <button
+                id="ckaiBackButton"
+                class="ckai-back-btn">
+
+                <i class="bi bi-arrow-left"></i>
+
+                Terug
+
+            </button>
+
+            <div
+                id="ckaiQuestionContract"
+                class="ckai-question-contract">
+
+            </div>
+
+        </div>
+
+        <div class="ckai-progress">
+
+            <div
+                id="ckaiProgressBar"
+                class="ckai-progress-fill">
+
+            </div>
+
+        </div>
+
+        <div id="ckaiQuestionContent"></div>
+
+        <div class="ckai-question-footer">
+
+            <button
+                id="ckaiNextButton"
+                class="ckai-next-btn"
+                disabled>
+
+                Volgende
+
+                <i class="bi bi-arrow-right"></i>
+
+            </button>
+
+        </div>
+
+    </div>
+
+        <!-- ==========================================================
+         ANALYSE
+    ========================================================== -->
+
+    <div
+        id="ckaiAnalysisScreen"
+        class="hidden">
+
+        <div class="ckai-analysis-card">
+
+            <div class="ckai-analysis-icon">
+
+                🤖
+
+            </div>
+
+            <h2
+                id="ckaiAnalysisTitle"
+                class="ckai-analysis-title">
+
+                Ik analyseer jouw contract...
+
+            </h2>
+
+            <div class="ckai-analysis-steps">
+
+                <div
+                    id="analysisStep1"
+                    class="ckai-analysis-step">
+
+                    ⏳ Contractgegevens ophalen
+
+                </div>
+
+                <div
+                    id="analysisStep2"
+                    class="ckai-analysis-step">
+
+                    ○ Gebruik analyseren
+
+                </div>
+
+                <div
+                    id="analysisStep3"
+                    class="ckai-analysis-step">
+
+                    ○ Vergelijken met actuele marktprijzen
+
+                </div>
+
+                <div
+                    id="analysisStep4"
+                    class="ckai-analysis-step">
+
+                    ○ Mogelijke besparing berekenen
+
+                </div>
+
+                <div
+                    id="analysisStep5"
+                    class="ckai-analysis-step">
+
+                    ○ Persoonlijk advies opstellen
+
+                </div>
+
+            </div>
+
+            <p class="ckai-analysis-note">
+
+                Dit duurt meestal minder dan 10 seconden.
+
+            </p>
+
+        </div>
+
+    </div>
+
+    <!-- ==========================================================
+         ANALYSE VOLTOOID
+    ========================================================== -->
+
+    <div
+        id="ckaiResultScreen"
+        class="hidden">
+
+        <div class="ckai-analysis-card">
+
+            <div class="ckai-analysis-icon">
+
+                🎉
+
+            </div>
+
+            <h2 class="ckai-analysis-title">
+
+                Analyse voltooid
+
+            </h2>
+
+            <p class="ckai-analysis-text">
+
+                Goed nieuws!
+
+                <br><br>
+
+                ContractKeeper AI heeft jouw abonnement geanalyseerd.
+
+                <br><br>
+
+                Er zijn aanbevelingen gevonden.
+
+            </p>
+
+            <button
+                id="ckaiViewResult"
+                class="ckai-button">
+
+                Bekijk mijn analyse
+
+            </button>
+
+        </div>
+
+    </div>
+
+        <!-- ==========================================================
+         PREMIUM
+    ========================================================== -->
+
+    <div
+        id="ckaiPremiumScreen"
+        class="hidden">
+
+        <div class="ckai-analysis-card">
+
+            <div class="ckai-analysis-icon">
+
+                🔒
+
+            </div>
+
+            <h2 class="ckai-analysis-title">
+
+                Ontgrendel ContractKeeper Premium
+
+            </h2>
+
+            <p class="ckai-analysis-text">
+
+                Jouw persoonlijke analyse is klaar.
+
+                <br><br>
+
+                Ontgrendel Premium en bekijk:
+
+            </p>
+
+            <div class="ckai-analysis-steps">
+
+                <div class="ckai-analysis-step">
+
+                    ✅ Persoonlijk bespaaradvies
+
+                </div>
+
+                <div class="ckai-analysis-step">
+
+                    ✅ Beste alternatieven
+
+                </div>
+
+                <div class="ckai-analysis-step">
+
+                    ✅ Jaarlijkse besparing
+
+                </div>
+
+                <div class="ckai-analysis-step">
+
+                    ✅ AI aanbevelingen
+
+                </div>
+
+                <div class="ckai-analysis-step">
+
+                    ✅ Contractmonitoring
+
+                </div>
+
+            </div>
+
+            <button
+                id="startPremium"
+                class="ckai-button">
+
+                ✨ Start 30 dagen gratis
+
+            </button>
+
+            <button
+                id="premiumLater"
+                class="ckai-secondary-button">
+
+                Misschien later
+
+            </button>
+
+        </div>
+
+    </div>
 
 </section>
 
@@ -1295,6 +1571,11 @@
         <span>Instellingen</span>
     </button>
 
+<button
+    id="nav-ckai"
+    style="display:none;">
+</button>
+
 </nav>
     
 </div>
@@ -1309,6 +1590,7 @@
 <script src="js/services.js"></script>
 <script src="js/contractService.js"></script>
 <script src="js/contracts.js"></script>
+<script src="js/ckaiQuestions.js"></script>
 <script src="js/dashboard.js"></script>
 <script src="js/modal.js"></script>
 <script src="js/updates.js"></script>

@@ -40,6 +40,10 @@ if (typeof initNavigation === "function") {
 // CK AI initialiseren
 initAI();
 
+if (typeof initCKAIResult === "function") {
+    initCKAIResult();
+}
+
 // Service Worker registreren
 registerServiceWorker();
 
