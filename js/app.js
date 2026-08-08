@@ -141,6 +141,7 @@ function hideAllPages() {
     document.getElementById("insightsSection").style.display = "none";
     document.getElementById("settingsSection").style.display = "none";
     document.getElementById("page-ckai").style.display = "none";
+    document.getElementById("ckAiInsightsSection").style.display = "none";
 
 }
 

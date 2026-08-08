@@ -893,6 +893,139 @@ if (ckaiContent) {
 
 }
 
+function openCKAIInsights() {
+
+    hideAllPages();
+
+    const page =
+        document.getElementById("ckAiInsightsSection");
+
+    if (!page) return;
+
+    page.style.display = "block";
+
+    renderCKAIInsights();
+
+    document
+        .querySelectorAll(".bottom-nav button")
+        .forEach(button => {
+            button.classList.remove("active");
+        });
+
+}
+
+function renderCKAIInsights() {
+
+    const container =
+        document.getElementById("ckAiInsightsList");
+
+    if (!container) return;
+
+    const insights =
+        ContractService.getCKInsights();
+
+    if (!insights.length) {
+
+        container.innerHTML = `
+            <div class="ck-ai-insights-empty">
+                Geen inzichten beschikbaar.
+            </div>
+        `;
+
+        return;
+    }
+
+
+    /* ==============================
+       INZICHTEN OPSPLITSEN
+    ============================== */
+
+    const mainInsights =
+        insights.filter(insight =>
+            insight.priority <= 3
+        );
+
+    const overviewInsights =
+        insights.filter(insight =>
+            insight.priority >= 4
+        );
+
+
+    /* ==============================
+       KAART MAKEN
+    ============================== */
+
+    function createInsightCard(insight) {
+
+        return `
+            <div class="ck-ai-insight-card ${insight.type} priority-${insight.priority}">
+
+                <div class="ck-ai-insight-header">
+
+                    <span class="ck-ai-insight-icon">
+                        ${insight.icon}
+                    </span>
+
+                    <span class="ck-ai-insight-title">
+                        ${insight.title}
+                    </span>
+
+                </div>
+
+                <p class="ck-ai-insight-message">
+                    ${insight.message}
+                </p>
+
+                ${insight.type === "warning" ? `
+    <button
+        class="ck-ai-insight-action"
+        onclick="openEndingSoonContracts()">
+
+        Bekijk contract →
+
+    </button>
+` : ""}
+
+            </div>
+        `;
+    }
+
+
+    /* ==============================
+       PAGINA OPBOUWEN
+    ============================== */
+
+    container.innerHTML = `
+
+        <div class="ck-ai-main-insights">
+
+            ${mainInsights
+                .map(createInsightCard)
+                .join("")}
+
+        </div>
+
+
+        <div class="ck-ai-overview">
+
+            <h3 class="ck-ai-overview-title">
+                Jouw overzicht
+            </h3>
+
+            <div class="ck-ai-overview-grid">
+
+                ${overviewInsights
+                    .map(createInsightCard)
+                    .join("")}
+
+            </div>
+
+        </div>
+
+    `;
+
+}
+
 /* ==========================================================
    START CK AI
 ========================================================== */
