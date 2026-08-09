@@ -145,6 +145,14 @@ function hideAllPages() {
 
 }
 
+function openInsights() {
+
+    document
+        .getElementById("nav-insights")
+        ?.click();
+
+}
+
 function initNavigation() {
 
     const homeButton = document.getElementById("nav-home");
@@ -190,8 +198,6 @@ function openPage(page) {
     }
 
 }
-
-
 
     if (homeButton) {
 

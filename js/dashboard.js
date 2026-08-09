@@ -193,6 +193,7 @@ function updateDashboard() {
     updateSmartTip();
     updateDidYouKnow();
     updateCKAIHome();
+    renderSmartInsights();
 
 }
 
@@ -1023,6 +1024,65 @@ function renderCKAIInsights() {
         </div>
 
     `;
+
+}
+
+function renderSmartInsights() {
+
+    const container =
+        document.getElementById("smartInsightsList");
+
+    if (!container) return;
+
+    const insights =
+        ContractService.getCKInsights();
+
+    /*
+     * Alleen echte inzichten tonen.
+     * De algemene statistieken staan al
+     * in het financieel overzicht.
+     */
+    const smartInsights = insights.filter(insight =>
+        insight.type === "warning" ||
+        insight.type === "reminder" ||
+        insight.type === "analysis" ||
+        insight.type === "success"
+    );
+
+    if (!smartInsights.length) {
+
+        container.innerHTML = `
+            <div class="smart-insight-empty">
+                Momenteel zijn er geen bijzondere inzichten.
+            </div>
+        `;
+
+        return;
+    }
+
+    container.innerHTML = smartInsights.map(insight => `
+
+        <div class="smart-insight-card ${insight.type}">
+
+            <div class="smart-insight-header">
+
+                <span class="smart-insight-icon">
+                    ${insight.icon}
+                </span>
+
+                <span class="smart-insight-title">
+                    ${insight.title}
+                </span>
+
+            </div>
+
+            <p class="smart-insight-message">
+                ${insight.message}
+            </p>
+
+        </div>
+
+    `).join("");
 
 }
 

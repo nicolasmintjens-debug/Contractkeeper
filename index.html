@@ -283,7 +283,7 @@
 
         <button
     class="ck-ai-home-cta"
-    onclick="openCKAIInsights()">
+    onclick="openInsights()">
 
     Bekijk inzicht →
 
@@ -1228,71 +1228,93 @@
 </button>
 
 </div>
-    
-    <div class="insights-grid">
 
-        <div class="insight-card">
-            <div class="insight-icon">💶</div>
-            <div class="insight-title">Jij betaalt</div>
-            <div class="insight-value" id="monthlyTotalInsights">
-    €0,00
-</div>
-            <div class="insight-subtitle">
+
+        <div class="financial-overview-card">
+
+    <div class="financial-overview-header">
+
+        <span class="financial-overview-title">
+            Financieel overzicht
+        </span>
+
+    </div>
+
+
+    <div class="financial-overview-main">
+
+        <div class="financial-overview-main-icon">
+            💶
+        </div>
+
+        <div>
+
+            <div
+                id="monthlyTotalInsights"
+                class="financial-overview-main-value">
+
+                €0,00
+
+            </div>
+
+            <div class="financial-overview-main-label">
                 per maand
             </div>
+
         </div>
 
-        <div class="insight-card">
-            <div class="insight-icon">📅</div>
-            <div class="insight-title">Op jaarbasis</div>
-            <div class="insight-value" id="yearlyTotal">
+    </div>
+
+
+    <div class="financial-overview-bottom">
+
+        <div class="financial-overview-stat">
+
+            <div class="financial-overview-stat-icon">
+                📅
+            </div>
+
+            <div
+                id="yearlyTotal"
+                class="financial-overview-stat-value">
+
                 €0,00
-            </div>
-        </div>
 
-        <div class="insight-card">
-            <div class="insight-icon">📄</div>
-            <div class="insight-title">Actieve contracten</div>
-            <div class="insight-value" id="activeContractsInsights">
-    0
-</div>
-        </div>
-
-        <div class="insight-card">
-            <div class="insight-icon">⏳</div>
-            <div class="insight-title">
-                Eerstvolgende einddatum
             </div>
 
-            <div class="insight-value" id="nextEnding">
-                -
-            </div>
-
-            <div class="insight-subtitle" id="nextEndingDate">
-                -
+            <div class="financial-overview-stat-label">
+                per jaar
             </div>
 
         </div>
 
-        <div class="insight-card">
 
-    <div class="insight-icon">💰</div>
+        <div class="financial-overview-divider"></div>
 
-    <div class="insight-title">
-        Grootste uitgave
-    </div>
 
-    <div class="insight-value" id="highestContract">
-        -
-    </div>
+        <div class="financial-overview-stat">
 
-    <div class="insight-subtitle" id="highestContractPrice">
-        -
+            <div class="financial-overview-stat-icon">
+                📄
+            </div>
+
+            <div
+                id="activeContractsInsights"
+                class="financial-overview-stat-value">
+
+                0
+
+            </div>
+
+            <div class="financial-overview-stat-label">
+                actieve contracten
+            </div>
+
+        </div>
+
     </div>
 
 </div>
-        
-    </div>
 
 <!-- ===========================
      UITGAVEN PER CATEGORIE
@@ -1300,21 +1322,62 @@
 
 <section class="insight-section">
 
-    <h3>
+    <!-- =========================================
+     SLIMME INZICHTEN
+========================================== -->
 
-        <i class="bi bi-pie-chart-fill"></i>
+<div class="smart-insights-section">
 
-        Uitgaven per categorie
+    <div class="smart-insights-heading">
 
-    </h3>
+        <div>
+            <h3>✨ Slimme inzichten</h3>
 
-    <div id="categoryChart">
+            <p>
+                Wat opvalt in jouw contracten.
+            </p>
+        </div>
 
     </div>
 
-    <div id="categoryTotals">
+    <div id="smartInsightsList">
+        <!-- Wordt dynamisch gevuld -->
+    </div>
+
+</div>
+
+    <div class="category-analysis-section">
+
+    <div class="category-analysis-heading">
+
+        <div>
+            <h3>
+                📊 Analyse
+            </h3>
+
+            <p>
+                Verdeling van je maandelijkse contractkosten.
+            </p>
+        </div>
 
     </div>
+
+
+    <div class="category-analysis-card">
+
+        <h4>
+            Uitgaven per categorie
+        </h4>
+
+        <div id="categoryChart">
+        </div>
+
+        <div id="categoryTotals">
+        </div>
+
+    </div>
+
+</div>
 
 </section>
 

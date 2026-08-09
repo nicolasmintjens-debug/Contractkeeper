@@ -674,6 +674,8 @@ getCKInsights() {
 
     if (endingSoon > 0) {
 
+    if (endingSoon === 1 && next) {
+
         insights.push({
 
             priority: 1,
@@ -682,19 +684,39 @@ getCKInsights() {
 
             icon: "⚠️",
 
-            title: "Actie vereist",
+            title: `${next.name} loopt binnenkort af`,
 
-            message: `${endingSoon} contract(en) lopen binnen 30 dagen af.`
+            message:
+                `Je contract eindigt op ${this.formatDate(next.endDate)}.`
 
         });
+
+    } else {
+
+        insights.push({
+
+            priority: 1,
+
+            type: "warning",
+
+            icon: "⚠️",
+
+            title: "Meerdere contracten lopen binnenkort af",
+
+            message:
+                `${endingSoon} contracten lopen binnen 30 dagen af.`
+
+        });
+
+    }   
 
     }
 
    /* ---------------------------------
-   Herinnering
+   Eerstvolgende contract
 --------------------------------- */
 
-if (next) {
+if (next && endingSoon === 0) {
 
     insights.push({
 
@@ -702,40 +724,72 @@ if (next) {
 
         type: "reminder",
 
-        icon: "🤖",
+        icon: "📅",
 
-        title: "CK AI Advies",
+        title: "Eerstvolgende einddatum",
 
         message:
-`Je ${next.category.toLowerCase()}-contract "${next.name}" loopt af op ${this.formatDate(next.endDate)}.
-
-💡 ${this.getCategoryAdvice(next.category)}`
+            `${next.name} is je eerstvolgende contract dat afloopt. ` +
+            `Einddatum: ${this.formatDate(next.endDate)}.`
 
     });
 
 }
 
     /* ---------------------------------
-       Analyse
-    --------------------------------- */
+   Grootste kostenpost
+--------------------------------- */
 
-    if (highest) {
+if (highest) {
 
-        insights.push({
+    const yearlyHighest = highest.amount * 12;
 
-            priority: 3,
+    insights.push({
 
-            type: "analysis",
+        priority: 3,
 
-            icon: "🤖",
+        type: "analysis",
 
-            title: "Analyse",
+        icon: "💰",
 
-            message: `Je duurste contract is ${highest.name} (${this.formatPrice(highest.amount)} per maand).`
+        title: "Grootste kostenpost",
 
-        });
+        message:
+            `${highest.name} is je duurste contract. ` +
+            `Je betaalt ${this.formatPrice(highest.amount)} per maand, ` +
+            `of ${this.formatPrice(yearlyHighest)} per jaar.`
 
-    }
+    });
+
+}
+
+/* ---------------------------------
+   Aandeel grootste contract
+--------------------------------- */
+
+if (highest && monthlyTotal > 0) {
+
+    const share =
+        (highest.amount / monthlyTotal) * 100;
+
+    insights.push({
+
+        priority: 3,
+
+        type: "analysis",
+
+        icon: "📊",
+
+        title: "Groot aandeel in je kosten",
+
+        message:
+            `${highest.name} vertegenwoordigt ` +
+            `${share.toFixed(1).replace(".", ",")}% ` +
+            `van je maandelijkse contractkosten.`
+
+    });
+
+}
 
     /* ---------------------------------
        Uitgaven
