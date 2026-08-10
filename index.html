@@ -643,86 +643,6 @@
 
 </section>
 
-        <!-- =========================================
-             INSTELLINGEN
-        ========================================== -->
-
-        <section
-            id="page-settings"
-            class="page hidden">
-
-            <section class="section">
-
-                <h2>
-
-                    Instellingen
-
-                </h2>
-
-                <div class="mt-24">
-
-                    <button class="btn w-100 btn-secondary">
-
-                        <i class="bi bi-download"></i>
-
-                        Exporteer contracten
-
-                    </button>
-
-                </div>
-
-                <div class="mt-16">
-
-                    <button class="btn w-100 btn-secondary">
-
-                        <i class="bi bi-upload"></i>
-
-                        Importeer contracten
-
-                    </button>
-
-                </div>
-
-                <div class="mt-16">
-
-                    <button class="btn w-100 btn-secondary">
-
-                        <i class="bi bi-bell"></i>
-
-                        Meldingen
-
-                    </button>
-
-                </div>
-
-                <div class="mt-16">
-
-                    <button class="btn w-100 btn-secondary">
-
-                        <i class="bi bi-moon-stars"></i>
-
-                        Thema
-
-                    </button>
-
-                </div>
-
-                <div class="mt-16">
-
-                    <button class="btn w-100 btn-secondary">
-
-                        <i class="bi bi-info-circle"></i>
-
-                        Over ContractKeeper
-
-                    </button>
-
-                </div>
-
-            </section>
-
-        </section>
-
 <!-- ==========================================================
      CONTRACTKEEPER AI
 ========================================================== -->
@@ -1473,25 +1393,233 @@
 
     </div>
 
-    <div class="empty-state">
+    <div class="settings-page">
 
-        <i class="bi bi-gear"></i>
+    <div class="settings-group">
 
-        <h3>Instellingen</h3>
+        <h3>Meldingen</h3>
 
-        <p>
-            Deze pagina is momenteel in ontwikkeling.
-        </p>
+        <div class="settings-card">
 
-        <small>
-            Binnenkort vind je hier login,
-            back-ups, meldingen en thema's.
-        </small>
+            <div class="settings-row">
+
+                <div class="settings-icon">
+                    <i class="bi bi-bell"></i>
+                </div>
+
+                <div class="settings-content">
+                    <strong>Contractmeldingen</strong>
+                    <span>Waarschuw mij voor einddatums</span>
+                </div>
+
+                <label class="settings-switch">
+    <input type="checkbox" id="contractNotifications" checked>
+    <span class="settings-switch-slider"></span>
+</label>
+
+            </div>
+
+            <div class="settings-row settings-row-clickable" id="reminderSetting">
+
+    <div class="settings-icon">
+        <i class="bi bi-clock"></i>
+    </div>
+
+    <div class="settings-content">
+        <strong>Herinnering</strong>
+        <span id="reminderValue">30 dagen vooraf</span>
+    </div>
+
+    <div class="settings-action">
+        <i class="bi bi-chevron-right"></i>
+    </div>
+
+</div>
+
+        </div>
+
+        <h3>Voorkeuren</h3>
+
+<div class="settings-card">
+
+    <div class="settings-row settings-row-clickable" id="languageSetting">
+
+        <div class="settings-icon">
+            <i class="bi bi-globe"></i>
+        </div>
+
+        <div class="settings-content">
+            <strong>Taal</strong>
+            <span id="languageValue">Nederlands</span>
+        </div>
+
+        <div class="settings-action">
+            <i class="bi bi-chevron-right"></i>
+        </div>
 
     </div>
 
+    <div class="settings-row settings-row-clickable" id="currencySetting">
+
+        <div class="settings-icon">
+            <i class="bi bi-currency-euro"></i>
+        </div>
+
+        <div class="settings-content">
+            <strong>Valuta</strong>
+            <span id="currencyValue">Euro (€)</span>
+        </div>
+
+        <div class="settings-action">
+            <i class="bi bi-chevron-right"></i>
+        </div>
+
+    </div>
+
+</div>
+
+<h3>Back-up & gegevens</h3>
+
+<div class="settings-card">
+
+    <div class="settings-row settings-row-clickable" id="exportDataSetting">
+
+        <div class="settings-icon">
+            <i class="bi bi-box-arrow-down"></i>
+        </div>
+
+        <div class="settings-content">
+            <strong>Gegevens exporteren</strong>
+            <span>Maak een back-up van je gegevens</span>
+        </div>
+
+        <div class="settings-action">
+            <i class="bi bi-chevron-right"></i>
+        </div>
+
+    </div>
+
+    <div class="settings-row settings-row-clickable" id="importDataSetting">
+
+        <div class="settings-icon">
+            <i class="bi bi-box-arrow-up"></i>
+        </div>
+
+        <div class="settings-content">
+            <strong>Gegevens importeren</strong>
+            <span>Herstel een eerdere back-up</span>
+        </div>
+
+        <div class="settings-action">
+            <i class="bi bi-chevron-right"></i>
+        </div>
+
+    </div>
+
+</div>
+
+<h3>Over ContractKeeper</h3>
+
+<div class="settings-card">
+
+    <div class="settings-row settings-row-clickable" id="aboutSetting">
+
+        <div class="settings-icon">
+            <i class="bi bi-info-circle"></i>
+        </div>
+
+        <div class="settings-content">
+            <strong>Over ContractKeeper</strong>
+            <span>Informatie over de app</span>
+        </div>
+
+        <div class="settings-action">
+            <i class="bi bi-chevron-right"></i>
+        </div>
+
+    </div>
+
+    <div class="settings-row settings-row-clickable" id="checkUpdatesSetting">
+
+        <div class="settings-icon">
+            <i class="bi bi-arrow-repeat"></i>
+        </div>
+
+        <div class="settings-content">
+            <strong>Controleer op updates</strong>
+            <span>Zoek naar een nieuwe versie</span>
+        </div>
+
+        <div class="settings-action">
+            <i class="bi bi-chevron-right"></i>
+        </div>
+
+    </div>
+
+    <div class="settings-row">
+
+        <div class="settings-icon">
+            <i class="bi bi-code-slash"></i>
+        </div>
+
+        <div class="settings-content">
+            <strong>Versie</strong>
+            <span id="settingsVersion">1.0.0</span>
+        </div>
+
+    </div>
+
+</div>
+
+<h3>Gegevensbeheer</h3>
+
+<div class="settings-card">
+
+    <div class="settings-row settings-row-clickable settings-row-danger"
+         id="deleteAllDataSetting">
+
+        <div class="settings-icon">
+            <i class="bi bi-trash3"></i>
+        </div>
+
+        <div class="settings-content">
+            <strong>Alle contracten verwijderen</strong>
+            <span>Verwijder al je opgeslagen contracten</span>
+        </div>
+
+        <div class="settings-action">
+            <i class="bi bi-chevron-right"></i>
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+
+</div>
+
 </section>
-            
+
+<div id="reminderSheet" class="settings-sheet">
+
+    <div class="settings-sheet-content">
+
+        <h3>Herinnering</h3>
+
+        <button data-days="30">30 dagen vooraf</button>
+        <button data-days="14">14 dagen vooraf</button>
+        <button data-days="7">7 dagen vooraf</button>
+        <button data-days="0">Op de einddatum</button>
+
+        <button class="settings-sheet-cancel">
+            Annuleren
+        </button>
+
+    </div>
+
+</div>
+           
     </main>
 
 

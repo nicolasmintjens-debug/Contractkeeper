@@ -40,6 +40,9 @@ if (typeof initNavigation === "function") {
 // CK AI initialiseren
 initAI();
 
+// Settings initialiseren
+initSettings();
+
 if (typeof initCKAIResult === "function") {
     initCKAIResult();
 }
@@ -345,5 +348,194 @@ function initAI() {
 function openAI() {
 
     openCKAI();
+
+}
+
+/* ==========================================================
+   SETTINGS
+========================================================== */
+
+function initSettings() {
+
+localStorage.removeItem("contractTheme");
+document.documentElement.removeAttribute("data-theme");
+
+const themeSetting =
+    document.getElementById("themeSetting");
+
+const themeSheet =
+    document.getElementById("themeSheet");
+
+const themeValue =
+    document.getElementById("themeValue");
+
+const themeOptions =
+    themeSheet.querySelectorAll("button[data-theme]");
+
+const notificationsToggle =
+    document.getElementById("contractNotifications");
+
+    const reminderSetting =
+        document.getElementById("reminderSetting");
+
+    const reminderSheet =
+        document.getElementById("reminderSheet");
+
+    const cancelButton =
+        reminderSheet?.querySelector(".settings-sheet-cancel");
+
+
+        const reminderValue =
+    document.getElementById("reminderValue");
+
+const reminderOptions =
+    reminderSheet.querySelectorAll("button[data-days]");
+
+    const savedReminder =
+    localStorage.getItem("contractReminderDays");
+
+if (savedReminder !== null) {
+
+    reminderValue.textContent =
+        savedReminder === "0"
+            ? "Op de einddatum"
+            : `${savedReminder} dagen vooraf`;
+
+}
+
+function applyTheme(theme) {
+
+    document.documentElement.setAttribute(
+        "data-theme",
+        theme
+    );
+
+}
+
+const savedTheme =
+    localStorage.getItem("contractTheme");
+
+if (savedTheme !== null) {
+
+    applyTheme(savedTheme);
+
+    let themeLabel = "Donker";
+
+    if (savedTheme === "light") {
+        themeLabel = "Licht";
+    }
+
+    if (savedTheme === "system") {
+        themeLabel = "Systeem";
+    }
+
+    themeValue.textContent =
+        themeLabel;
+
+}
+
+const savedNotifications =
+    localStorage.getItem("contractNotifications");
+
+if (savedNotifications !== null) {
+
+    notificationsToggle.checked =
+        savedNotifications === "true";
+
+}
+
+    if (!reminderSetting || !reminderSheet) {
+        return;
+    }
+
+    reminderSetting.addEventListener("click", () => {
+
+        reminderSheet.classList.add("active");
+
+    });
+
+    themeSetting?.addEventListener("click", () => {
+
+    themeSheet?.classList.add("active");
+
+});
+
+    cancelButton?.addEventListener("click", () => {
+
+        reminderSheet.classList.remove("active");
+
+    });
+
+    themeSheet
+    ?.querySelector(".settings-sheet-cancel")
+    ?.addEventListener("click", () => {
+
+        themeSheet.classList.remove("active");
+
+    });
+
+    themeOptions.forEach(option => {
+
+    option.addEventListener("click", () => {
+
+        const theme =
+    option.dataset.theme;
+
+localStorage.setItem("contractTheme", theme);
+
+applyTheme(theme);
+
+let label = "Donker";
+
+        if (theme === "light") {
+            label = "Licht";
+        }
+
+        if (theme === "system") {
+            label = "Systeem";
+        }
+
+        themeValue.textContent =
+            label;
+
+        themeSheet.classList.remove("active");
+
+    });
+
+});
+
+    reminderOptions.forEach(option => {
+
+    option.addEventListener("click", () => {
+
+        const days =
+            option.dataset.days;
+
+        localStorage.setItem("contractReminderDays", days);
+
+        let label =
+            `${days} dagen vooraf`;
+
+        if (days === "0") {
+            label = "Op de einddatum";
+        }
+
+        reminderValue.textContent =
+            label;
+
+        reminderSheet.classList.remove("active");
+
+    });
+
+});
+
+notificationsToggle.addEventListener("change", () => {
+
+    localStorage.setItem(
+        "contractNotifications",
+        notificationsToggle.checked
+    );
+
+});
 
 }
