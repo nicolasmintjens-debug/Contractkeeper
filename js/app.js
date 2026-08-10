@@ -360,18 +360,6 @@ function initSettings() {
 localStorage.removeItem("contractTheme");
 document.documentElement.removeAttribute("data-theme");
 
-const themeSetting =
-    document.getElementById("themeSetting");
-
-const themeSheet =
-    document.getElementById("themeSheet");
-
-const themeValue =
-    document.getElementById("themeValue");
-
-const themeOptions =
-    themeSheet.querySelectorAll("button[data-theme]");
-
 const notificationsToggle =
     document.getElementById("contractNotifications");
 
@@ -403,37 +391,6 @@ if (savedReminder !== null) {
 
 }
 
-function applyTheme(theme) {
-
-    document.documentElement.setAttribute(
-        "data-theme",
-        theme
-    );
-
-}
-
-const savedTheme =
-    localStorage.getItem("contractTheme");
-
-if (savedTheme !== null) {
-
-    applyTheme(savedTheme);
-
-    let themeLabel = "Donker";
-
-    if (savedTheme === "light") {
-        themeLabel = "Licht";
-    }
-
-    if (savedTheme === "system") {
-        themeLabel = "Systeem";
-    }
-
-    themeValue.textContent =
-        themeLabel;
-
-}
-
 const savedNotifications =
     localStorage.getItem("contractNotifications");
 
@@ -454,55 +411,11 @@ if (savedNotifications !== null) {
 
     });
 
-    themeSetting?.addEventListener("click", () => {
-
-    themeSheet?.classList.add("active");
-
-});
-
     cancelButton?.addEventListener("click", () => {
 
         reminderSheet.classList.remove("active");
 
     });
-
-    themeSheet
-    ?.querySelector(".settings-sheet-cancel")
-    ?.addEventListener("click", () => {
-
-        themeSheet.classList.remove("active");
-
-    });
-
-    themeOptions.forEach(option => {
-
-    option.addEventListener("click", () => {
-
-        const theme =
-    option.dataset.theme;
-
-localStorage.setItem("contractTheme", theme);
-
-applyTheme(theme);
-
-let label = "Donker";
-
-        if (theme === "light") {
-            label = "Licht";
-        }
-
-        if (theme === "system") {
-            label = "Systeem";
-        }
-
-        themeValue.textContent =
-            label;
-
-        themeSheet.classList.remove("active");
-
-    });
-
-});
 
     reminderOptions.forEach(option => {
 
