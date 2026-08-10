@@ -1062,23 +1062,96 @@ function renderSmartInsights() {
 
     container.innerHTML = smartInsights.map(insight => `
 
-        <div class="smart-insight-card ${insight.type}">
+        <div class="smart-insight-card ${insight.type} priority-${insight.priority}">
 
-            <div class="smart-insight-header">
+            <div class="smart-insight-icon">
+                ${insight.icon}
+            </div>
 
-                <span class="smart-insight-icon">
-                    ${insight.icon}
-                </span>
+            <div class="smart-insight-content">
 
-                <span class="smart-insight-title">
+                <div class="smart-insight-title">
                     ${insight.title}
-                </span>
+                </div>
+
+                <p class="smart-insight-message">
+                    ${insight.message}
+                </p>
 
             </div>
 
-            <p class="smart-insight-message">
-                ${insight.message}
-            </p>
+        </div>
+
+    `).join("");
+
+}
+
+function renderTips() {
+
+    const container =
+        document.getElementById("tipsList");
+
+    if (!container) return;
+
+    const tips = [
+
+        {
+            icon: "💶",
+            title: "Kleine bedragen tellen op",
+            text: "Een abonnement van €9,99 per maand kost je bijna €120 per jaar."
+        },
+
+        {
+            icon: "🔄",
+            title: "Let op automatische verlenging",
+            text: "Sommige contracten lopen automatisch verder wanneer je ze niet tijdig opzegt."
+        },
+
+        {
+            icon: "📺",
+            title: "Controleer je abonnementen",
+            text: "Streamingdiensten en andere kleine abonnementen worden makkelijk vergeten wanneer je ze weinig gebruikt."
+        },
+
+        {
+            icon: "📅",
+            title: "Hou einddatums in de gaten",
+            text: "Door regelmatig je einddatums te controleren, weet je wanneer het tijd is om een contract opnieuw te bekijken."
+        },
+
+        {
+            icon: "🧾",
+            title: "Vergelijk maand- en jaarprijzen",
+            text: "Een klein maandelijks verschil kan op jaarbasis een veel groter bedrag betekenen."
+        },
+
+        {
+            icon: "💡",
+            title: "Bekijk regelmatig je vaste kosten",
+            text: "Een periodieke controle van je contracten helpt om overzicht te houden over waar je geld naartoe gaat."
+        }
+
+    ];
+
+    container.innerHTML = tips.map(tip => `
+
+        <div class="tip-card">
+
+            <div class="tip-card-icon">
+                ${tip.icon}
+            </div>
+
+            <div class="tip-card-content">
+
+                <div class="tip-card-title">
+                    ${tip.title}
+                </div>
+
+                <p class="tip-card-text">
+                    ${tip.text}
+                </p>
+
+            </div>
 
         </div>
 

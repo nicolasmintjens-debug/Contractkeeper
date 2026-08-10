@@ -142,7 +142,7 @@ function hideAllPages() {
     document.getElementById("settingsSection").style.display = "none";
     document.getElementById("page-ckai").style.display = "none";
     document.getElementById("ckAiInsightsSection").style.display = "none";
-
+    document.getElementById("tipsSection").style.display = "none";
 }
 
 function openInsights() {
@@ -150,6 +150,29 @@ function openInsights() {
     document
         .getElementById("nav-insights")
         ?.click();
+
+}
+
+function openTips() {
+
+    hideAllPages();
+
+    const page =
+        document.getElementById("tipsSection");
+
+    if (!page) return;
+
+    page.style.display = "block";
+
+    if (typeof renderTips === "function") {
+    renderTips();
+}
+
+    document
+        .querySelectorAll(".bottom-nav button")
+        .forEach(button => {
+            button.classList.remove("active");
+        });
 
 }
 
