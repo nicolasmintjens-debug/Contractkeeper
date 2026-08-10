@@ -1187,7 +1187,7 @@ function startCKAI() {
 
         ${
             logo
-                ? `<img src="assets/logos/${logo}" class="contract-logo" alt="${contract.name}">`
+                ? `<img src="${resolveLogoSrc(logo)}" class="contract-logo" alt="${contract.name}">`
                 : `<i class="bi ${ContractService.getCategoryIcon(contract.category)}"></i>`
         }
 

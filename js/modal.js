@@ -347,7 +347,7 @@ function showDetailModal(contract) {
 
     document.getElementById("detailHeroIcon").innerHTML = logo
 
-        ? `<img src="assets/logos/${logo}"
+        ? `<img src="${resolveLogoSrc(logo)}"
                class="contract-logo"
                alt="${contract.name}">`
 
@@ -477,7 +477,7 @@ function initAutocomplete() {
 
                 <img
                     class="name-suggestion-logo"
-                    src="assets/logos/${service.logo}"
+                    src="${resolveLogoSrc(ContractService.getLogo(service.name))}"
                     alt="${service.name}">
 
                 <div class="name-suggestion-content">
@@ -514,7 +514,7 @@ function initAutocomplete() {
 
                 if (logo && preview && image) {
 
-                    image.src = `assets/logos/${logo}`;
+                    image.src = resolveLogoSrc(logo);
 
                     preview.style.display = "flex";
 
@@ -592,4 +592,22 @@ function setValue(id, valueToSet) {
 
     element.value = valueToSet ?? "";
 
+}
+
+function resolveLogoSrc(logo) {
+
+    if (!logo) return null;
+
+    if (
+        logo.startsWith("http://") ||
+        logo.startsWith("https://")
+    ) {
+        return logo;
+    }
+
+    if (logo.startsWith("assets/")) {
+        return logo;
+    }
+
+    return `assets/logos/${logo}`;
 }

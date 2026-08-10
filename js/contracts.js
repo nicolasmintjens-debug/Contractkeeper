@@ -261,7 +261,7 @@ if (status === "expired") {
 
             ${
     logo
-        ? `<img src="assets/logos/${logo}" class="contract-logo" alt="${escapeHtml(contract.name)}">`
+        ? `<img src="${resolveLogoSrc(logo)}" class="contract-logo" alt="${escapeHtml(contract.name)}">`
         : `<i class="bi ${icon}"></i>`
 }
 

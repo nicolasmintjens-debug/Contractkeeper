@@ -393,29 +393,37 @@ const grandTotal = Object.values(totals)
 
     getCategories() {
 
-        return [
+    return [
 
-            "Streaming",
+        "Energie",
+        "Water",
+        "Internet",
+        "Telefonie",
+        "TV",
+        "Streaming",
+        "Muziek",
+        "Media",
+        "Gaming",
+        "Software",
+        "Cloud",
+        "AI",
+        "Verzekering",
+        "Bank & financieel",
+        "Fitness & sport",
+        "Wonen & huishouden",
+        "Gezondheid",
+        "Auto & mobiliteit",
+        "Beveiliging",
+        "Lidmaatschap",
+        "Hosting & websites",
+        "Maaltijden & bezorging",
+        "Boeken & lezen",
+        "Overig"
 
-            "Internet",
 
-            "Verzekering",
+    ];
 
-            "Fitness",
-
-            "Gaming",
-
-            "Cloud",
-
-            "Software",
-
-            "Muziek",
-
-            "Overig"
-
-        ];
-
-    },
+},
 
 
 
@@ -425,31 +433,47 @@ const grandTotal = Object.values(totals)
 
     getCategoryIcon(category) {
 
-        const icons = {
+    const icons = {
 
-            Streaming: "bi-film",
+        Energie: "bi-lightning-charge",
+        Water: "bi-droplet",
+        Internet: "bi-wifi",
+        Telefonie: "bi-phone",
+        TV: "bi-tv",
 
-            Internet: "bi-wifi",
+        Streaming: "bi-film",
+        Muziek: "bi-music-note",
+        Media: "bi-newspaper",
 
-            Verzekering: "bi-shield-check",
+        Gaming: "bi-controller",
+        Software: "bi-window",
+        Cloud: "bi-cloud",
+        AI: "bi-stars",
 
-            Fitness: "bi-heart-pulse",
+        Verzekering: "bi-shield-check",
+        "Bank & financieel": "bi-bank",
 
-            Gaming: "bi-controller",
+        "Fitness & sport": "bi-heart-pulse",
+        Gezondheid: "bi-heart",
 
-            Cloud: "bi-cloud",
+        "Auto & mobiliteit": "bi-car-front",
+        Beveiliging: "bi-shield-lock",
 
-            Software: "bi-window",
+        "Wonen & huishouden": "bi-house",
+        "Hosting & websites": "bi-globe2",
 
-            Muziek: "bi-music-note",
+        Lidmaatschap: "bi-card-checklist",
+        "Maaltijden & bezorging": "bi-basket2",
+        "Boeken & lezen": "bi-book",
+        Overig: "bi-folder"
 
-            Overig: "bi-folder"
+        
 
-        };
+    };
 
-        return icons[category] || "bi-folder";
+    return icons[category] || "bi-folder";
 
-    },
+},
 
 
 
@@ -576,29 +600,48 @@ const grandTotal = Object.values(totals)
     const value =
         name.toLowerCase().trim();
 
-    if (value.length < 3) {
-
+    if (value.length < 2) {
         return null;
+    }
+
+    // 1. Eerst exacte match zoeken
+    const exactMatch = SERVICES.find(service =>
+        service.name.toLowerCase().trim() === value
+    );
+
+    if (exactMatch) {
+
+        if (exactMatch.logo) {
+            return exactMatch.logo;
+        }
+
+        if (exactMatch.domain) {
+            return `https://cdn.brandfetch.io/domain/${exactMatch.domain}/icon.png?c=${BRANDFETCH_CLIENT_ID}`;
+        }
 
     }
 
+    // 2. Alleen als er geen exacte match is:
+    //    gedeeltelijke match proberen
     for (const service of SERVICES) {
 
         const serviceName =
             service.name.toLowerCase();
 
         if (
-
-            serviceName.includes(value)
-
-            ||
-
+            serviceName.includes(value) ||
             value.includes(serviceName)
-
         ) {
 
-            return service.logo;
+            if (service.logo) {
+                return service.logo;
+            }
 
+            if (service.domain) {
+                return `https://cdn.brandfetch.io/domain/${service.domain}/icon.png?c=${BRANDFETCH_CLIENT_ID}`;
+            }
+
+            return null;
         }
 
     }
@@ -639,7 +682,7 @@ getCategoryAdvice(category) {
        case "Internet":
     return "Hoeveel personen gebruiken thuis het internet? CK AI gebruikt dat om het juiste abonnement voor te stellen.";
 
-        case "Elektriciteit":
+        case "Energie":
             return "Vergelijk zeker de stroomprijs en kijk of een vast of variabel tarief beter past.";
 
         case "Verzekering":

@@ -69,10 +69,10 @@ netflix: [
 
 
 /* ==========================================================
-   ELEKTRICITEIT
+   ENERGIE
 ========================================================== */
 
-elektriciteit: [
+energie: [
 
     {
         id: 1,
@@ -130,71 +130,6 @@ elektriciteit: [
     }
 
 ],
-
-
-/* ==========================================================
-   GAS
-========================================================== */
-
-gas: [
-
-    {
-        id: 1,
-        question: "Welk type gascontract heb je?",
-        options: [
-            "Vaste prijs",
-            "Variabele prijs",
-            "Weet ik niet",
-            "Niet van toepassing"
-        ]
-    },
-
-    {
-        id: 2,
-        question: "Waarvoor gebruik je voornamelijk gas?",
-        options: [
-            "Verwarming",
-            "Verwarming en warm water",
-            "Koken",
-            "Meerdere toepassingen"
-        ]
-    },
-
-    {
-        id: 3,
-        question: "Hoe zou je je gasverbruik omschrijven?",
-        options: [
-            "Laag",
-            "Gemiddeld",
-            "Hoog",
-            "Weet ik niet"
-        ]
-    },
-
-    {
-        id: 4,
-        question: "Wanneer heb je je gastarief voor het laatst vergeleken?",
-        options: [
-            "Minder dan 6 maanden geleden",
-            "6 tot 12 maanden geleden",
-            "Meer dan een jaar geleden",
-            "Nog nooit"
-        ]
-    },
-
-    {
-        id: 5,
-        question: "Wat is voor jou het belangrijkste?",
-        options: [
-            "Laagste prijs",
-            "Prijszekerheid",
-            "Duurzaamheid",
-            "Goede service"
-        ]
-    }
-
-],
-
 
 /* ==========================================================
    WATER
@@ -325,10 +260,10 @@ internet: [
 
 
 /* ==========================================================
-   MOBIEL
+   TELEFONIE
 ========================================================== */
 
-mobiel: [
+telefonie: [
 
     {
         id: 1,
@@ -837,10 +772,10 @@ verzekering: [
 
 
 /* ==========================================================
-   BANK
+   BANK & FINANCIEEL
 ========================================================== */
 
-bank: [
+"bank & financieel": [
 
     {
         id: 1,
@@ -965,10 +900,10 @@ lidmaatschap: [
 
 
 /* ==========================================================
-   FITNESS
+   FITNESS & SPORT
 ========================================================== */
 
-fitness: [
+"fitness & sport": [
 
     {
         id: 1,
@@ -1029,10 +964,10 @@ fitness: [
 
 
 /* ==========================================================
-   VOERTUIG
+   AUTO & MOBILITEIT
 ========================================================== */
 
-voertuig: [
+"auto & mobiliteit": [
 
     {
         id: 1,
@@ -1155,6 +1090,452 @@ gezondheid: [
 
 ],
 
+/* ==========================================================
+   MEDIA
+========================================================== */
+
+media: [
+
+    {
+        id: 1,
+        question: "Hoe vaak gebruik je dit media-abonnement?",
+        options: [
+            "Dagelijks",
+            "Enkele keren per week",
+            "Af en toe",
+            "Bijna nooit"
+        ]
+    },
+
+    {
+        id: 2,
+        question: "Gebruik je vooral digitale of papieren toegang?",
+        options: [
+            "Vooral digitaal",
+            "Vooral papier",
+            "Beide",
+            "Niet van toepassing"
+        ]
+    },
+
+    {
+        id: 3,
+        question: "Lees of bekijk je de meeste content waarvoor je betaalt?",
+        options: [
+            "Ja, heel vaak",
+            "Regelmatig",
+            "Slechts een deel",
+            "Bijna nooit"
+        ]
+    },
+
+    {
+        id: 4,
+        question: "Heb je nog andere betaalde media-abonnementen?",
+        options: [
+            "Nee",
+            "1 ander",
+            "2 andere",
+            "3 of meer"
+        ]
+    },
+
+    {
+        id: 5,
+        question: "Vind je de abonnementsprijs gerechtvaardigd?",
+        options: [
+            "Zeker",
+            "Waarschijnlijk wel",
+            "Ik twijfel",
+            "Nee"
+        ]
+    }
+
+],
+
+
+/* ==========================================================
+   AI
+========================================================== */
+
+ai: [
+
+    {
+        id: 1,
+        question: "Hoe vaak gebruik je deze AI-dienst?",
+        options: [
+            "Dagelijks",
+            "Enkele keren per week",
+            "Af en toe",
+            "Bijna nooit"
+        ]
+    },
+
+    {
+        id: 2,
+        question: "Waarvoor gebruik je deze AI-dienst voornamelijk?",
+        options: [
+            "Werk",
+            "Privé",
+            "Studie",
+            "Meerdere toepassingen"
+        ]
+    },
+
+    {
+        id: 3,
+        question: "Gebruik je functies die alleen in de betaalde versie beschikbaar zijn?",
+        options: [
+            "Ja, heel vaak",
+            "Regelmatig",
+            "Bijna nooit",
+            "Weet ik niet"
+        ]
+    },
+
+    {
+        id: 4,
+        question: "Betaal je nog voor andere AI-diensten?",
+        options: [
+            "Nee",
+            "1 andere",
+            "2 andere",
+            "3 of meer"
+        ]
+    },
+
+    {
+        id: 5,
+        question: "Zou de gratis versie voor jou voldoende zijn?",
+        options: [
+            "Waarschijnlijk wel",
+            "Misschien",
+            "Waarschijnlijk niet",
+            "Zeker niet"
+        ]
+    }
+
+],
+
+
+/* ==========================================================
+   BEVEILIGING
+========================================================== */
+
+beveiliging: [
+
+    {
+        id: 1,
+        question: "Welk type beveiligingsdienst gebruik je?",
+        options: [
+            "Alarm",
+            "Camerabewaking",
+            "Alarm en camera's",
+            "Andere"
+        ]
+    },
+
+    {
+        id: 2,
+        question: "Gebruik je de dienst actief?",
+        options: [
+            "Dagelijks",
+            "Regelmatig",
+            "Af en toe",
+            "Bijna nooit"
+        ]
+    },
+
+    {
+        id: 3,
+        question: "Is professionele opvolging inbegrepen?",
+        options: [
+            "Ja",
+            "Nee",
+            "Gedeeltelijk",
+            "Weet ik niet"
+        ]
+    },
+
+    {
+        id: 4,
+        question: "Wanneer heb je de prijs of voorwaarden voor het laatst vergeleken?",
+        options: [
+            "Minder dan een jaar geleden",
+            "1 tot 2 jaar geleden",
+            "Meer dan 2 jaar geleden",
+            "Nog nooit"
+        ]
+    },
+
+    {
+        id: 5,
+        question: "Ben je tevreden over de prijs-kwaliteitverhouding?",
+        options: [
+            "Zeer tevreden",
+            "Tevreden",
+            "Twijfel",
+            "Nee"
+        ]
+    }
+
+],
+
+
+/* ==========================================================
+   WONEN & HUISHOUDEN
+========================================================== */
+
+"wonen & huishouden": [
+
+    {
+        id: 1,
+        question: "Welk type contract of dienst is dit?",
+        options: [
+            "Onderhoud",
+            "Herstelling of service",
+            "Toestel of installatie",
+            "Andere"
+        ]
+    },
+
+    {
+        id: 2,
+        question: "Hoe vaak maak je gebruik van deze dienst?",
+        options: [
+            "Regelmatig",
+            "Enkele keren per jaar",
+            "Zelden",
+            "Bijna nooit"
+        ]
+    },
+
+    {
+        id: 3,
+        question: "Zijn onderdelen of interventies inbegrepen?",
+        options: [
+            "Ja, volledig",
+            "Gedeeltelijk",
+            "Nee",
+            "Weet ik niet"
+        ]
+    },
+
+    {
+        id: 4,
+        question: "Heb je alternatieven of andere aanbieders vergeleken?",
+        options: [
+            "Recent",
+            "Een tijdje geleden",
+            "Nog nooit",
+            "Er zijn weinig alternatieven"
+        ]
+    },
+
+    {
+        id: 5,
+        question: "Vind je de jaarlijkse of maandelijkse kost gerechtvaardigd?",
+        options: [
+            "Zeker",
+            "Waarschijnlijk wel",
+            "Ik twijfel",
+            "Nee"
+        ]
+    }
+
+],
+
+
+/* ==========================================================
+   HOSTING & WEBSITES
+========================================================== */
+
+"hosting & websites": [
+
+    {
+        id: 1,
+        question: "Waarvoor gebruik je deze dienst?",
+        options: [
+            "Website",
+            "Webshop",
+            "Domeinnaam of e-mail",
+            "Meerdere toepassingen"
+        ]
+    },
+
+    {
+        id: 2,
+        question: "Hoe belangrijk is deze dienst voor jou?",
+        options: [
+            "Essentieel",
+            "Belangrijk",
+            "Handig maar niet essentieel",
+            "Nauwelijks belangrijk"
+        ]
+    },
+
+    {
+        id: 3,
+        question: "Gebruik je de meeste inbegrepen functies?",
+        options: [
+            "Ja",
+            "De meeste",
+            "Slechts enkele",
+            "Bijna geen"
+        ]
+    },
+
+    {
+        id: 4,
+        question: "Heb je de prijs recent met andere aanbieders vergeleken?",
+        options: [
+            "Ja, recent",
+            "Minder dan een jaar geleden",
+            "Meer dan een jaar geleden",
+            "Nog nooit"
+        ]
+    },
+
+    {
+        id: 5,
+        question: "Zou een goedkoper pakket voldoende zijn?",
+        options: [
+            "Waarschijnlijk wel",
+            "Misschien",
+            "Waarschijnlijk niet",
+            "Zeker niet"
+        ]
+    }
+
+],
+
+
+/* ==========================================================
+   MAALTIJDEN & BEZORGING
+========================================================== */
+
+"maaltijden & bezorging": [
+
+    {
+        id: 1,
+        question: "Hoe vaak gebruik je deze dienst?",
+        options: [
+            "Meerdere keren per week",
+            "Ongeveer wekelijks",
+            "Enkele keren per maand",
+            "Bijna nooit"
+        ]
+    },
+
+    {
+        id: 2,
+        question: "Wat is de belangrijkste reden dat je deze dienst gebruikt?",
+        options: [
+            "Gemak",
+            "Tijdsbesparing",
+            "Variatie",
+            "Korting of prijs"
+        ]
+    },
+
+    {
+        id: 3,
+        question: "Heb je regelmatig ongebruikte bestellingen of tegoeden?",
+        options: [
+            "Nooit",
+            "Soms",
+            "Regelmatig",
+            "Heel vaak"
+        ]
+    },
+
+    {
+        id: 4,
+        question: "Gebruik je nog andere maaltijd- of bezorgdiensten?",
+        options: [
+            "Nee",
+            "1 andere",
+            "2 andere",
+            "3 of meer"
+        ]
+    },
+
+    {
+        id: 5,
+        question: "Vind je dat deze dienst je voldoende waarde biedt?",
+        options: [
+            "Absoluut",
+            "Waarschijnlijk wel",
+            "Ik twijfel",
+            "Nee"
+        ]
+    }
+
+],
+
+
+/* ==========================================================
+   BOEKEN & LEZEN
+========================================================== */
+
+"boeken & lezen": [
+
+    {
+        id: 1,
+        question: "Hoe vaak gebruik je deze lees- of luisterdienst?",
+        options: [
+            "Dagelijks",
+            "Enkele keren per week",
+            "Af en toe",
+            "Bijna nooit"
+        ]
+    },
+
+    {
+        id: 2,
+        question: "Wat gebruik je vooral?",
+        options: [
+            "E-books",
+            "Audioboeken",
+            "Beide",
+            "Andere content"
+        ]
+    },
+
+    {
+        id: 3,
+        question: "Lees of luister je voldoende om het abonnement te benutten?",
+        options: [
+            "Zeker",
+            "Waarschijnlijk wel",
+            "Ik twijfel",
+            "Nee"
+        ]
+    },
+
+    {
+        id: 4,
+        question: "Heb je nog andere betaalde lees- of luisterdiensten?",
+        options: [
+            "Nee",
+            "1 andere",
+            "2 andere",
+            "3 of meer"
+        ]
+    },
+
+    {
+        id: 5,
+        question: "Zou kopen per boek voordeliger voor je zijn?",
+        options: [
+            "Waarschijnlijk wel",
+            "Misschien",
+            "Waarschijnlijk niet",
+            "Zeker niet"
+        ]
+    }
+
+],
 
 /* ==========================================================
    OVERIG
