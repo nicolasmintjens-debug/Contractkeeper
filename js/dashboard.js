@@ -275,7 +275,17 @@ function nextCKAIHomeInsight() {
 
     if (!card) return;
 
-    card.classList.add("swipe-left");
+
+    // Huidige kaart naar links wegschuiven
+    card.style.transition =
+        "transform .22s ease, opacity .22s ease";
+
+    card.style.transform =
+        "translateX(-110%)";
+
+    card.style.opacity =
+        "0";
+
 
     setTimeout(() => {
 
@@ -285,24 +295,34 @@ function nextCKAIHomeInsight() {
             currentCKAIHomeInsight = 0;
         }
 
+
+        // Nieuwe kaart rechts klaarzetten
         card.style.transition = "none";
 
-        card.classList.remove("swipe-left");
+        card.style.transform =
+            "translateX(110%)";
 
-        card.style.transform = "translateX(110%)";
-        card.style.opacity = "0";
+        card.style.opacity =
+            "0";
 
+
+        // Nieuwe inhoud laden
         updateCKAIHome();
+
 
         requestAnimationFrame(() => {
 
             requestAnimationFrame(() => {
 
+                // Nieuwe kaart naar binnen schuiven
                 card.style.transition =
                     "transform .22s ease, opacity .22s ease";
 
-                card.style.transform = "translateX(0)";
-                card.style.opacity = "1";
+                card.style.transform =
+                    "translateX(0)";
+
+                card.style.opacity =
+                    "1";
 
             });
 
@@ -311,7 +331,6 @@ function nextCKAIHomeInsight() {
     }, 220);
 
 }
-
 
 function previousCKAIHomeInsight() {
 
@@ -325,34 +344,55 @@ function previousCKAIHomeInsight() {
 
     if (!card) return;
 
-    card.classList.add("swipe-right");
+
+    // Huidige kaart naar rechts wegschuiven
+    card.style.transition =
+        "transform .22s ease, opacity .22s ease";
+
+    card.style.transform =
+        "translateX(110%)";
+
+    card.style.opacity =
+        "0";
+
 
     setTimeout(() => {
 
         currentCKAIHomeInsight--;
 
         if (currentCKAIHomeInsight < 0) {
-            currentCKAIHomeInsight = insights.length - 1;
+            currentCKAIHomeInsight =
+                insights.length - 1;
         }
 
+
+        // Nieuwe kaart links klaarzetten
         card.style.transition = "none";
 
-        card.classList.remove("swipe-right");
+        card.style.transform =
+            "translateX(-110%)";
 
-        card.style.transform = "translateX(-110%)";
-        card.style.opacity = "0";
+        card.style.opacity =
+            "0";
 
+
+        // Nieuwe inhoud laden
         updateCKAIHome();
+
 
         requestAnimationFrame(() => {
 
             requestAnimationFrame(() => {
 
+                // Nieuwe kaart naar binnen schuiven
                 card.style.transition =
                     "transform .22s ease, opacity .22s ease";
 
-                card.style.transform = "translateX(0)";
-                card.style.opacity = "1";
+                card.style.transform =
+                    "translateX(0)";
+
+                card.style.opacity =
+                    "1";
 
             });
 
