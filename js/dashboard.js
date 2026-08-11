@@ -263,7 +263,7 @@ function updateDashboard() {
 
 }
 
-function nextCKAIHomeInsight() {
+async function nextCKAIHomeInsight() {
 
     const insights =
         ContractService.getCKInsights();
@@ -276,63 +276,58 @@ function nextCKAIHomeInsight() {
     if (!card) return;
 
 
-    // Huidige kaart naar links wegschuiven
-    card.style.transition =
-        "transform .22s ease, opacity .22s ease";
-
-    card.style.transform =
-        "translateX(-110%)";
-
-    card.style.opacity =
-        "0";
-
-
-    setTimeout(() => {
-
-        currentCKAIHomeInsight++;
-
-        if (currentCKAIHomeInsight >= insights.length) {
-            currentCKAIHomeInsight = 0;
+    // Oude kaart naar links
+    await card.animate(
+        [
+            {
+                transform: "translateX(0)",
+                opacity: 1
+            },
+            {
+                transform: "translateX(-110%)",
+                opacity: 0
+            }
+        ],
+        {
+            duration: 220,
+            easing: "ease",
+            fill: "forwards"
         }
+    ).finished;
 
 
-        // Nieuwe kaart rechts klaarzetten
-        card.style.transition = "none";
+    // Volgend inzicht
+    currentCKAIHomeInsight++;
 
-        card.style.transform =
-            "translateX(110%)";
+    if (currentCKAIHomeInsight >= insights.length) {
+        currentCKAIHomeInsight = 0;
+    }
 
-        card.style.opacity =
-            "0";
-
-
-        // Nieuwe inhoud laden
-        updateCKAIHome();
+    updateCKAIHome();
 
 
-        requestAnimationFrame(() => {
-
-            requestAnimationFrame(() => {
-
-                // Nieuwe kaart naar binnen schuiven
-                card.style.transition =
-                    "transform .22s ease, opacity .22s ease";
-
-                card.style.transform =
-                    "translateX(0)";
-
-                card.style.opacity =
-                    "1";
-
-            });
-
-        });
-
-    }, 220);
+    // Nieuwe kaart van rechts binnen
+    await card.animate(
+        [
+            {
+                transform: "translateX(110%)",
+                opacity: 0
+            },
+            {
+                transform: "translateX(0)",
+                opacity: 1
+            }
+        ],
+        {
+            duration: 220,
+            easing: "ease",
+            fill: "forwards"
+        }
+    ).finished;
 
 }
 
-function previousCKAIHomeInsight() {
+async function previousCKAIHomeInsight() {
 
     const insights =
         ContractService.getCKInsights();
@@ -345,60 +340,55 @@ function previousCKAIHomeInsight() {
     if (!card) return;
 
 
-    // Huidige kaart naar rechts wegschuiven
-    card.style.transition =
-        "transform .22s ease, opacity .22s ease";
-
-    card.style.transform =
-        "translateX(110%)";
-
-    card.style.opacity =
-        "0";
-
-
-    setTimeout(() => {
-
-        currentCKAIHomeInsight--;
-
-        if (currentCKAIHomeInsight < 0) {
-            currentCKAIHomeInsight =
-                insights.length - 1;
+    // Oude kaart naar rechts
+    await card.animate(
+        [
+            {
+                transform: "translateX(0)",
+                opacity: 1
+            },
+            {
+                transform: "translateX(110%)",
+                opacity: 0
+            }
+        ],
+        {
+            duration: 220,
+            easing: "ease",
+            fill: "forwards"
         }
+    ).finished;
 
 
-        // Nieuwe kaart links klaarzetten
-        card.style.transition = "none";
+    // Vorig inzicht
+    currentCKAIHomeInsight--;
 
-        card.style.transform =
-            "translateX(-110%)";
+    if (currentCKAIHomeInsight < 0) {
+        currentCKAIHomeInsight =
+            insights.length - 1;
+    }
 
-        card.style.opacity =
-            "0";
-
-
-        // Nieuwe inhoud laden
-        updateCKAIHome();
+    updateCKAIHome();
 
 
-        requestAnimationFrame(() => {
-
-            requestAnimationFrame(() => {
-
-                // Nieuwe kaart naar binnen schuiven
-                card.style.transition =
-                    "transform .22s ease, opacity .22s ease";
-
-                card.style.transform =
-                    "translateX(0)";
-
-                card.style.opacity =
-                    "1";
-
-            });
-
-        });
-
-    }, 220);
+    // Nieuwe kaart van links binnen
+    await card.animate(
+        [
+            {
+                transform: "translateX(-110%)",
+                opacity: 0
+            },
+            {
+                transform: "translateX(0)",
+                opacity: 1
+            }
+        ],
+        {
+            duration: 220,
+            easing: "ease",
+            fill: "forwards"
+        }
+    ).finished;
 
 }
 
