@@ -4,7 +4,7 @@
    Build: 1
 =========================================== */
 
-const CACHE_NAME = "contractkeeper-0.1.0-build1";
+const CACHE_NAME = "contractkeeper-0.1.0-build2";
 
 const STATIC_FILES = [
     "./",
