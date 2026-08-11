@@ -1601,3 +1601,625 @@ overig: [
 ]
 
 };
+
+/* ==========================================================
+   CK AI - ALGEMENE SCORING
+========================================================== */
+
+const CKAI_SCORING = {
+
+    netflix: [
+        null,
+        null,
+        null,
+        {
+            "Dagelijks": 3,
+            "Enkele keren per week": 2,
+            "Af en toe": -1,
+            "Bijna nooit": -3
+        },
+        {
+            "Zeer tevreden": 3,
+            "Tevreden": 2,
+            "Twijfel": -2,
+            "Nee": -4
+        }
+    ],
+
+
+    energie: [
+        null,
+        null,
+        null,
+        {
+            "Minder dan 6 maanden geleden": 2,
+            "6 tot 12 maanden geleden": 1,
+            "Meer dan een jaar geleden": -1,
+            "Nog nooit": -2
+        },
+        null
+    ],
+
+
+    water: [
+        null,
+        null,
+        {
+            "Ja, regelmatig": 2,
+            "Soms": 1,
+            "Bijna nooit": -1,
+            "Nooit": -2
+        },
+        {
+            "Ja, meerdere": 2,
+            "Een paar": 1,
+            "Nee": -1,
+            "Weet ik niet": 0
+        },
+        null
+    ],
+
+
+    internet: [
+        null,
+        null,
+        {
+            "Zeer tevreden": 3,
+            "Meestal tevreden": 2,
+            "Soms te traag": -2,
+            "Vaak te traag": -4
+        },
+        {
+            "Nooit": 2,
+            "Soms": 0,
+            "Regelmatig": -2,
+            "Heel vaak": -3
+        },
+        null
+    ],
+
+
+    telefonie: [
+        null,
+        null,
+        {
+            "Heel veel": -2,
+            "Een beetje": 1,
+            "Bijna niets": 2,
+            "Ik kom data tekort": -3
+        },
+        null,
+        null
+    ],
+
+
+    tv: [
+        {
+            "Dagelijks": 3,
+            "Enkele keren per week": 2,
+            "Af en toe": -1,
+            "Bijna nooit": -3
+        },
+        {
+            "Vooral live-tv": 2,
+            "Beide ongeveer evenveel": 1,
+            "Vooral streaming": -2,
+            "Bijna geen van beide": -3
+        },
+        null,
+        null,
+        {
+            "Ja": -3,
+            "Waarschijnlijk wel": -2,
+            "Waarschijnlijk niet": 2,
+            "Nee": 3
+        }
+    ],
+
+
+    streaming: [
+        null,
+        {
+            "Dagelijks": 3,
+            "Enkele keren per week": 2,
+            "Af en toe": -1,
+            "Bijna nooit": -3
+        },
+        {
+            "Geen": 1,
+            "1 andere": 0,
+            "2 andere": -1,
+            "3 of meer": -2
+        },
+        {
+            "Ja": 2,
+            "Grotendeels": 1,
+            "Niet echt": -2,
+            "Weet ik niet": 0
+        },
+        {
+            "Zeer tevreden": 3,
+            "Tevreden": 2,
+            "Twijfel": -2,
+            "Nee": -4
+        }
+    ],
+
+
+    muziek: [
+        null,
+        {
+            "Dagelijks": 3,
+            "Enkele keren per week": 2,
+            "Af en toe": -1,
+            "Bijna nooit": -3
+        },
+        {
+            "Ja, vaak": 2,
+            "Soms": 1,
+            "Bijna nooit": -2,
+            "Weet ik niet": 0
+        },
+        {
+            "Nee": 1,
+            "1 andere": -1,
+            "2 andere": -2,
+            "Meer dan 2": -3
+        },
+        {
+            "Zeer tevreden": 3,
+            "Tevreden": 2,
+            "Twijfel": -2,
+            "Nee": -4
+        }
+    ],
+
+
+    gaming: [
+        {
+            "Dagelijks": 3,
+            "Enkele keren per week": 2,
+            "Af en toe": -1,
+            "Bijna nooit": -3
+        },
+        {
+            "Bijna altijd": 3,
+            "Regelmatig": 2,
+            "Soms": 0,
+            "Bijna nooit": -2
+        },
+        {
+            "Heel vaak": 2,
+            "Regelmatig": 1,
+            "Soms": 0,
+            "Nooit": 0
+        },
+        {
+            "Nee": 1,
+            "1 ander": 0,
+            "2 andere": -1,
+            "3 of meer": -2
+        },
+        {
+            "Absoluut": 3,
+            "Waarschijnlijk wel": 2,
+            "Ik twijfel": -2,
+            "Nee": -4
+        }
+    ],
+
+
+    cloud: [
+        {
+            "Minder dan 25%": -2,
+            "25% tot 50%": 0,
+            "50% tot 80%": 2,
+            "Meer dan 80%": 2
+        },
+        null,
+        {
+            "Nee": 1,
+            "1 andere dienst": -1,
+            "2 andere diensten": -2,
+            "Meer dan 2": -3
+        },
+        null,
+        {
+            "Ja": -3,
+            "Misschien": -1,
+            "Nee": 2,
+            "Weet ik niet": 0
+        }
+    ],
+
+
+    software: [
+        {
+            "Dagelijks": 3,
+            "Enkele keren per week": 2,
+            "Af en toe": -1,
+            "Bijna nooit": -3
+        },
+        null,
+        {
+            "Ja": 3,
+            "De meeste": 2,
+            "Slechts enkele": -1,
+            "Bijna geen": -3
+        },
+        null,
+        null
+    ],
+
+
+    verzekering: [
+        {
+            "Minder dan een jaar geleden": 2,
+            "1 tot 2 jaar geleden": 1,
+            "Meer dan 2 jaar geleden": -1,
+            "Nog nooit": -2
+        },
+        {
+            "Ja, volledig": 2,
+            "Grotendeels": 1,
+            "Niet echt": -1,
+            "Nee": -2
+        },
+        null,
+        null,
+        null
+    ],
+
+
+    "bank & financieel": [
+        {
+            "Dagelijks": 3,
+            "Regelmatig": 2,
+            "Af en toe": 0,
+            "Bijna nooit": -2
+        },
+        null,
+        {
+            "Vaak": 2,
+            "Soms": 0,
+            "Bijna nooit": -2,
+            "Weet ik niet": 0
+        },
+        {
+            "Nee": 1,
+            "2 banken": 0,
+            "3 banken": -1,
+            "Meer dan 3": -2
+        },
+        null
+    ],
+
+
+    lidmaatschap: [
+        {
+            "Heel vaak": 3,
+            "Regelmatig": 2,
+            "Af en toe": -1,
+            "Bijna nooit": -3
+        },
+        {
+            "Bijna allemaal": 3,
+            "Meerdere": 2,
+            "Slechts één of twee": -1,
+            "Geen": -3
+        },
+        null,
+        {
+            "Recent": 2,
+            "Dit jaar": 1,
+            "Meer dan een jaar geleden": -1,
+            "Nog nooit": -2
+        },
+        {
+            "Zeker": 3,
+            "Waarschijnlijk": 2,
+            "Waarschijnlijk niet": -2,
+            "Nee": -4
+        }
+    ],
+
+
+    "fitness & sport": [
+        {
+            "3 keer of meer per week": 3,
+            "1 tot 2 keer per week": 2,
+            "Enkele keren per maand": -1,
+            "Bijna nooit": -3
+        },
+        null,
+        null,
+        {
+            "Zeer tevreden": 3,
+            "Tevreden": 2,
+            "Twijfel": -2,
+            "Nee": -4
+        },
+        {
+            "Waarschijnlijk wel": -2,
+            "Misschien": -1,
+            "Waarschijnlijk niet": 1,
+            "Nee": 2
+        }
+    ],
+
+
+    "auto & mobiliteit": [
+        null,
+        {
+            "Dagelijks": 3,
+            "Meerdere keren per week": 2,
+            "Af en toe": -1,
+            "Bijna nooit": -3
+        },
+        {
+            "Ja, volledig": 2,
+            "Gedeeltelijk": 1,
+            "Nee": 0,
+            "Weet ik niet": 0
+        },
+        null,
+        {
+            "Zeer tevreden": 3,
+            "Tevreden": 2,
+            "Twijfel": -2,
+            "Nee": -4
+        }
+    ],
+
+
+    gezondheid: [
+        {
+            "Heel regelmatig": 3,
+            "Regelmatig": 2,
+            "Af en toe": -1,
+            "Bijna nooit": -3
+        },
+        {
+            "Ja": 3,
+            "De meeste": 2,
+            "Slechts enkele": -1,
+            "Bijna geen": -3
+        },
+        null,
+        {
+            "Nee": 1,
+            "Een paar": -1,
+            "Ja, meerdere": -2,
+            "Weet ik niet": 0
+        },
+        {
+            "Zeer tevreden": 3,
+            "Tevreden": 2,
+            "Twijfel": -2,
+            "Nee": -4
+        }
+    ],
+
+
+    media: [
+        {
+            "Dagelijks": 3,
+            "Enkele keren per week": 2,
+            "Af en toe": -1,
+            "Bijna nooit": -3
+        },
+        null,
+        {
+            "Ja, heel vaak": 3,
+            "Regelmatig": 2,
+            "Slechts een deel": -1,
+            "Bijna nooit": -3
+        },
+        {
+            "Nee": 1,
+            "1 ander": 0,
+            "2 andere": -1,
+            "3 of meer": -2
+        },
+        {
+            "Zeker": 3,
+            "Waarschijnlijk wel": 2,
+            "Ik twijfel": -2,
+            "Nee": -4
+        }
+    ],
+
+
+    ai: [
+        {
+            "Dagelijks": 3,
+            "Enkele keren per week": 2,
+            "Af en toe": -1,
+            "Bijna nooit": -3
+        },
+        null,
+        {
+            "Ja, heel vaak": 3,
+            "Regelmatig": 2,
+            "Bijna nooit": -2,
+            "Weet ik niet": 0
+        },
+        {
+            "Nee": 1,
+            "1 andere": 0,
+            "2 andere": -1,
+            "3 of meer": -2
+        },
+        {
+            "Waarschijnlijk wel": -3,
+            "Misschien": -1,
+            "Waarschijnlijk niet": 2,
+            "Zeker niet": 3
+        }
+    ],
+
+
+    beveiliging: [
+        null,
+        {
+            "Dagelijks": 3,
+            "Regelmatig": 2,
+            "Af en toe": 0,
+            "Bijna nooit": -2
+        },
+        null,
+        {
+            "Minder dan een jaar geleden": 2,
+            "1 tot 2 jaar geleden": 1,
+            "Meer dan 2 jaar geleden": -1,
+            "Nog nooit": -2
+        },
+        {
+            "Zeer tevreden": 3,
+            "Tevreden": 2,
+            "Twijfel": -2,
+            "Nee": -4
+        }
+    ],
+
+
+    "wonen & huishouden": [
+        null,
+        {
+            "Regelmatig": 3,
+            "Enkele keren per jaar": 1,
+            "Zelden": -1,
+            "Bijna nooit": -3
+        },
+        {
+            "Ja, volledig": 2,
+            "Gedeeltelijk": 1,
+            "Nee": 0,
+            "Weet ik niet": 0
+        },
+        {
+            "Recent": 2,
+            "Een tijdje geleden": 1,
+            "Nog nooit": -2,
+            "Er zijn weinig alternatieven": 0
+        },
+        {
+            "Zeker": 3,
+            "Waarschijnlijk wel": 2,
+            "Ik twijfel": -2,
+            "Nee": -4
+        }
+    ],
+
+
+    "hosting & websites": [
+        null,
+        {
+            "Essentieel": 3,
+            "Belangrijk": 2,
+            "Handig maar niet essentieel": 0,
+            "Nauwelijks belangrijk": -3
+        },
+        {
+            "Ja": 3,
+            "De meeste": 2,
+            "Slechts enkele": -1,
+            "Bijna geen": -3
+        },
+        {
+            "Ja, recent": 2,
+            "Minder dan een jaar geleden": 1,
+            "Meer dan een jaar geleden": -1,
+            "Nog nooit": -2
+        },
+        {
+            "Waarschijnlijk wel": -2,
+            "Misschien": -1,
+            "Waarschijnlijk niet": 1,
+            "Zeker niet": 2
+        }
+    ],
+
+
+    "maaltijden & bezorging": [
+        {
+            "Meerdere keren per week": 3,
+            "Ongeveer wekelijks": 2,
+            "Enkele keren per maand": 0,
+            "Bijna nooit": -3
+        },
+        null,
+        {
+            "Nooit": 2,
+            "Soms": 0,
+            "Regelmatig": -2,
+            "Heel vaak": -3
+        },
+        {
+            "Nee": 1,
+            "1 andere": 0,
+            "2 andere": -1,
+            "3 of meer": -2
+        },
+        {
+            "Absoluut": 3,
+            "Waarschijnlijk wel": 2,
+            "Ik twijfel": -2,
+            "Nee": -4
+        }
+    ],
+
+
+    "boeken & lezen": [
+        {
+            "Dagelijks": 3,
+            "Enkele keren per week": 2,
+            "Af en toe": -1,
+            "Bijna nooit": -3
+        },
+        null,
+        {
+            "Zeker": 3,
+            "Waarschijnlijk wel": 2,
+            "Ik twijfel": -2,
+            "Nee": -4
+        },
+        {
+            "Nee": 1,
+            "1 andere": 0,
+            "2 andere": -1,
+            "3 of meer": -2
+        },
+        {
+            "Waarschijnlijk wel": -2,
+            "Misschien": -1,
+            "Waarschijnlijk niet": 1,
+            "Zeker niet": 2
+        }
+    ],
+
+
+    overig: [
+        {
+            "Heel vaak": 3,
+            "Regelmatig": 2,
+            "Af en toe": -1,
+            "Bijna nooit": -3
+        },
+        {
+            "Zeker": 3,
+            "Waarschijnlijk wel": 2,
+            "Ik twijfel": -2,
+            "Nee": -4
+        },
+        null,
+        {
+            "Recent": 2,
+            "Een tijdje geleden": 1,
+            "Nog nooit": -2,
+            "Er zijn geen alternatieven": 0
+        },
+        null
+    ]
+
+};

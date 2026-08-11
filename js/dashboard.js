@@ -810,6 +810,8 @@ let ckaiAnswers = {};
 
 let ckaiSelectedAnswer = null;
 
+let ckaiEvaluationResult = null;
+
 /* ==========================================================
    OPEN CK AI
 ========================================================== */
@@ -876,6 +878,11 @@ if (ckaiContent) {
     document
         .getElementById("ckaiPremiumScreen")
         ?.classList.add("hidden");
+
+        // Advies/resultaatscherm verbergen
+document
+    .getElementById("ckaiAdviceScreen")
+    ?.classList.add("hidden");
 
 
     // AI status resetten
@@ -1168,6 +1175,28 @@ function startCKAI() {
     const container = document.getElementById("ckaiContent");
 
     if (!container) return;
+
+    // Vorige CK AI schermen resetten
+
+document
+    .getElementById("ckaiQuestionScreen")
+    ?.classList.add("hidden");
+
+document
+    .getElementById("ckaiAnalysisScreen")
+    ?.classList.add("hidden");
+
+document
+    .getElementById("ckaiResultScreen")
+    ?.classList.add("hidden");
+
+document
+    .getElementById("ckaiPremiumScreen")
+    ?.classList.add("hidden");
+
+document
+    .getElementById("ckaiAdviceScreen")
+    ?.classList.add("hidden");
 
     const contracts = ContractService.getAll();
 
@@ -1475,10 +1504,16 @@ document.getElementById("ckaiAnalysisTitle").textContent =
 document.getElementById("ckaiAnalysisContract").textContent =
     ckaiCurrentContract.name;
 
+// CK AI evaluatie uitvoeren
+ckaiEvaluationResult = null;
+
+ckaiEvaluationResult =
+    evaluateCKAI();
+
 // Analyse starten
 startCKAIAnalysis();
 
-    return;
+return;
 
 }
 
@@ -1488,6 +1523,119 @@ startCKAIAnalysis();
         ckaiQuestions,
         ckaiCurrentQuestion
     );
+
+}
+
+/* ==========================================================
+CK AI - ANTWOORDCOMBINATIE
+========================================================== */
+
+function getCKAIAnswerCombination() {
+
+    return ckaiQuestions.map(question => {
+
+        const selectedAnswer = ckaiAnswers[question.id];
+
+        const answerIndex =
+            question.options.indexOf(selectedAnswer);
+
+        if (answerIndex === -1) {
+            return "?";
+        }
+
+        return ["A", "B", "C", "D"][answerIndex];
+
+    }).join("-");
+
+}
+
+/* ==========================================================
+   CK AI - ALGEMENE EVALUATIE
+========================================================== */
+
+function evaluateCKAI() {
+
+    let score = 0;
+
+    const contractKey =
+        ckaiCurrentContract.name.toLowerCase();
+
+    const categoryKey =
+        ckaiCurrentContract.category.toLowerCase();
+
+    const scoring =
+        CKAI_SCORING[contractKey] ||
+        CKAI_SCORING[categoryKey];
+
+    if (!scoring) {
+
+        return {
+            status: "herbekijken",
+            title: "Herbekijken",
+            score: 0
+        };
+
+    }
+
+    const answers =
+        Object.values(ckaiAnswers);
+
+    scoring.forEach((questionScoring, index) => {
+
+        if (!questionScoring) {
+            return;
+        }
+
+        const answer =
+            answers[index];
+
+        const answerScore =
+            questionScoring[answer];
+
+        if (typeof answerScore === "number") {
+            score += answerScore;
+        }
+
+    });
+
+
+    // Eindresultaat bepalen
+
+    if (score >= 7) {
+
+        return {
+            status: "behouden",
+            title: "Behouden",
+            score: score
+        };
+
+    }
+
+    if (score >= 3) {
+
+        return {
+            status: "optimaliseren",
+            title: "Goed, maar optimalisatie mogelijk",
+            score: score
+        };
+
+    }
+
+    if (score >= -6) {
+
+        return {
+            status: "herbekijken",
+            title: "Herbekijken",
+            score: score
+        };
+
+    }
+
+    return {
+        status: "opzeggen",
+        title: "Opzeggen of alternatief zoeken",
+        score: score
+    };
 
 }
 
@@ -1573,6 +1721,50 @@ if (resultContract && ckaiCurrentContract) {
 
 }
 
+// Evaluatieresultaat tonen
+const resultTitle =
+    document.getElementById("ckaiResultTitle");
+
+const resultText =
+    document.getElementById("ckaiResultText");
+
+if (ckaiEvaluationResult) {
+
+    if (resultTitle) {
+        resultTitle.textContent =
+            ckaiEvaluationResult.title;
+    }
+
+    if (resultText) {
+
+        switch (ckaiEvaluationResult.status) {
+
+            case "behouden":
+                resultText.textContent =
+                    "Dit abonnement lijkt goed bij jouw gebruik te passen.";
+                break;
+
+            case "optimaliseren":
+                resultText.textContent =
+                    "Dit abonnement past redelijk goed bij jouw gebruik, maar er zijn mogelijk optimalisaties.";
+                break;
+
+            case "herbekijken":
+                resultText.textContent =
+                    "Je haalt momenteel mogelijk niet genoeg waarde uit dit abonnement.";
+                break;
+
+            case "opzeggen":
+                resultText.textContent =
+                    "Op basis van je antwoorden lijkt dit abonnement momenteel weinig waarde te bieden.";
+                break;
+
+        }
+
+    }
+
+}
+
 // Resultaat tonen
 document
     .getElementById("ckaiResultScreen")
@@ -1583,6 +1775,791 @@ document
     }
 
     nextStep();
+
+}
+
+/* ==========================================================
+   CK AI - NATUURLIJKE ANALYSETEKST
+========================================================== */
+
+function getCKAIInsight(category, index, answer) {
+
+    const insights = {
+
+        netflix: [
+            {
+                "Alleen ik": "Je gebruikt Netflix alleen.",
+                "2 personen": "Je deelt Netflix met twee personen.",
+                "3 personen": "Je deelt Netflix met drie personen.",
+                "4 of meer": "Netflix wordt door vier of meer personen gebruikt."
+            },
+            {
+                "Standard met reclame": "Je gebruikt het voordeligere Standard-abonnement met reclame.",
+                "Standard": "Je hebt het Standard-abonnement.",
+                "Premium": "Je betaalt voor het uitgebreidere Premium-abonnement.",
+                "Weet ik niet": "Je weet momenteel niet precies welk Netflix-abonnement je hebt."
+            },
+            {
+                "Ja": "Je maakt gebruik van 4K Ultra HD.",
+                "Nee": "4K Ultra HD is voor jou geen belangrijke functie.",
+                "Weet ik niet": "Het is niet duidelijk of je 4K Ultra HD gebruikt."
+            },
+            {
+                "Dagelijks": "Je kijkt dagelijks Netflix.",
+                "Enkele keren per week": "Je kijkt meerdere keren per week Netflix.",
+                "Af en toe": "Je gebruikt Netflix maar af en toe.",
+                "Bijna nooit": "Je kijkt bijna nooit Netflix."
+            },
+            {
+                "Zeer tevreden": "Je bent zeer tevreden over je huidige Netflix-abonnement.",
+                "Tevreden": "Je bent tevreden over je huidige Netflix-abonnement.",
+                "Twijfel": "Je twijfelt of je huidige Netflix-abonnement nog voldoende waarde biedt.",
+                "Nee": "Je bent niet tevreden over je huidige Netflix-abonnement."
+            }
+        ],
+
+
+        gaming: [
+            {
+                "Dagelijks": "Je gebruikt dit gamingabonnement dagelijks.",
+                "Enkele keren per week": "Je gebruikt dit gamingabonnement meerdere keren per week.",
+                "Af en toe": "Je gebruikt dit gamingabonnement maar af en toe.",
+                "Bijna nooit": "Je gebruikt dit gamingabonnement bijna nooit."
+            },
+            {
+                "Bijna altijd": "Je speelt voornamelijk games die in het abonnement inbegrepen zijn.",
+                "Regelmatig": "Je maakt regelmatig gebruik van de inbegrepen games.",
+                "Soms": "Je gebruikt de inbegrepen games slechts af en toe.",
+                "Bijna nooit": "Je maakt nauwelijks gebruik van de inbegrepen games."
+            },
+            {
+                "Heel vaak": "Online multiplayer is voor jou een belangrijk onderdeel van het abonnement.",
+                "Regelmatig": "Je gebruikt online multiplayer regelmatig.",
+                "Soms": "Je gebruikt online multiplayer slechts af en toe.",
+                "Nooit": "Je gebruikt online multiplayer niet."
+            },
+            {
+                "Nee": "Je hebt geen andere gamingabonnementen, waardoor er geen directe overlap is.",
+                "1 ander": "Je betaalt daarnaast nog voor één ander gamingabonnement.",
+                "2 andere": "Je hebt nog twee andere gamingabonnementen, waardoor er mogelijk overlap is.",
+                "3 of meer": "Je betaalt voor meerdere gamingabonnementen, waardoor de kans op overlap groot is."
+            },
+            {
+                "Absoluut": "Je vindt zelf dat je duidelijk voldoende waarde uit het abonnement haalt.",
+                "Waarschijnlijk wel": "Je denkt dat je voldoende waarde uit het abonnement haalt.",
+                "Ik twijfel": "Je twijfelt zelf of het abonnement voldoende waarde biedt.",
+                "Nee": "Je vindt zelf dat het abonnement onvoldoende waarde biedt."
+            }
+        ],
+
+
+        streaming: [
+            null,
+            {
+                "Dagelijks": "Je gebruikt deze streamingdienst dagelijks.",
+                "Enkele keren per week": "Je gebruikt deze streamingdienst meerdere keren per week.",
+                "Af en toe": "Je gebruikt deze streamingdienst maar af en toe.",
+                "Bijna nooit": "Je gebruikt deze streamingdienst bijna nooit."
+            },
+            {
+                "Geen": "Je betaalt niet voor andere streamingdiensten.",
+                "1 andere": "Je betaalt daarnaast voor één andere streamingdienst.",
+                "2 andere": "Je betaalt daarnaast nog voor twee andere streamingdiensten.",
+                "3 of meer": "Je betaalt voor meerdere andere streamingdiensten, waardoor overlap waarschijnlijk is."
+            },
+            {
+                "Ja": "Je maakt goed gebruik van de functies van je abonnement.",
+                "Grotendeels": "Je gebruikt het grootste deel van de beschikbare functies.",
+                "Niet echt": "Je gebruikt maar een beperkt deel van de functies waarvoor je betaalt.",
+                "Weet ik niet": "Je weet niet goed of je alle inbegrepen functies benut."
+            },
+            {
+                "Zeer tevreden": "Je bent zeer tevreden over de prijs die je betaalt.",
+                "Tevreden": "Je bent tevreden over de prijs van het abonnement.",
+                "Twijfel": "Je twijfelt of de prijs nog in verhouding staat tot de waarde die je krijgt.",
+                "Nee": "Je vindt de huidige prijs niet gerechtvaardigd."
+            }
+        ],
+
+
+        muziek: [
+            null,
+            {
+                "Dagelijks": "Je gebruikt deze muziekdienst dagelijks.",
+                "Enkele keren per week": "Je gebruikt deze muziekdienst meerdere keren per week.",
+                "Af en toe": "Je gebruikt deze muziekdienst maar af en toe.",
+                "Bijna nooit": "Je gebruikt deze muziekdienst bijna nooit."
+            },
+            {
+                "Ja, vaak": "Je maakt vaak gebruik van functies waarvoor een betaald abonnement nodig is.",
+                "Soms": "Je gebruikt sommige premiumfuncties.",
+                "Bijna nooit": "Je maakt nauwelijks gebruik van functies waarvoor je betaalt.",
+                "Weet ik niet": "Het is niet duidelijk of je de premiumfuncties echt nodig hebt."
+            },
+            {
+                "Nee": "Je betaalt niet voor andere muziekdiensten.",
+                "1 andere": "Je betaalt daarnaast nog voor één andere muziekdienst.",
+                "2 andere": "Je betaalt voor meerdere muziekdiensten, waardoor er mogelijk overlap is.",
+                "Meer dan 2": "Je hebt verschillende betaalde muziekdiensten, waardoor overlap waarschijnlijk is."
+            },
+            {
+                "Zeer tevreden": "Je bent zeer tevreden over je huidige muziekabonnement.",
+                "Tevreden": "Je bent tevreden over je huidige muziekabonnement.",
+                "Twijfel": "Je twijfelt of je huidige muziekabonnement nog de moeite waard is.",
+                "Nee": "Je bent niet tevreden over je huidige muziekabonnement."
+            }
+        ],
+
+
+        software: [
+            {
+                "Dagelijks": "Je gebruikt deze software dagelijks.",
+                "Enkele keren per week": "Je gebruikt deze software meerdere keren per week.",
+                "Af en toe": "Je gebruikt deze software maar af en toe.",
+                "Bijna nooit": "Je gebruikt deze software bijna nooit."
+            },
+            null,
+            {
+                "Ja": "Je maakt goed gebruik van de functies waarvoor je betaalt.",
+                "De meeste": "Je gebruikt het grootste deel van de beschikbare functies.",
+                "Slechts enkele": "Je gebruikt slechts een beperkt deel van de beschikbare functies.",
+                "Bijna geen": "Je maakt nauwelijks gebruik van de functies waarvoor je betaalt."
+            },
+            null,
+            null
+        ],
+
+
+        cloud: [
+            {
+                "Minder dan 25%": "Je gebruikt minder dan een kwart van je beschikbare cloudopslag.",
+                "25% tot 50%": "Je gebruikt minder dan de helft van je beschikbare cloudopslag.",
+                "50% tot 80%": "Je benut een groot deel van je cloudopslag.",
+                "Meer dan 80%": "Je gebruikt het grootste deel van je beschikbare cloudopslag."
+            },
+            null,
+            {
+                "Nee": "Je betaalt niet voor andere cloudopslag.",
+                "1 andere dienst": "Je betaalt daarnaast nog voor een andere clouddienst.",
+                "2 andere diensten": "Je betaalt voor meerdere clouddiensten.",
+                "Meer dan 2": "Je betaalt voor verschillende clouddiensten, waardoor overlap waarschijnlijk is."
+            },
+            null,
+            {
+                "Ja": "Je geeft aan dat je momenteel meer opslag hebt dan je nodig hebt.",
+                "Misschien": "Je twijfelt of je huidige opslagpakket niet groter is dan nodig.",
+                "Nee": "Je huidige opslagcapaciteit lijkt passend bij je behoefte.",
+                "Weet ik niet": "Je weet niet zeker of je huidige opslagpakket passend is."
+            }
+        ],
+
+
+        internet: [
+            null,
+            null,
+            {
+                "Zeer tevreden": "Je bent zeer tevreden over je huidige internetsnelheid.",
+                "Meestal tevreden": "Je bent meestal tevreden over je internetsnelheid.",
+                "Soms te traag": "Je ervaart dat je internet soms te traag is.",
+                "Vaak te traag": "Je ervaart regelmatig problemen met een te trage verbinding."
+            },
+            {
+                "Nooit": "Je hebt geen noemenswaardige wifi-problemen.",
+                "Soms": "Je ervaart af en toe problemen met wifi.",
+                "Regelmatig": "Je hebt regelmatig problemen met wifi in huis.",
+                "Heel vaak": "Wifi-problemen komen bij jou heel vaak voor."
+            },
+            null
+        ],
+
+
+        telefonie: [
+            null,
+            null,
+            {
+                "Heel veel": "Je houdt iedere maand veel mobiele data over.",
+                "Een beetje": "Je houdt meestal nog wat mobiele data over.",
+                "Bijna niets": "Je databundel sluit vrij goed aan bij je werkelijke gebruik.",
+                "Ik kom data tekort": "Je huidige databundel is regelmatig te klein."
+            },
+            null,
+            null
+        ],
+
+
+        tv: [
+            {
+                "Dagelijks": "Je kijkt dagelijks klassieke televisie.",
+                "Enkele keren per week": "Je kijkt meerdere keren per week klassieke televisie.",
+                "Af en toe": "Je kijkt maar af en toe klassieke televisie.",
+                "Bijna nooit": "Je kijkt bijna nooit klassieke televisie."
+            },
+            {
+                "Vooral live-tv": "Live televisie blijft voor jou belangrijk.",
+                "Beide ongeveer evenveel": "Je combineert klassieke televisie en streaming.",
+                "Vooral streaming": "Je kijkt vooral via streamingdiensten.",
+                "Bijna geen van beide": "Je maakt weinig gebruik van zowel klassieke televisie als streaming."
+            },
+            null,
+            null,
+            {
+                "Ja": "Je denkt dat je zonder klassiek tv-abonnement kunt.",
+                "Waarschijnlijk wel": "Je denkt dat je waarschijnlijk zonder klassiek tv-abonnement kunt.",
+                "Waarschijnlijk niet": "Je verwacht klassiek tv nog nodig te hebben.",
+                "Nee": "Een klassiek tv-abonnement blijft voor jou belangrijk."
+            }
+        ],
+
+        /* ==========================================================
+   ENERGIE
+========================================================== */
+
+energie: [
+    {
+        "Vaste prijs": "Je hebt gekozen voor prijszekerheid met een vast energietarief.",
+        "Variabele prijs": "Je energietarief beweegt mee met de marktprijzen.",
+        "Dynamische prijs": "Je gebruikt een dynamisch energietarief dat sterk afhankelijk is van het moment van verbruik.",
+        "Weet ik niet": "Je weet momenteel niet welk type energietarief je hebt."
+    },
+    {
+        "Ja": "Je hebt zonnepanelen, wat invloed kan hebben op welk energietarief het beste bij je past.",
+        "Nee": "Je hebt momenteel geen zonnepanelen.",
+        "Binnenkort": "Je plant binnenkort zonnepanelen, waardoor je energiebehoefte mogelijk verandert.",
+        "Weet ik niet": "Het is niet duidelijk of zonnepanelen een rol spelen in je energiecontract."
+    },
+    {
+        "Laag": "Je geeft aan dat je elektriciteitsverbruik relatief laag is.",
+        "Gemiddeld": "Je elektriciteitsverbruik ligt volgens jou rond het gemiddelde.",
+        "Hoog": "Je hebt een relatief hoog elektriciteitsverbruik, waardoor tariefverschillen extra belangrijk kunnen zijn.",
+        "Weet ik niet": "Je hebt momenteel weinig zicht op je werkelijke elektriciteitsverbruik."
+    },
+    {
+        "Minder dan 6 maanden geleden": "Je hebt je energietarief recent nog vergeleken.",
+        "6 tot 12 maanden geleden": "Je hebt je energietarief het afgelopen jaar nog vergeleken.",
+        "Meer dan een jaar geleden": "Het is meer dan een jaar geleden dat je je energietarief hebt vergeleken.",
+        "Nog nooit": "Je hebt je huidige energietarief nog nooit met alternatieven vergeleken."
+    },
+    null
+],
+
+
+/* ==========================================================
+   WATER
+========================================================== */
+
+water: [
+    null,
+    {
+        "Laag": "Je omschrijft je waterverbruik als laag.",
+        "Gemiddeld": "Je waterverbruik ligt volgens jou rond het gemiddelde.",
+        "Hoog": "Je geeft aan dat je waterverbruik relatief hoog is.",
+        "Weet ik niet": "Je hebt momenteel weinig zicht op je waterverbruik."
+    },
+    {
+        "Ja, regelmatig": "Je volgt je waterverbruik actief op.",
+        "Soms": "Je kijkt af en toe naar je waterverbruik.",
+        "Bijna nooit": "Je volgt je waterverbruik nauwelijks op.",
+        "Nooit": "Je volgt je waterverbruik momenteel niet op."
+    },
+    {
+        "Ja, meerdere": "Je gebruikt meerdere systemen of toestellen om water te besparen.",
+        "Een paar": "Je hebt al enkele maatregelen genomen om water te besparen.",
+        "Nee": "Je gebruikt momenteel geen specifieke waterbesparende systemen.",
+        "Weet ik niet": "Je weet niet goed welke waterbesparende voorzieningen aanwezig zijn."
+    },
+    null
+],
+
+
+/* ==========================================================
+   VERZEKERING
+========================================================== */
+
+verzekering: [
+    {
+        "Minder dan een jaar geleden": "Je hebt je verzekering vrij recent nog vergeleken.",
+        "1 tot 2 jaar geleden": "Je hebt je verzekering één tot twee jaar geleden nog vergeleken.",
+        "Meer dan 2 jaar geleden": "Het is meer dan twee jaar geleden dat je deze verzekering hebt vergeleken.",
+        "Nog nooit": "Je hebt deze verzekering nog nooit met alternatieven vergeleken."
+    },
+    {
+        "Ja, volledig": "Je weet goed welke dekkingen in je verzekering inbegrepen zijn.",
+        "Grotendeels": "Je kent het grootste deel van de inbegrepen dekkingen.",
+        "Niet echt": "Je hebt maar beperkt zicht op wat je verzekering precies dekt.",
+        "Nee": "Je weet momenteel niet goed waarvoor je precies verzekerd bent."
+    },
+    {
+        "Ja": "Je hebt meerdere verzekeringen bij dezelfde maatschappij.",
+        "Nee": "Je verzekeringen zijn niet allemaal bij dezelfde maatschappij ondergebracht.",
+        "Gedeeltelijk": "Een deel van je verzekeringen is bij dezelfde maatschappij ondergebracht.",
+        "Weet ik niet": "Je weet niet zeker hoe je verzekeringen verdeeld zijn."
+    },
+    null,
+    null
+],
+
+
+/* ==========================================================
+   BANK & FINANCIEEL
+========================================================== */
+
+"bank & financieel": [
+    {
+        "Dagelijks": "Je gebruikt deze bankrekening dagelijks.",
+        "Regelmatig": "Je gebruikt deze bankrekening regelmatig.",
+        "Af en toe": "Je gebruikt deze rekening slechts af en toe.",
+        "Bijna nooit": "Je maakt nauwelijks gebruik van deze bankrekening."
+    },
+    {
+        "Ja": "Je betaalt voor deze rekening of dit bankpakket.",
+        "Nee": "Je betaalt momenteel niets voor deze rekening.",
+        "Gedeeltelijk": "Een deel van je bankdiensten is betalend.",
+        "Weet ik niet": "Je weet niet precies welke kosten aan je bankpakket verbonden zijn."
+    },
+    {
+        "Vaak": "Je gebruikt de extra voordelen van je bankpakket regelmatig.",
+        "Soms": "Je gebruikt sommige extra voordelen van je bankpakket.",
+        "Bijna nooit": "Je maakt nauwelijks gebruik van de extra voordelen waarvoor je mogelijk betaalt.",
+        "Weet ik niet": "Je weet niet goed welke extra voordelen je bankpakket bevat."
+    },
+    {
+        "Nee": "Je hebt je bankzaken bij één bank geconcentreerd.",
+        "2 banken": "Je gebruikt momenteel twee verschillende banken.",
+        "3 banken": "Je hebt rekeningen bij drie verschillende banken.",
+        "Meer dan 3": "Je gebruikt meerdere banken, waardoor er mogelijk overlap in diensten of kosten is."
+    },
+    null
+],
+
+
+/* ==========================================================
+   LIDMAATSCHAP
+========================================================== */
+
+lidmaatschap: [
+    {
+        "Heel vaak": "Je maakt heel vaak gebruik van dit lidmaatschap.",
+        "Regelmatig": "Je gebruikt dit lidmaatschap regelmatig.",
+        "Af en toe": "Je maakt slechts af en toe gebruik van dit lidmaatschap.",
+        "Bijna nooit": "Je gebruikt dit lidmaatschap bijna nooit."
+    },
+    {
+        "Bijna allemaal": "Je benut bijna alle voordelen van je lidmaatschap.",
+        "Meerdere": "Je maakt gebruik van meerdere inbegrepen voordelen.",
+        "Slechts één of twee": "Je gebruikt maar een klein deel van de voordelen waarvoor je betaalt.",
+        "Geen": "Je maakt momenteel geen gebruik van de voordelen van het lidmaatschap."
+    },
+    null,
+    {
+        "Recent": "Je hebt recent nog bekeken of dit lidmaatschap nuttig voor je is.",
+        "Dit jaar": "Je hebt dit jaar nog beoordeeld of je het lidmaatschap nodig hebt.",
+        "Meer dan een jaar geleden": "Het is meer dan een jaar geleden dat je dit lidmaatschap opnieuw hebt geëvalueerd.",
+        "Nog nooit": "Je hebt nog nooit bekeken of dit lidmaatschap nog bij je past."
+    },
+    {
+        "Zeker": "Je zou dit lidmaatschap duidelijk missen als je het stopzet.",
+        "Waarschijnlijk": "Je verwacht dat je dit lidmaatschap waarschijnlijk zou missen.",
+        "Waarschijnlijk niet": "Je denkt dat je het lidmaatschap waarschijnlijk niet zou missen.",
+        "Nee": "Je verwacht het lidmaatschap niet te missen als je het stopzet."
+    }
+],
+
+
+/* ==========================================================
+   FITNESS & SPORT
+========================================================== */
+
+"fitness & sport": [
+    {
+        "3 keer of meer per week": "Je sport drie keer of meer per week en gebruikt je abonnement intensief.",
+        "1 tot 2 keer per week": "Je sport één tot twee keer per week en gebruikt je abonnement regelmatig.",
+        "Enkele keren per maand": "Je maakt slechts enkele keren per maand gebruik van je sportabonnement.",
+        "Bijna nooit": "Je maakt bijna nooit gebruik van je sportabonnement."
+    },
+    {
+        "Ja, regelmatig": "Je gebruikt ook regelmatig extra diensten die in je abonnement zitten.",
+        "Soms": "Je maakt af en toe gebruik van extra diensten.",
+        "Bijna nooit": "Je gebruikt de extra diensten nauwelijks.",
+        "Er zijn geen extra diensten": "Je abonnement bevat geen extra diensten om rekening mee te houden."
+    },
+    {
+        "Maandelijks opzegbaar": "Je abonnement is flexibel en maandelijks opzegbaar.",
+        "Jaarcontract": "Je zit momenteel aan een jaarcontract vast.",
+        "Langere looptijd": "Je sportabonnement heeft een langere contractduur.",
+        "Weet ik niet": "Je weet momenteel niet hoe flexibel je sportabonnement is."
+    },
+    {
+        "Zeer tevreden": "Je bent zeer tevreden over de locatie en faciliteiten.",
+        "Tevreden": "Je bent tevreden over de locatie en faciliteiten.",
+        "Twijfel": "Je twijfelt of de locatie en faciliteiten nog voldoende bij je passen.",
+        "Nee": "Je bent niet tevreden over de locatie of faciliteiten."
+    },
+    {
+        "Waarschijnlijk wel": "Je denkt dat een goedkoper sportabonnement waarschijnlijk voldoende zou zijn.",
+        "Misschien": "Je vermoedt dat een goedkoper abonnement mogelijk voldoende kan zijn.",
+        "Waarschijnlijk niet": "Je verwacht dat een goedkoper abonnement waarschijnlijk niet aan je behoeften voldoet.",
+        "Nee": "Je verwacht dat je huidige abonnementsniveau nodig blijft."
+    }
+],
+
+
+/* ==========================================================
+   AUTO & MOBILITEIT
+========================================================== */
+
+"auto & mobiliteit": [
+    null,
+    {
+        "Dagelijks": "Je gebruikt het voertuig dagelijks.",
+        "Meerdere keren per week": "Je gebruikt het voertuig meerdere keren per week.",
+        "Af en toe": "Je gebruikt het voertuig slechts af en toe.",
+        "Bijna nooit": "Je gebruikt het voertuig bijna nooit."
+    },
+    {
+        "Ja, volledig": "Onderhoud en andere diensten zijn volledig in je contract inbegrepen.",
+        "Gedeeltelijk": "Een deel van het onderhoud of de dienstverlening is inbegrepen.",
+        "Nee": "Onderhoud en aanvullende diensten zijn niet inbegrepen.",
+        "Weet ik niet": "Je weet niet precies welke diensten in het contract inbegrepen zijn."
+    },
+    {
+        "Ja": "Je weet precies wanneer je voertuigcontract eindigt.",
+        "Ongeveer": "Je weet ongeveer wanneer je contract afloopt.",
+        "Nee": "Je weet momenteel niet wanneer het contract eindigt.",
+        "Niet van toepassing": "Voor dit contract is geen klassieke einddatum van toepassing."
+    },
+    {
+        "Zeer tevreden": "Je bent zeer tevreden over de totale maandelijkse kost.",
+        "Tevreden": "Je bent tevreden over de totale maandelijkse kost.",
+        "Twijfel": "Je twijfelt of de totale maandelijkse kost nog gerechtvaardigd is.",
+        "Nee": "Je bent niet tevreden over de totale maandelijkse kost."
+    }
+],
+
+
+/* ==========================================================
+   GEZONDHEID
+========================================================== */
+
+gezondheid: [
+    {
+        "Heel regelmatig": "Je gebruikt deze gezondheidsdienst heel regelmatig.",
+        "Regelmatig": "Je maakt regelmatig gebruik van deze dienst.",
+        "Af en toe": "Je gebruikt deze dienst slechts af en toe.",
+        "Bijna nooit": "Je maakt bijna nooit gebruik van deze dienst."
+    },
+    {
+        "Ja": "Je gebruikt de inbegrepen diensten goed.",
+        "De meeste": "Je benut het grootste deel van de inbegrepen diensten.",
+        "Slechts enkele": "Je gebruikt slechts enkele van de inbegrepen diensten.",
+        "Bijna geen": "Je maakt nauwelijks gebruik van de diensten waarvoor je betaalt."
+    },
+    null,
+    {
+        "Nee": "Je hebt geen vergelijkbare diensten elders.",
+        "Een paar": "Je gebruikt daarnaast nog enkele vergelijkbare diensten.",
+        "Ja, meerdere": "Je gebruikt meerdere vergelijkbare diensten, waardoor overlap mogelijk is.",
+        "Weet ik niet": "Je weet niet goed of er overlap met andere diensten bestaat."
+    },
+    {
+        "Zeer tevreden": "Je bent zeer tevreden over de prijs-kwaliteitverhouding.",
+        "Tevreden": "Je bent tevreden over de prijs-kwaliteitverhouding.",
+        "Twijfel": "Je twijfelt of de prijs nog in verhouding staat tot wat je krijgt.",
+        "Nee": "Je bent niet tevreden over de prijs-kwaliteitverhouding."
+    }
+],
+
+
+/* ==========================================================
+   MEDIA
+========================================================== */
+
+media: [
+    {
+        "Dagelijks": "Je gebruikt dit media-abonnement dagelijks.",
+        "Enkele keren per week": "Je gebruikt dit media-abonnement meerdere keren per week.",
+        "Af en toe": "Je gebruikt dit media-abonnement maar af en toe.",
+        "Bijna nooit": "Je gebruikt dit media-abonnement bijna nooit."
+    },
+    null,
+    {
+        "Ja, heel vaak": "Je gebruikt veel van de content waarvoor je betaalt.",
+        "Regelmatig": "Je maakt regelmatig gebruik van de beschikbare content.",
+        "Slechts een deel": "Je gebruikt slechts een deel van de content waarvoor je betaalt.",
+        "Bijna nooit": "Je maakt nauwelijks gebruik van de betaalde content."
+    },
+    {
+        "Nee": "Je hebt geen andere betaalde media-abonnementen.",
+        "1 ander": "Je hebt daarnaast nog één ander media-abonnement.",
+        "2 andere": "Je betaalt voor meerdere media-abonnementen.",
+        "3 of meer": "Je hebt verschillende betaalde media-abonnementen, waardoor overlap mogelijk is."
+    },
+    {
+        "Zeker": "Je vindt de abonnementsprijs duidelijk gerechtvaardigd.",
+        "Waarschijnlijk wel": "Je vindt de prijs waarschijnlijk gerechtvaardigd.",
+        "Ik twijfel": "Je twijfelt of de abonnementsprijs nog gerechtvaardigd is.",
+        "Nee": "Je vindt de abonnementsprijs niet gerechtvaardigd."
+    }
+],
+
+
+/* ==========================================================
+   AI
+========================================================== */
+
+ai: [
+    {
+        "Dagelijks": "Je gebruikt deze AI-dienst dagelijks.",
+        "Enkele keren per week": "Je gebruikt deze AI-dienst meerdere keren per week.",
+        "Af en toe": "Je gebruikt deze AI-dienst maar af en toe.",
+        "Bijna nooit": "Je gebruikt deze AI-dienst bijna nooit."
+    },
+    {
+        "Werk": "Je gebruikt deze AI-dienst voornamelijk voor je werk.",
+        "Privé": "Je gebruikt deze AI-dienst voornamelijk privé.",
+        "Studie": "Je gebruikt deze AI-dienst voornamelijk voor studie.",
+        "Meerdere toepassingen": "Je gebruikt deze AI-dienst voor verschillende toepassingen."
+    },
+    {
+        "Ja, heel vaak": "Je gebruikt vaak functies die alleen in de betaalde versie beschikbaar zijn.",
+        "Regelmatig": "Je maakt regelmatig gebruik van betaalde functies.",
+        "Bijna nooit": "Je maakt nauwelijks gebruik van functies waarvoor een betaald abonnement nodig is.",
+        "Weet ik niet": "Je weet niet goed of je daadwerkelijk betaalde functies gebruikt."
+    },
+    {
+        "Nee": "Je betaalt niet voor andere AI-diensten.",
+        "1 andere": "Je betaalt daarnaast nog voor één andere AI-dienst.",
+        "2 andere": "Je betaalt voor meerdere AI-diensten.",
+        "3 of meer": "Je betaalt voor verschillende AI-diensten, waardoor overlap waarschijnlijk is."
+    },
+    {
+        "Waarschijnlijk wel": "Je denkt dat de gratis versie waarschijnlijk voldoende zou zijn.",
+        "Misschien": "Je vermoedt dat de gratis versie mogelijk voldoende kan zijn.",
+        "Waarschijnlijk niet": "Je verwacht dat de gratis versie waarschijnlijk onvoldoende is.",
+        "Zeker niet": "Je hebt de betaalde functies duidelijk nodig."
+    }
+],
+
+
+/* ==========================================================
+   BEVEILIGING
+========================================================== */
+
+beveiliging: [
+    null,
+    {
+        "Dagelijks": "Je gebruikt of controleert deze beveiligingsdienst dagelijks.",
+        "Regelmatig": "Je gebruikt deze beveiligingsdienst regelmatig.",
+        "Af en toe": "Je maakt slechts af en toe actief gebruik van de beveiligingsdienst.",
+        "Bijna nooit": "Je gebruikt de beveiligingsdienst nauwelijks actief."
+    },
+    {
+        "Ja": "Professionele opvolging is in je beveiligingsabonnement inbegrepen.",
+        "Nee": "Je abonnement bevat geen professionele opvolging.",
+        "Gedeeltelijk": "Professionele opvolging is gedeeltelijk inbegrepen.",
+        "Weet ik niet": "Je weet niet precies welke professionele opvolging inbegrepen is."
+    },
+    {
+        "Minder dan een jaar geleden": "Je hebt de prijs en voorwaarden recent nog vergeleken.",
+        "1 tot 2 jaar geleden": "Je hebt de prijs of voorwaarden één tot twee jaar geleden vergeleken.",
+        "Meer dan 2 jaar geleden": "Het is meer dan twee jaar geleden dat je alternatieven hebt vergeleken.",
+        "Nog nooit": "Je hebt deze beveiligingsdienst nog nooit met alternatieven vergeleken."
+    },
+    {
+        "Zeer tevreden": "Je bent zeer tevreden over de prijs-kwaliteitverhouding.",
+        "Tevreden": "Je bent tevreden over de prijs-kwaliteitverhouding.",
+        "Twijfel": "Je twijfelt of de huidige prijs nog in verhouding staat tot de dienstverlening.",
+        "Nee": "Je bent niet tevreden over de prijs-kwaliteitverhouding."
+    }
+],
+
+
+/* ==========================================================
+   WONEN & HUISHOUDEN
+========================================================== */
+
+"wonen & huishouden": [
+    null,
+    {
+        "Regelmatig": "Je maakt regelmatig gebruik van deze dienst.",
+        "Enkele keren per jaar": "Je gebruikt deze dienst enkele keren per jaar.",
+        "Zelden": "Je hebt deze dienst maar zelden nodig.",
+        "Bijna nooit": "Je maakt bijna nooit gebruik van deze dienst."
+    },
+    {
+        "Ja, volledig": "Onderdelen of interventies zijn volledig inbegrepen.",
+        "Gedeeltelijk": "Een deel van de onderdelen of interventies is inbegrepen.",
+        "Nee": "Onderdelen en interventies zijn niet in het contract inbegrepen.",
+        "Weet ik niet": "Je weet niet precies wat er in het contract inbegrepen is."
+    },
+    {
+        "Recent": "Je hebt recent nog alternatieve aanbieders bekeken.",
+        "Een tijdje geleden": "Het is enige tijd geleden dat je alternatieven hebt bekeken.",
+        "Nog nooit": "Je hebt deze dienst nog nooit met andere aanbieders vergeleken.",
+        "Er zijn weinig alternatieven": "Er lijken voor deze dienst weinig directe alternatieven beschikbaar."
+    },
+    {
+        "Zeker": "Je vindt de huidige kost duidelijk gerechtvaardigd.",
+        "Waarschijnlijk wel": "Je vindt de huidige kost waarschijnlijk gerechtvaardigd.",
+        "Ik twijfel": "Je twijfelt of de huidige kost nog gerechtvaardigd is.",
+        "Nee": "Je vindt de huidige kost niet gerechtvaardigd."
+    }
+],
+
+
+/* ==========================================================
+   HOSTING & WEBSITES
+========================================================== */
+
+"hosting & websites": [
+    null,
+    {
+        "Essentieel": "Deze dienst is essentieel voor jou.",
+        "Belangrijk": "Deze dienst is belangrijk voor je dagelijkse activiteiten.",
+        "Handig maar niet essentieel": "De dienst is nuttig, maar niet essentieel.",
+        "Nauwelijks belangrijk": "Deze dienst is momenteel nauwelijks belangrijk voor je."
+    },
+    {
+        "Ja": "Je maakt goed gebruik van de inbegrepen functies.",
+        "De meeste": "Je gebruikt het grootste deel van de beschikbare functies.",
+        "Slechts enkele": "Je gebruikt maar een beperkt deel van de functies waarvoor je betaalt.",
+        "Bijna geen": "Je maakt nauwelijks gebruik van de inbegrepen functies."
+    },
+    {
+        "Ja, recent": "Je hebt de prijs recent nog met andere aanbieders vergeleken.",
+        "Minder dan een jaar geleden": "Je hebt de prijs het afgelopen jaar nog vergeleken.",
+        "Meer dan een jaar geleden": "Het is meer dan een jaar geleden dat je de prijs hebt vergeleken.",
+        "Nog nooit": "Je hebt deze dienst nog nooit met andere aanbieders vergeleken."
+    },
+    {
+        "Waarschijnlijk wel": "Je denkt dat een goedkoper pakket waarschijnlijk voldoende zou zijn.",
+        "Misschien": "Een goedkoper pakket zou mogelijk voldoende kunnen zijn.",
+        "Waarschijnlijk niet": "Je verwacht dat een goedkoper pakket waarschijnlijk onvoldoende is.",
+        "Zeker niet": "Je huidige pakketniveau lijkt voor jou noodzakelijk."
+    }
+],
+
+
+/* ==========================================================
+   MAALTIJDEN & BEZORGING
+========================================================== */
+
+"maaltijden & bezorging": [
+    {
+        "Meerdere keren per week": "Je gebruikt deze dienst meerdere keren per week.",
+        "Ongeveer wekelijks": "Je gebruikt deze dienst ongeveer één keer per week.",
+        "Enkele keren per maand": "Je gebruikt deze dienst enkele keren per maand.",
+        "Bijna nooit": "Je gebruikt deze dienst bijna nooit."
+    },
+    null,
+    {
+        "Nooit": "Je hebt geen last van ongebruikte bestellingen of tegoeden.",
+        "Soms": "Je houdt soms ongebruikte bestellingen of tegoeden over.",
+        "Regelmatig": "Je hebt regelmatig ongebruikte bestellingen of tegoeden.",
+        "Heel vaak": "Je betaalt vaak voor bestellingen of tegoeden die je uiteindelijk niet gebruikt."
+    },
+    {
+        "Nee": "Je gebruikt geen andere vergelijkbare maaltijd- of bezorgdiensten.",
+        "1 andere": "Je gebruikt daarnaast nog één andere vergelijkbare dienst.",
+        "2 andere": "Je gebruikt meerdere maaltijd- of bezorgdiensten.",
+        "3 of meer": "Je gebruikt verschillende vergelijkbare diensten, waardoor overlap mogelijk is."
+    },
+    {
+        "Absoluut": "Je vindt dat deze dienst je duidelijk voldoende waarde biedt.",
+        "Waarschijnlijk wel": "Je vindt dat de dienst waarschijnlijk voldoende waarde biedt.",
+        "Ik twijfel": "Je twijfelt of de dienst voldoende waarde biedt.",
+        "Nee": "Je vindt dat deze dienst onvoldoende waarde biedt."
+    }
+],
+
+
+/* ==========================================================
+   BOEKEN & LEZEN
+========================================================== */
+
+"boeken & lezen": [
+    {
+        "Dagelijks": "Je gebruikt deze lees- of luisterdienst dagelijks.",
+        "Enkele keren per week": "Je gebruikt deze dienst meerdere keren per week.",
+        "Af en toe": "Je gebruikt de dienst slechts af en toe.",
+        "Bijna nooit": "Je gebruikt deze dienst bijna nooit."
+    },
+    null,
+    {
+        "Zeker": "Je gebruikt de dienst voldoende om het abonnement goed te benutten.",
+        "Waarschijnlijk wel": "Je benut het abonnement waarschijnlijk voldoende.",
+        "Ik twijfel": "Je twijfelt of je voldoende leest of luistert om het abonnement te verantwoorden.",
+        "Nee": "Je gebruikt de dienst onvoldoende om het abonnement goed te benutten."
+    },
+    {
+        "Nee": "Je betaalt niet voor andere lees- of luisterdiensten.",
+        "1 andere": "Je betaalt daarnaast nog voor één andere lees- of luisterdienst.",
+        "2 andere": "Je betaalt voor meerdere lees- of luisterdiensten.",
+        "3 of meer": "Je betaalt voor verschillende lees- of luisterdiensten, waardoor overlap mogelijk is."
+    },
+    {
+        "Waarschijnlijk wel": "Je denkt dat afzonderlijke boeken kopen waarschijnlijk voordeliger zou zijn.",
+        "Misschien": "Afzonderlijke boeken kopen zou mogelijk voordeliger kunnen zijn.",
+        "Waarschijnlijk niet": "Je verwacht dat het abonnement voordeliger blijft dan losse aankopen.",
+        "Zeker niet": "Je bent ervan overtuigd dat het abonnement voordeliger is dan losse aankopen."
+    }
+],
+
+
+/* ==========================================================
+   OVERIG
+========================================================== */
+
+overig: [
+    {
+        "Heel vaak": "Je maakt heel vaak gebruik van dit contract.",
+        "Regelmatig": "Je maakt regelmatig gebruik van dit contract.",
+        "Af en toe": "Je gebruikt dit contract slechts af en toe.",
+        "Bijna nooit": "Je maakt bijna nooit gebruik van dit contract."
+    },
+    {
+        "Zeker": "Je vindt dat je duidelijk voldoende waarde krijgt voor wat je betaalt.",
+        "Waarschijnlijk wel": "Je vindt dat je waarschijnlijk voldoende waarde krijgt.",
+        "Ik twijfel": "Je twijfelt of je voldoende waarde krijgt voor wat je betaalt.",
+        "Nee": "Je vindt dat je onvoldoende waarde krijgt voor wat je betaalt."
+    },
+    {
+        "Ja": "Je weet precies wanneer dit contract eindigt of verlengd wordt.",
+        "Ongeveer": "Je weet ongeveer wanneer het contract eindigt of verlengd wordt.",
+        "Nee": "Je weet momenteel niet wanneer het contract eindigt of verlengd wordt.",
+        "Niet van toepassing": "Voor dit contract is geen klassieke eind- of verlengdatum van toepassing."
+    },
+    {
+        "Recent": "Je hebt recent nog alternatieven bekeken.",
+        "Een tijdje geleden": "Het is enige tijd geleden dat je alternatieven hebt bekeken.",
+        "Nog nooit": "Je hebt nog nooit alternatieven voor dit contract bekeken.",
+        "Er zijn geen alternatieven": "Er lijken momenteel geen duidelijke alternatieven voor dit contract te zijn."
+    },
+    {
+        "Lagere prijs": "Voor jou ligt de grootste verbeterkans bij een lagere prijs.",
+        "Betere voorwaarden": "Je zou vooral betere contractvoorwaarden willen.",
+        "Meer flexibiliteit": "Je zou vooral meer flexibiliteit in het contract willen.",
+        "Ik ben tevreden": "Je geeft aan dat je momenteel tevreden bent met het contract."
+    }
+]
+
+    };
+
+
+    const categoryInsights =
+        insights[category];
+
+    if (!categoryInsights) {
+        return null;
+    }
+
+    const questionInsights =
+        categoryInsights[index];
+
+    if (!questionInsights) {
+        return null;
+    }
+
+    return questionInsights[answer] || null;
 
 }
 
@@ -1599,17 +2576,386 @@ function initCKAIResult() {
 
     button.addEventListener("click", () => {
 
-        // Resultaat verbergen
+        // Resultaatscherm verbergen
         document
             .getElementById("ckaiResultScreen")
             .classList.add("hidden");
 
-        // Premium tonen
+        // Persoonlijke analyse tonen
+        document
+            .getElementById("ckaiAdviceScreen")
+            .classList.remove("hidden");
+
+            // Persoonlijke analyse invullen
+const adviceTitle =
+    document.getElementById("ckaiAdviceTitle");
+
+const adviceContract =
+    document.getElementById("ckaiAdviceContract");
+
+const adviceStatus =
+    document.getElementById("ckaiAdviceStatus");
+
+if (ckaiEvaluationResult && ckaiCurrentContract) {
+
+    adviceTitle.textContent =
+    "Jouw resultaat";
+
+    adviceContract.textContent =
+        ckaiCurrentContract.name;
+
+        const adviceLogo =
+    document.getElementById("ckaiAdviceLogo");
+
+if (adviceLogo) {
+
+    const logo =
+        ContractService.getLogo(
+            ckaiCurrentContract.name
+        );
+
+    if (logo) {
+
+        adviceLogo.innerHTML = `
+            <img
+                src="${resolveLogoSrc(logo)}"
+                alt="${ckaiCurrentContract.name}">
+        `;
+
+    } else {
+
+        const icon =
+            ContractService.getCategoryIcon(
+                ckaiCurrentContract.category
+            );
+
+        adviceLogo.innerHTML = `
+            <i class="bi ${icon}"></i>
+        `;
+
+    }
+
+}
+
+    adviceStatus.textContent =
+        ckaiEvaluationResult.title;
+
+        const adviceStatusContainer =
+    document.querySelector(".ckai-advice-status");
+
+if (adviceStatusContainer) {
+
+    adviceStatusContainer.classList.remove(
+        "status-behouden",
+        "status-optimaliseren",
+        "status-herbekijken",
+        "status-opzeggen"
+    );
+
+    adviceStatusContainer.classList.add(
+        `status-${ckaiEvaluationResult.status}`
+    );
+
+}
+
+// ===========================
+// PREMIUM CTA
+// ===========================
+
+const premiumCta =
+    document.getElementById("ckaiPremiumCta");
+
+    const premiumCtaTitle =
+    document.getElementById("ckaiPremiumCtaTitle");
+
+const premiumCtaText =
+    document.getElementById("ckaiPremiumCtaText");
+
+if (premiumCta) {
+
+    if (ckaiEvaluationResult.status === "behouden") {
+
+        premiumCta.classList.add("hidden");
+
+    } else {
+
+    premiumCta.classList.remove("hidden");
+
+
+    switch (ckaiEvaluationResult.status) {
+
+        case "optimaliseren":
+
+            premiumCtaTitle.textContent =
+                "Er valt mogelijk meer uit te halen";
+
+            premiumCtaText.textContent =
+                "Ontdek met Premium waar je kunt optimaliseren en mogelijk besparen.";
+
+            break;
+
+
+        case "herbekijken":
+
+            premiumCtaTitle.textContent =
+                "Misschien is er een betere keuze";
+
+            premiumCtaText.textContent =
+                "Vergelijk met Premium je contract met mogelijke alternatieven.";
+
+            break;
+
+
+        case "opzeggen":
+
+            premiumCtaTitle.textContent =
+                "Bekijk betere alternatieven";
+
+            premiumCtaText.textContent =
+                "Ontdek met Premium welke alternatieven mogelijk beter bij je passen.";
+
+            break;
+
+    }
+
+}
+
+}
+
+
+const premiumCtaButton =
+    document.getElementById("ckaiPremiumCtaButton");
+
+if (premiumCtaButton) {
+
+    premiumCtaButton.onclick = () => {
+
+        document
+            .getElementById("ckaiAdviceScreen")
+            ?.classList.add("hidden");
+
         document
             .getElementById("ckaiPremiumScreen")
-            .classList.remove("hidden");
+            ?.classList.remove("hidden");
+
+    };
+
+}
+
+        const adviceAnalysis =
+    document.getElementById("ckaiAdviceAnalysis");
+
+if (adviceAnalysis) {
+
+    const answers =
+        Object.values(ckaiAnswers);
+
+    const contractKey =
+        ckaiCurrentContract.name.toLowerCase();
+
+    const categoryKey =
+        ckaiCurrentContract.category.toLowerCase();
+
+    const analysisKey =
+        CKAI_SCORING[contractKey]
+            ? contractKey
+            : categoryKey;
+
+    const scoring =
+        CKAI_SCORING[analysisKey];
+
+    const strongInsights = [];
+    const normalInsights = [];
+
+
+    ckaiQuestions.forEach((question, index) => {
+
+        const answer =
+            answers[index];
+
+        if (!answer) return;
+
+        const insight =
+            getCKAIInsight(
+                analysisKey,
+                index,
+                answer
+            );
+
+        if (!insight) return;
+
+
+        const answerScore =
+            scoring?.[index]?.[answer];
+
+
+        if (
+            typeof answerScore === "number" &&
+            Math.abs(answerScore) >= 2
+        ) {
+
+            strongInsights.push(insight);
+
+        } else {
+
+            normalInsights.push(insight);
+
+        }
+
+    });
+
+
+    const analysisParts = [];
+
+
+    switch (ckaiEvaluationResult.status) {
+
+        case "behouden":
+
+            analysisParts.push(
+                `${ckaiCurrentContract.name} lijkt goed bij je huidige gebruik te passen.`
+            );
+
+            break;
+
+        case "optimaliseren":
+
+            analysisParts.push(
+                `${ckaiCurrentContract.name} biedt je voldoende waarde, al zijn er nog enkele mogelijkheden om te optimaliseren.`
+            );
+
+            break;
+
+        case "herbekijken":
+
+            analysisParts.push(
+                `${ckaiCurrentContract.name} verdient op basis van je antwoorden opnieuw bekeken te worden.`
+            );
+
+            break;
+
+        case "opzeggen":
+
+            analysisParts.push(
+                `${ckaiCurrentContract.name} lijkt momenteel niet optimaal aan te sluiten bij je gebruik en behoeften.`
+            );
+
+            break;
+
+    }
+
+
+    analysisParts.push(
+        ...strongInsights.slice(0, 3)
+    );
+
+
+    if (strongInsights.length < 3) {
+
+        analysisParts.push(
+            ...normalInsights.slice(
+                0,
+                3 - strongInsights.length
+            )
+        );
+
+    }
+
+
+    adviceAnalysis.textContent =
+        analysisParts.join(" ");
+
+}
+
+const monthlyCostElement =
+    document.getElementById("ckaiAdviceMonthlyCost");
+
+const yearlyCostElement =
+    document.getElementById("ckaiAdviceYearlyCost");
+
+const amount =
+    Number(ckaiCurrentContract.amount) || 0;
+
+let monthlyCost = 0;
+let yearlyCost = 0;
+
+switch (ckaiCurrentContract.frequency) {
+
+    case "monthly":
+        monthlyCost = amount;
+        yearlyCost = amount * 12;
+        break;
+
+    case "quarterly":
+        monthlyCost = amount / 3;
+        yearlyCost = amount * 4;
+        break;
+
+    case "yearly":
+        monthlyCost = amount / 12;
+        yearlyCost = amount;
+        break;
+
+}
+
+if (monthlyCostElement) {
+
+    monthlyCostElement.textContent =
+        ContractService.formatPrice(monthlyCost);
+
+}
+
+if (yearlyCostElement) {
+
+    yearlyCostElement.textContent =
+        ContractService.formatPrice(yearlyCost);
+
+}
+
+const adviceRecommendation =
+    document.getElementById("ckaiAdviceRecommendation");
+
+if (adviceRecommendation) {
+
+    switch (ckaiEvaluationResult.status) {
+
+        case "behouden":
+
+            adviceRecommendation.textContent =
+                `Dit abonnement sluit goed aan bij je huidige gebruik. Je lijkt voldoende waarde uit je abonnement te halen. Voor ${ContractService.formatPrice(monthlyCost)} per maand, oftewel ${ContractService.formatPrice(yearlyCost)} per jaar, lijkt behouden op dit moment een logische keuze.`;
+
+            break;
+
+
+        case "optimaliseren":
+
+            adviceRecommendation.textContent =
+                `Je haalt voldoende waarde uit dit abonnement om het te behouden. Je betaalt ${ContractService.formatPrice(monthlyCost)} per maand, oftewel ${ContractService.formatPrice(yearlyCost)} per jaar. Toch zijn er enkele signalen dat je mogelijk nog kunt optimaliseren. Bekijk regelmatig of je gebruik en de kost in verhouding blijven.`;
+
+            break;
+
+
+        case "herbekijken":
+
+            adviceRecommendation.textContent =
+                `Je gebruik en je eigen beoordeling geven aan dat dit abonnement mogelijk niet optimaal bij je past. Je betaalt ${ContractService.formatPrice(monthlyCost)} per maand, oftewel ${ContractService.formatPrice(yearlyCost)} per jaar. Bekijk je gebruik van de afgelopen maanden en overweeg een goedkoper abonnement of opzegging als je het weinig gebruikt.`;
+
+            break;
+
+
+        case "opzeggen":
+
+            adviceRecommendation.textContent =
+                `Op basis van je antwoorden lijkt dit abonnement momenteel weinig waarde te bieden. Je betaalt ${ContractService.formatPrice(monthlyCost)} per maand, oftewel ${ContractService.formatPrice(yearlyCost)} per jaar. Overweeg om het abonnement stop te zetten of te vervangen door een goedkoper alternatief.`;
+
+            break;
+
+    }
+
+}
+
+}
 
     });
 
 }
-

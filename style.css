@@ -6565,3 +6565,347 @@ min-height:120px;
 
 }
 
+/* ===========================
+   CK AI - ADVIES
+=========================== */
+
+.ckai-advice-card{
+
+    margin:12px;
+    margin-bottom:90px;
+
+    padding:22px;
+
+    background:#142238;
+
+    border-radius:20px;
+
+    box-shadow:
+        0 14px 35px rgba(0,0,0,.22);
+
+}
+
+/* ===========================
+   CK AI - STATUS
+=========================== */
+
+.ckai-advice-status{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    margin-top:14px;
+
+    margin-bottom:20px;
+
+    padding:7px 12px;
+
+    border-radius:999px;
+
+    background:rgba(245,158,11,.12);
+
+    color:#F59E0B;
+
+    font-size:13px;
+
+    font-weight:700;
+
+}
+
+.ckai-advice-status.status-behouden{
+
+    background:rgba(34,197,94,.12);
+    color:#22C55E;
+
+}
+
+.ckai-advice-status.status-optimaliseren{
+
+    background:rgba(234,179,8,.12);
+    color:#EAB308;
+
+}
+
+.ckai-advice-status.status-herbekijken{
+
+    background:rgba(245,158,11,.12);
+    color:#F59E0B;
+
+}
+
+.ckai-advice-status.status-opzeggen{
+
+    background:rgba(239,68,68,.12);
+    color:#EF4444;
+
+}
+
+/* ===========================
+   CK AI - ADVIES SECTIES
+=========================== */
+
+.ckai-advice-section{
+
+    margin-top:16px;
+
+    padding:16px;
+
+    background:rgba(255,255,255,.035);
+
+    border:1px solid rgba(255,255,255,.06);
+
+    border-radius:14px;
+
+}
+
+.ckai-advice-section h3{
+
+    margin:0 0 10px;
+
+    font-size:15px;
+
+    font-weight:700;
+
+    color:#FFFFFF;
+
+}
+
+.ckai-advice-section p{
+
+    margin:0;
+
+    font-size:14px;
+
+    line-height:1.55;
+
+    color:#B8C7DC;
+
+}
+
+/* ===========================
+   CK AI - KOSTEN
+=========================== */
+
+.ckai-advice-costs{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:12px;
+
+}
+
+.ckai-advice-costs > div{
+
+    padding:14px;
+
+    background:rgba(255,255,255,.04);
+
+    border-radius:12px;
+
+}
+
+.ckai-advice-costs span{
+
+    display:block;
+
+    margin-bottom:6px;
+
+    font-size:12px;
+
+    color:#8FA3BD;
+
+}
+
+.ckai-advice-costs strong{
+
+    display:block;
+
+    font-size:20px;
+
+    font-weight:700;
+
+    color:#FFFFFF;
+
+}
+
+/* ===========================
+   CK AI - CONTRACT
+=========================== */
+
+.ckai-advice-contract{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    margin-top:8px;
+
+}
+
+.ckai-advice-logo{
+
+    width:34px;
+
+    height:34px;
+
+    border-radius:10px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:rgba(255,255,255,.05);
+
+    overflow:hidden;
+
+    flex-shrink:0;
+
+}
+
+.ckai-advice-logo img{
+
+    width:24px;
+
+    height:24px;
+
+    object-fit:contain;
+
+}
+
+.ckai-advice-logo i{
+
+    font-size:20px;
+
+    color:#8FA3BD;
+
+}
+
+#ckaiAdviceContract{
+
+    font-size:14px;
+
+    font-weight:600;
+
+    color:#FFFFFF;
+
+}
+
+/* ===========================
+   CK AI - PREMIUM CTA
+=========================== */
+
+.ckai-premium-cta{
+
+    margin-top:14px;
+
+    padding:16px;
+
+    border-radius:14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(34,197,94,.12),
+            rgba(52,211,153,.05)
+        );
+
+    border:1px solid rgba(52,211,153,.20);
+
+}
+
+.ckai-premium-cta-content{
+
+    display:flex;
+
+    align-items:flex-start;
+
+    gap:10px;
+
+}
+
+.ckai-premium-cta-icon{
+
+    width:34px;
+    height:34px;
+
+    border-radius:10px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    flex-shrink:0;
+
+    background:rgba(52,211,153,.12);
+
+    font-size:17px;
+
+}
+
+.ckai-premium-cta-content strong{
+
+    display:block;
+
+    margin-bottom:4px;
+
+    color:#FFFFFF;
+
+    font-size:13px;
+
+    line-height:1.3;
+
+}
+
+.ckai-premium-cta-content span{
+
+    display:block;
+
+    color:#9DB2CC;
+
+    font-size:11px;
+
+    line-height:1.45;
+
+}
+
+.ckai-premium-cta-button{
+
+    width:100%;
+
+    margin-top:13px;
+    padding:11px 14px;
+
+    border:0;
+    border-radius:10px;
+
+    background:#22C55E;
+
+    color:#FFFFFF;
+
+    font-size:12px;
+    font-weight:700;
+
+    cursor:pointer;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    gap:7px;
+
+}
+
+.ckai-premium-cta-button i{
+
+    font-size:13px;
+
+}

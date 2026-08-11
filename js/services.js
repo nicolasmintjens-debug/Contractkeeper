@@ -41,7 +41,7 @@ const SERVICES = [
     // INTERNET & TELEFONIE
     // ======================================================
 
-    { name: "Proximus", domain: "proximus.be", category: "Internet" },
+    { name: "Proximus", logo: "assets/logos/proximus.png", category: "Internet" },
     { name: "Telenet", domain: "telenet.be", category: "Internet" },
     { name: "Scarlet", domain: "scarlet.be", category: "Internet" },
     { name: "DIGI", domain: "digi-belgium.be", category: "Internet" },
