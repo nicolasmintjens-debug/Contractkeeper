@@ -5247,8 +5247,31 @@ a,
 
     overflow:hidden;
 
+    transition:
+        transform .22s ease,
+        opacity .22s ease;
+
+    will-change:
+        transform,
+        opacity;
+
     box-shadow:
         0 12px 30px rgba(0,0,0,.18);
+
+}
+
+.did-you-know-card.swipe-left{
+
+    transform:translateX(-110%);
+    opacity:0;
+
+}
+
+.did-you-know-card.swipe-right{
+
+    transform:translateX(110%);
+    opacity:0;
+
 }
 
 .did-you-know-content{

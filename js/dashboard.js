@@ -84,25 +84,91 @@ if (card) {
 
 function nextDidYouKnowTip() {
 
-    currentDidYouKnowTip++;
+    const card =
+        document.querySelector(".did-you-know-card");
 
-    if (currentDidYouKnowTip >= didYouKnowTips.length) {
-        currentDidYouKnowTip = 0;
-    }
+    if (!card) return;
 
-    updateDidYouKnow();
+    card.classList.add("swipe-left");
+
+    setTimeout(() => {
+
+        currentDidYouKnowTip++;
+
+        if (currentDidYouKnowTip >= didYouKnowTips.length) {
+            currentDidYouKnowTip = 0;
+        }
+
+        card.style.transition = "none";
+
+        card.classList.remove("swipe-left");
+
+        card.style.transform = "translateX(110%)";
+        card.style.opacity = "0";
+
+        updateDidYouKnow();
+
+        requestAnimationFrame(() => {
+
+            requestAnimationFrame(() => {
+
+                card.style.transition =
+                    "transform .22s ease, opacity .22s ease";
+
+                card.style.transform = "translateX(0)";
+                card.style.opacity = "1";
+
+            });
+
+        });
+
+    }, 220);
+
 }
 
 
 function previousDidYouKnowTip() {
 
-    currentDidYouKnowTip--;
+    const card =
+        document.querySelector(".did-you-know-card");
 
-    if (currentDidYouKnowTip < 0) {
-        currentDidYouKnowTip = didYouKnowTips.length - 1;
-    }
+    if (!card) return;
 
-    updateDidYouKnow();
+    card.classList.add("swipe-right");
+
+    setTimeout(() => {
+
+        currentDidYouKnowTip--;
+
+        if (currentDidYouKnowTip < 0) {
+            currentDidYouKnowTip = didYouKnowTips.length - 1;
+        }
+
+        card.style.transition = "none";
+
+        card.classList.remove("swipe-right");
+
+        card.style.transform = "translateX(-110%)";
+        card.style.opacity = "0";
+
+        updateDidYouKnow();
+
+        requestAnimationFrame(() => {
+
+            requestAnimationFrame(() => {
+
+                card.style.transition =
+                    "transform .22s ease, opacity .22s ease";
+
+                card.style.transform = "translateX(0)";
+                card.style.opacity = "1";
+
+            });
+
+        });
+
+    }, 220);
+
 }
 
 function updateCKAIHome() {
