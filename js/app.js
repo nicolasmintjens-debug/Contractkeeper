@@ -66,8 +66,10 @@ function registerServiceWorker() {
         return;
     }
 
-    navigator.serviceWorker
-        .register("sw.js")
+navigator.serviceWorker
+    .register("sw.js", {
+        updateViaCache: "none"
+    })
         .then(() => {
 
             console.log("✅ Service Worker geregistreerd");
