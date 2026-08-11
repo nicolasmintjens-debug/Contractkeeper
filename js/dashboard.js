@@ -1809,18 +1809,44 @@ function startCKAIAnalysis() {
 
     const steps = [
 
-        "Contractgegevens ophalen",
-        "Gebruik analyseren",
-        "Vergelijken met actuele marktprijzen",
-        "Mogelijke besparing berekenen",
-        "Persoonlijk advies opstellen"
+    "Contractgegevens ophalen",
+    "Gebruik analyseren",
+    "Vergelijken met actuele marktprijzen",
+    "Mogelijke besparing berekenen",
+    "Persoonlijk advies opstellen"
 
-    ];
+];
+
+
+// ===========================
+// ANALYSE RESETTEN
+// ===========================
+
+steps.forEach((step, index) => {
+
+    const stepElement =
+        document.getElementById(
+            `analysisStep${index + 1}`
+        );
+
+    if (stepElement) {
+
+        stepElement.innerHTML =
+            `<span class="analysis-waiting">○</span> ${step}`;
+
+    }
+
+});
+
+
+const progressBar =
+    document.getElementById("ckaiAnalysisProgressBar");
+
+if (progressBar) {
+    progressBar.style.width = "0%";
+}
 
     let currentStep = 0;
-
-    const progressBar =
-        document.getElementById("ckaiAnalysisProgressBar");
 
     function nextStep() {
 
@@ -2899,6 +2925,56 @@ if (premiumCtaButton) {
         document
             .getElementById("ckaiPremiumScreen")
             ?.classList.remove("hidden");
+
+
+        // Premium altijd bovenaan openen
+        const ckaiPage =
+            document.getElementById("page-ckai");
+
+        if (ckaiPage) {
+            ckaiPage.scrollTop = 0;
+        }
+
+        window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: "instant"
+        });
+
+    };
+
+}
+
+const premiumLaterButton =
+    document.getElementById("premiumLater");
+
+if (premiumLaterButton) {
+
+    premiumLaterButton.onclick = () => {
+
+        // Premium verbergen
+        document
+            .getElementById("ckaiPremiumScreen")
+            ?.classList.add("hidden");
+
+        // Terug naar het CK AI advies
+        document
+            .getElementById("ckaiAdviceScreen")
+            ?.classList.remove("hidden");
+
+        // Advies opnieuw bovenaan openen
+        const ckaiPage =
+            document.getElementById("page-ckai");
+
+        if (ckaiPage) {
+            ckaiPage.scrollTop = 0;
+        }
+
+        window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: "instant"
+        });
 
     };
 
