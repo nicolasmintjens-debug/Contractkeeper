@@ -270,13 +270,46 @@ function nextCKAIHomeInsight() {
 
     if (insights.length <= 1) return;
 
-    currentCKAIHomeInsight++;
+    const card =
+        document.querySelector(".ck-ai-home-card");
 
-    if (currentCKAIHomeInsight >= insights.length) {
-        currentCKAIHomeInsight = 0;
-    }
+    if (!card) return;
 
-    updateCKAIHome();
+    card.classList.add("swipe-left");
+
+    setTimeout(() => {
+
+        currentCKAIHomeInsight++;
+
+        if (currentCKAIHomeInsight >= insights.length) {
+            currentCKAIHomeInsight = 0;
+        }
+
+        card.style.transition = "none";
+
+        card.classList.remove("swipe-left");
+
+        card.style.transform = "translateX(110%)";
+        card.style.opacity = "0";
+
+        updateCKAIHome();
+
+        requestAnimationFrame(() => {
+
+            requestAnimationFrame(() => {
+
+                card.style.transition =
+                    "transform .22s ease, opacity .22s ease";
+
+                card.style.transform = "translateX(0)";
+                card.style.opacity = "1";
+
+            });
+
+        });
+
+    }, 220);
+
 }
 
 
@@ -287,13 +320,46 @@ function previousCKAIHomeInsight() {
 
     if (insights.length <= 1) return;
 
-    currentCKAIHomeInsight--;
+    const card =
+        document.querySelector(".ck-ai-home-card");
 
-    if (currentCKAIHomeInsight < 0) {
-        currentCKAIHomeInsight = insights.length - 1;
-    }
+    if (!card) return;
 
-    updateCKAIHome();
+    card.classList.add("swipe-right");
+
+    setTimeout(() => {
+
+        currentCKAIHomeInsight--;
+
+        if (currentCKAIHomeInsight < 0) {
+            currentCKAIHomeInsight = insights.length - 1;
+        }
+
+        card.style.transition = "none";
+
+        card.classList.remove("swipe-right");
+
+        card.style.transform = "translateX(-110%)";
+        card.style.opacity = "0";
+
+        updateCKAIHome();
+
+        requestAnimationFrame(() => {
+
+            requestAnimationFrame(() => {
+
+                card.style.transition =
+                    "transform .22s ease, opacity .22s ease";
+
+                card.style.transform = "translateX(0)";
+                card.style.opacity = "1";
+
+            });
+
+        });
+
+    }, 220);
+
 }
 
 /* ==========================================================

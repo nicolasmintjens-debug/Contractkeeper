@@ -5366,11 +5366,11 @@ a,
 
     gap:12px;
 
-   margin-top:10px;
+    margin-top:10px;
 
-padding:14px 16px;
+    padding:14px 16px;
 
-min-height:120px;
+    min-height:120px;
 
     background:
         linear-gradient(
@@ -5385,8 +5385,31 @@ min-height:120px;
 
     overflow:hidden;
 
+    transition:
+        transform .22s ease,
+        opacity .22s ease;
+
+    will-change:
+        transform,
+        opacity;
+
     box-shadow:
         0 14px 35px rgba(0,0,0,.22);
+
+}
+
+.ck-ai-home-card.swipe-left{
+
+    transform:translateX(-110%);
+    opacity:0;
+
+}
+
+.ck-ai-home-card.swipe-right{
+
+    transform:translateX(110%);
+    opacity:0;
+
 }
 
 .ck-ai-home-content{
