@@ -1063,6 +1063,28 @@ document
 
 }
 
+function openContractAnalysis() {
+
+    openCKAI();
+
+    // CK AI Premium-home verbergen
+    document
+        .querySelector("#page-ckai .ckai-card-header")
+        ?.classList.add("hidden");
+
+    document
+        .querySelector("#page-ckai .ckai-tools")
+        ?.classList.add("hidden");
+
+    document
+        .getElementById("openPremium")
+        ?.classList.add("hidden");
+
+    // Gewone contractanalyse starten
+    startCKAI();
+
+}
+
 function openCKAIPremium() {
 
     const hero =
