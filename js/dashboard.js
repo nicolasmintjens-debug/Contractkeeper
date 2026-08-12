@@ -1013,6 +1013,19 @@ function openCKAI() {
         welcomeCard.style.display = "block";
     }
 
+    // CK AI home-inhoud opnieuw tonen
+document
+    .querySelector("#page-ckai .ckai-card-header")
+    ?.classList.remove("hidden");
+
+document
+    .querySelector("#page-ckai .ckai-tools")
+    ?.classList.remove("hidden");
+
+document
+    .getElementById("openPremium")
+    ?.classList.remove("hidden");
+
     // Oude contractkeuze verwijderen
 const ckaiContent =
     document.getElementById("ckaiContent");
@@ -4505,8 +4518,8 @@ if (premiumCta) {
             premiumCtaTitle.textContent =
                 "Er valt mogelijk meer uit te halen";
 
-            premiumCtaText.textContent =
-                "Ontdek met Premium waar je kunt optimaliseren en mogelijk besparen.";
+                premiumCtaText.textContent =
+    "Bekijk waar je jouw contract nog kunt optimaliseren en mogelijk besparen.";
 
             break;
 
@@ -4545,6 +4558,65 @@ const premiumCtaButton =
 if (premiumCtaButton) {
 
     premiumCtaButton.onclick = () => {
+
+                const planContract =
+            document.getElementById("ckaiPlanContract");
+
+        const planMonthly =
+            document.getElementById("ckaiPlanMonthly");
+
+        const planYearly =
+            document.getElementById("ckaiPlanYearly");
+
+
+        if (ckaiCurrentContract) {
+
+            if (planContract) {
+                planContract.textContent =
+                    ckaiCurrentContract.name;
+            }
+
+            const amount =
+                Number(ckaiCurrentContract.amount) || 0;
+
+            let monthlyCost = 0;
+            let yearlyCost = 0;
+
+            switch (ckaiCurrentContract.frequency) {
+
+                case "monthly":
+                    monthlyCost = amount;
+                    yearlyCost = amount * 12;
+                    break;
+
+                case "quarterly":
+                    monthlyCost = amount / 3;
+                    yearlyCost = amount * 4;
+                    break;
+
+                case "yearly":
+                    monthlyCost = amount / 12;
+                    yearlyCost = amount;
+                    break;
+
+                case "once":
+                    monthlyCost = 0;
+                    yearlyCost = amount;
+                    break;
+
+            }
+
+            if (planMonthly) {
+                planMonthly.textContent =
+                    ContractService.formatPrice(monthlyCost);
+            }
+
+            if (planYearly) {
+                planYearly.textContent =
+                    ContractService.formatPrice(yearlyCost);
+            }
+
+        }
 
         document
             .getElementById("ckaiAdviceScreen")
