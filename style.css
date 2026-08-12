@@ -7224,3 +7224,232 @@ a,
     margin-top:4px;
 
 }
+
+/* ===========================
+   CONTRACT ANALYSE CARD
+=========================== */
+
+.contract-analysis-card {
+
+    margin: 14px 20px 0;
+
+    padding: 18px;
+
+    border-radius: 18px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(34, 197, 94, 0.14),
+            rgba(34, 197, 94, 0.05)
+        );
+
+    border: 1px solid rgba(34, 197, 94, 0.20);
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 16px;
+
+}
+
+.contract-analysis-content {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+}
+
+.contract-analysis-icon {
+
+    width: 44px;
+
+    height: 44px;
+
+    border-radius: 13px;
+
+    background: rgba(34, 197, 94, 0.16);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    font-size: 21px;
+
+    color: #34D399;
+
+}
+
+.contract-analysis-text {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 5px;
+
+}
+
+.contract-analysis-text strong {
+
+    font-size: 16px;
+
+    font-weight: 700;
+
+    color: #ffffff;
+
+}
+
+.contract-analysis-text span {
+
+    font-size: 12px;
+
+    line-height: 1.5;
+
+    color: rgba(255, 255, 255, 0.62);
+
+}
+
+.contract-analysis-button {
+
+    width: 100%;
+
+    height: 44px;
+
+    border: 0;
+
+    border-radius: 12px;
+
+    background: #22C55E;
+
+    color: #ffffff;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 7px;
+
+    cursor: pointer;
+
+}
+
+.contract-analysis-button:active {
+
+    transform: scale(0.98);
+
+}
+
+/* ===========================
+   CK AI TOOLS
+=========================== */
+
+.ckai-tools {
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    margin-top: 18px;
+    margin-bottom: 18px;
+
+}
+
+.ckai-tool-card {
+
+    width: 100%;
+
+    padding: 14px;
+
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 14px;
+
+    background: rgba(255, 255, 255, 0.04);
+
+    display: grid;
+    grid-template-columns: 38px 1fr 18px;
+    align-items: center;
+    gap: 12px;
+
+    color: #ffffff;
+
+    text-align: left;
+
+    cursor: pointer;
+
+}
+
+.ckai-tool-card > i:first-child {
+
+    width: 38px;
+    height: 38px;
+
+    border-radius: 11px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(52, 211, 153, 0.12);
+
+    color: #34D399;
+
+    font-size: 18px;
+
+}
+
+.ckai-tool-card > div {
+
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+
+    min-width: 0;
+
+}
+
+.ckai-tool-card strong {
+
+    font-size: 13px;
+    font-weight: 700;
+
+    color: #ffffff;
+
+}
+
+.ckai-tool-card span {
+
+    font-size: 11px;
+    line-height: 1.4;
+
+    color: rgba(255, 255, 255, 0.58);
+
+}
+
+.ckai-tool-card > i:last-child {
+
+    font-size: 14px;
+
+    color: rgba(255, 255, 255, 0.35);
+
+}
+
+.ckai-tool-card:active {
+
+    transform: scale(0.98);
+
+}

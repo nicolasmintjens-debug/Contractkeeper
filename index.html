@@ -206,6 +206,45 @@
 
 </div>
 
+<!-- ===========================
+     CONTRACT ANALYSE
+=========================== -->
+
+<div class="contract-analysis-card">
+
+    <div class="contract-analysis-content">
+
+        <div class="contract-analysis-icon">
+            <i class="bi bi-clipboard2-pulse"></i>
+        </div>
+
+        <div class="contract-analysis-text">
+
+            <strong>
+                Analyseer je contract
+            </strong>
+
+            <span>
+                Ontdek in enkele vragen hoe goed je contract
+                bij jouw gebruik past.
+            </span>
+
+        </div>
+
+    </div>
+
+    <button
+        class="contract-analysis-button"
+        onclick="openCKAI()">
+
+        Start analyse
+
+        <i class="bi bi-arrow-right"></i>
+
+    </button>
+
+</div>
+
 <div class="did-you-know-card">
 
     <div class="did-you-know-content">
@@ -772,57 +811,114 @@
 
             </div>
 
-            <!-- WELKOMSKAART -->
+            <!-- CK AI HOME -->
 
-            <div class="ckai-card">
+<div class="ckai-card">
 
-                <div class="ckai-card-header">
+    <div class="ckai-card-header">
 
-                    <div class="ckai-card-icon">
+        <div class="ckai-card-icon">
 
-                        <i class="bi bi-chat-dots"></i>
+            <i class="bi bi-stars"></i>
 
-                    </div>
+        </div>
 
-                    <div class="ckai-card-content">
+        <div class="ckai-card-content">
 
-                        <h3 class="ckai-card-title">
+            <h3 class="ckai-card-title">
+                Wat kan CK AI voor je doen?
+            </h3>
 
-                            Welkom bij
+            <p class="ckai-card-text">
+                Laat je contracten uitlezen, analyseren en actief opvolgen.
+            </p>
 
-                            <span class="ck-brand">
+        </div>
 
-                                <span class="brand-white">Contract</span><span class="brand-green">Keeper</span>
+    </div>
 
-                                <span class="brand-ai">AI</span>
 
-                            </span>
+    <div class="ckai-tools">
 
-                        </h3>
+        <button
+            class="ckai-tool-card"
+            id="ckaiScanContract">
 
-                        <p class="ckai-card-text">
+            <i class="bi bi-file-earmark-text"></i>
 
-                            Ik analyseer jouw contracten en geef persoonlijk bespaaradvies.
-
-                            Kies hieronder waarmee ik je mag helpen.
-
-                        </p>
-
-                    </div>
-
-                </div>
-
-                <button
-                    id="startCKAI"
-                    class="ckai-button">
-
-                    🚀 Start persoonlijk advies
-
-                </button>
-
-                <div id="ckaiContent"></div>
-
+            <div>
+                <strong>Contract scannen</strong>
+                <span>Upload een contract of factuur en laat de gegevens automatisch uitlezen.</span>
             </div>
+
+            <i class="bi bi-chevron-right"></i>
+
+        </button>
+
+
+        <button
+            class="ckai-tool-card"
+            id="ckaiAnalyzeContract">
+
+            <i class="bi bi-cpu"></i>
+
+            <div>
+                <strong>AI-contractanalyse</strong>
+                <span>Laat voorwaarden, kosten en aandachtspunten analyseren.</span>
+            </div>
+
+            <i class="bi bi-chevron-right"></i>
+
+        </button>
+
+
+        <button
+            class="ckai-tool-card"
+            id="ckaiPriceWatch">
+
+            <i class="bi bi-graph-up-arrow"></i>
+
+            <div>
+                <strong>Prijsbewaking</strong>
+                <span>Ontvang een melding wanneer prijzen of voorwaarden wijzigen.</span>
+            </div>
+
+            <i class="bi bi-chevron-right"></i>
+
+        </button>
+
+
+        <button
+            class="ckai-tool-card"
+            id="ckaiDeals">
+
+            <i class="bi bi-tags"></i>
+
+            <div>
+                <strong>Deals & promoties</strong>
+                <span>Ontdek interessante aanbiedingen en mogelijke alternatieven.</span>
+            </div>
+
+            <i class="bi bi-chevron-right"></i>
+
+        </button>
+
+    </div>
+
+
+    <button
+    id="openPremium"
+    class="ckai-button"
+    onclick="openCKAIPremium()">
+
+    Bekijk Premium
+
+</button>
+
+
+    <div id="ckaiContent"></div>
+
+</div>
 
         </div>
 
@@ -1179,11 +1275,11 @@
 
         <div>
             <strong id="ckaiPremiumCtaTitle">
-    Er valt mogelijk meer uit te halen
+    Jouw persoonlijk advies
 </strong>
 
 <span id="ckaiPremiumCtaText">
-    Ontdek met Premium je beste alternatieven en mogelijke besparing.
+    Bekijk concrete actiepunten op basis van jouw antwoorden.
 </span>
         </div>
 
@@ -1193,7 +1289,7 @@
         id="ckaiPremiumCtaButton"
         class="ckai-premium-cta-button">
 
-        Bekijk Premium
+        Bekijk gedetailleerd advies
 
         <i class="bi bi-arrow-right"></i>
 
@@ -1209,8 +1305,8 @@
          PREMIUM
     ========================================================== -->
 
-    <!-- =========================================
-     CK AI - PREMIUM
+  <!-- =========================================
+     CONTRACTKEEPER PREMIUM
 ========================================== -->
 
 <div
@@ -1222,18 +1318,14 @@
         <!-- SLOT -->
 
         <div class="ckai-premium-lock">
-
             🔒
-
         </div>
 
 
         <!-- TITEL -->
 
         <h2 class="ckai-premium-ready">
-
-            Jouw analyse is klaar
-
+            ContractKeeper Premium
         </h2>
 
         <div class="ckai-premium-divider"></div>
@@ -1242,16 +1334,13 @@
         <!-- PREMIUM -->
 
         <h3 class="ckai-premium-title">
-
-            Ontgrendel ContractKeeper
-            <span>Premium</span>
-
+            Laat ContractKeeper
+            <span>voor jou werken</span>
         </h3>
 
         <p class="ckai-premium-intro">
-
-            Ontgrendel Premium en bekijk:
-
+            Met Premium worden je contracten actief
+            geanalyseerd en opgevolgd.
         </p>
 
 
@@ -1266,7 +1355,7 @@
                 </div>
 
                 <span>
-                    Persoonlijk bespaaradvies
+                    Contracten automatisch uitlezen
                 </span>
 
                 <i class="bi bi-chevron-right"></i>
@@ -1281,7 +1370,7 @@
                 </div>
 
                 <span>
-                    Beste alternatieven
+                    AI-analyse van je contracten
                 </span>
 
                 <i class="bi bi-chevron-right"></i>
@@ -1296,7 +1385,7 @@
                 </div>
 
                 <span>
-                    Jaarlijkse besparing
+                    Prijsstijgingen detecteren
                 </span>
 
                 <i class="bi bi-chevron-right"></i>
@@ -1311,7 +1400,7 @@
                 </div>
 
                 <span>
-                    AI aanbevelingen
+                    Promoties & betere deals ontdekken
                 </span>
 
                 <i class="bi bi-chevron-right"></i>
@@ -1326,7 +1415,7 @@
                 </div>
 
                 <span>
-                    Contractmonitoring
+                    Slimme contractmonitoring
                 </span>
 
                 <i class="bi bi-chevron-right"></i>
@@ -1342,7 +1431,7 @@
             id="startPremium"
             class="ckai-premium-button">
 
-            ✨ Start 1 week gratis
+            ✨ Probeer 1 maand gratis
 
         </button>
 
@@ -1350,12 +1439,13 @@
         <!-- LATER -->
 
         <button
-            id="premiumLater"
-            class="ckai-premium-later">
+    id="premiumLater"
+    class="ckai-premium-later"
+    onclick="closeCKAIPremium()">
 
-            Misschien later
+    Misschien later
 
-        </button>
+</button>
 
     </div>
 
@@ -1374,23 +1464,23 @@
     <div class="ckai-premium-plan">
 
 
-        <!-- HEADER -->
+       <!-- HEADER -->
 
-        <div class="ckai-plan-header">
+<div class="ckai-plan-header">
 
-            <span class="ckai-plan-label">
-                ✨ CK AI PREMIUM
-            </span>
+    <span class="ckai-plan-label">
+        ✓ CK ANALYSE
+    </span>
 
-            <h2>
-                Jouw persoonlijk bespaarplan
-            </h2>
+    <h2>
+        Jouw persoonlijk advies
+    </h2>
 
-            <p id="ckaiPlanContract">
-                Contract
-            </p>
+    <p id="ckaiPlanContract">
+        Contract
+    </p>
 
-        </div>
+</div>
 
 
         <!-- ADVIES -->
@@ -1414,9 +1504,9 @@
             </h3>
 
             <p id="ckaiPlanActionText">
-                CK AI bekijkt welke actie het beste aansluit
-                bij jouw gebruik en contract.
-            </p>
+    Op basis van jouw antwoorden bekijken we
+    welke actie het beste bij jouw situatie past.
+</p>
 
         </div>
 
@@ -1469,13 +1559,13 @@
 
 
             <p
-                id="ckaiPlanSavingText"
-                class="ckai-plan-saving-text">
+    id="ckaiPlanSavingText"
+    class="ckai-plan-saving-text">
 
-                Mogelijke besparing wordt bepaald op basis
-                van jouw situatie.
+    Je huidige kosten op basis van de gegevens
+    in ContractKeeper.
 
-            </p>
+</p>
 
         </div>
 

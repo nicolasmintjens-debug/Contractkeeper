@@ -1063,6 +1063,77 @@ document
 
 }
 
+function openCKAIPremium() {
+
+    const hero =
+        document.querySelector("#page-ckai .ckai-hero");
+
+    const premiumScreen =
+        document.getElementById("ckaiPremiumScreen");
+
+    if (!premiumScreen) {
+        console.error("CK AI Premium-scherm niet gevonden");
+        return;
+    }
+
+    // CK AI home verbergen
+    if (hero) {
+        hero.style.display = "none";
+    }
+
+    // Andere CK AI schermen verbergen
+    [
+        "ckaiQuestionScreen",
+        "ckaiAnalysisScreen",
+        "ckaiResultScreen",
+        "ckaiAdviceScreen",
+        "ckaiPremiumPlanScreen"
+    ].forEach(id => {
+
+        document
+            .getElementById(id)
+            ?.classList.add("hidden");
+
+    });
+
+    // Premium tonen
+    premiumScreen.classList.remove("hidden");
+    premiumScreen.style.display = "block";
+
+    window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "instant"
+    });
+
+}
+
+function closeCKAIPremium() {
+
+    const premiumScreen =
+        document.getElementById("ckaiPremiumScreen");
+
+    const ckaiHero =
+        document.querySelector("#page-ckai .ckai-hero");
+
+    if (premiumScreen) {
+        premiumScreen.classList.add("hidden");
+        premiumScreen.style.display = "none";
+    }
+
+    if (ckaiHero) {
+        ckaiHero.classList.remove("hidden");
+        ckaiHero.style.display = "block";
+    }
+
+    window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "instant"
+    });
+
+}
+
 function openCKAIInsights() {
 
     hideAllPages();
@@ -2839,7 +2910,1429 @@ function getCKAIAction(category, index, answer) {
                     "Overweeg je Netflix-abonnement te verlagen of stop te zetten als de dienst onvoldoende waarde biedt."
             }
 
-        ]
+        ],
+
+                streaming: [
+
+            null,
+
+            {
+                "Dagelijks":
+                    "Je gebruikt deze streamingdienst intensief. Controleer vooral of je huidige abonnementsniveau niet duurder is dan nodig.",
+
+                "Enkele keren per week":
+                    "Vergelijk je huidige abonnement met een goedkoper alternatief dat nog steeds bij je kijkgedrag past.",
+
+                "Af en toe":
+                    "Overweeg een goedkoper abonnement of de streamingdienst tijdelijk stop te zetten wanneer je hem weinig gebruikt.",
+
+                "Bijna nooit":
+                    "Overweeg de streamingdienst stop te zetten en alleen opnieuw te activeren wanneer je hem daadwerkelijk wilt gebruiken."
+            },
+
+            {
+                "Geen":
+                    "Je hebt geen andere streamingdiensten. Controleer vooral of deze dienst voldoende waarde biedt voor de prijs die je betaalt.",
+
+                "1 andere":
+                    "Vergelijk beide streamingdiensten en controleer of je ze allebei voldoende gebruikt om twee abonnementen te rechtvaardigen.",
+
+                "2 andere":
+                    "Bekijk welke streamingdiensten je het meest gebruikt en overweeg minstens één minder gebruikte dienst tijdelijk stop te zetten.",
+
+                "3 of meer":
+                    "Je betaalt voor meerdere streamingdiensten. Overweeg abonnementen af te wisselen in plaats van ze allemaal tegelijk actief te houden."
+            },
+
+            {
+                "Ja":
+                    "Je benut de functies van je abonnement goed. Focus daarom vooral op prijs en gebruiksfrequentie voordat je iets wijzigt.",
+
+                "Grotendeels":
+                    "Controleer of een goedkoper abonnementsniveau dezelfde functies bevat die jij daadwerkelijk gebruikt.",
+
+                "Niet echt":
+                    "Bekijk of je kunt overstappen naar een goedkoper abonnement zonder functies te verliezen die voor jou belangrijk zijn.",
+
+                "Weet ik niet":
+                    "Controleer welke functies in je abonnement inbegrepen zijn en of je daarvoor werkelijk een duurder niveau nodig hebt."
+            },
+
+            {
+                "Zeer tevreden":
+                    "Je bent zeer tevreden over de prijs. Behouden is logisch zolang je de streamingdienst voldoende blijft gebruiken.",
+
+                "Tevreden":
+                    "Je bent tevreden over de prijs. Controleer vooral of je gebruik hoog genoeg blijft om het abonnement te behouden.",
+
+                "Twijfel":
+                    "Vergelijk de huidige prijs met een goedkoper abonnementsniveau of een andere streamingdienst voordat je volgende betaling plaatsvindt.",
+
+                "Nee":
+                    "Overweeg een goedkoper abonnement, een alternatief of tijdelijke stopzetting omdat je de huidige prijs onvoldoende gerechtvaardigd vindt."
+            }
+
+        ],
+
+                gaming: [
+
+            {
+                "Dagelijks":
+                    "Je gebruikt dit gamingabonnement intensief. Controleer vooral of je huidige abonnementsniveau niet uitgebreider is dan je nodig hebt.",
+
+                "Enkele keren per week":
+                    "Vergelijk je huidige gamingabonnement met een goedkoper niveau dat nog steeds bij je speelgedrag past.",
+
+                "Af en toe":
+                    "Overweeg een goedkoper abonnement of tijdelijke stopzetting wanneer je maar af en toe speelt.",
+
+                "Bijna nooit":
+                    "Overweeg het gamingabonnement stop te zetten en alleen opnieuw te activeren wanneer je het daadwerkelijk wilt gebruiken."
+            },
+
+            {
+                "Bijna altijd":
+                    "Je gebruikt de inbegrepen games intensief. Behouden kan interessant zijn zolang je hierdoor minder losse games hoeft te kopen.",
+
+                "Regelmatig":
+                    "Controleer of de games die je regelmatig speelt ook beschikbaar zijn in een goedkoper abonnementsniveau.",
+
+                "Soms":
+                    "Vergelijk de abonnementsprijs met wat je zou betalen als je alleen de games koopt die je daadwerkelijk speelt.",
+
+                "Bijna nooit":
+                    "Je gebruikt de inbegrepen games nauwelijks. Bekijk of een goedkoper abonnement of losse aankopen voordeliger zijn."
+            },
+
+            {
+                "Heel vaak":
+                    "Online multiplayer is belangrijk voor jou. Kies daarom alleen een goedkoper abonnement als multiplayer daarin behouden blijft.",
+
+                "Regelmatig":
+                    "Controleer welk goedkoper abonnementsniveau nog toegang geeft tot de online multiplayerfuncties die je gebruikt.",
+
+                "Soms":
+                    "Bekijk of je voor het beperkte multiplayergebruik een goedkoper abonnementsniveau kunt nemen.",
+
+                "Nooit":
+                    "Je gebruikt online multiplayer niet. Controleer of je betaalt voor een abonnementsniveau met functies die je niet nodig hebt."
+            },
+
+            {
+                "Nee":
+                    "Je hebt geen andere gamingabonnementen. Focus daarom vooral op gebruik en abonnementsniveau.",
+
+                "1 ander":
+                    "Vergelijk beide gamingabonnementen en controleer of ze voldoende verschillende voordelen bieden om beide te behouden.",
+
+                "2 andere":
+                    "Bekijk welke gamingabonnementen je het meest gebruikt en overweeg minstens één minder gebruikt abonnement stop te zetten.",
+
+                "3 of meer":
+                    "Je hebt meerdere gamingabonnementen. Overweeg ze af te wisselen in plaats van allemaal tegelijk actief te houden."
+            },
+
+            {
+                "Absoluut":
+                    "Je haalt duidelijk waarde uit het abonnement. Controleer alleen of een goedkoper niveau dezelfde belangrijkste voordelen biedt.",
+
+                "Waarschijnlijk wel":
+                    "Je haalt waarschijnlijk voldoende waarde uit het abonnement, maar een vergelijking met een goedkoper niveau kan interessant zijn.",
+
+                "Ik twijfel":
+                    "Vergelijk je huidige abonnement met een goedkoper niveau of alternatief voordat de volgende betaling plaatsvindt.",
+
+                "Nee":
+                    "Overweeg het abonnement te verlagen of stop te zetten omdat je zelf aangeeft er onvoldoende waarde uit te halen."
+            }
+
+        ],
+
+
+        muziek: [
+
+            null,
+
+            {
+                "Dagelijks":
+                    "Je gebruikt deze muziekdienst intensief. Controleer vooral of je huidige formule niet uitgebreider is dan nodig.",
+
+                "Enkele keren per week":
+                    "Vergelijk je huidige abonnement met een goedkoper muziekabonnement dat nog steeds bij je luistergedrag past.",
+
+                "Af en toe":
+                    "Overweeg een goedkoper abonnement of tijdelijk de gratis versie te gebruiken als die beschikbaar is.",
+
+                "Bijna nooit":
+                    "Overweeg het betaalde muziekabonnement stop te zetten en een gratis alternatief te gebruiken."
+            },
+
+            {
+                "Ja, vaak":
+                    "Je gebruikt premiumfuncties vaak. Houd deze functies mee in rekening wanneer je een goedkoper alternatief vergelijkt.",
+
+                "Soms":
+                    "Controleer welke premiumfuncties je echt gebruikt en of een goedkoper abonnement die ook aanbiedt.",
+
+                "Bijna nooit":
+                    "Je gebruikt premiumfuncties nauwelijks. Bekijk of een gratis of goedkoper abonnement voldoende is.",
+
+                "Weet ik niet":
+                    "Controleer welke premiumfuncties in je abonnement zitten en of je ze daadwerkelijk gebruikt."
+            },
+
+            {
+                "Nee":
+                    "Je hebt geen andere betaalde muziekdiensten. Focus daarom vooral op gebruik en prijs van dit abonnement.",
+
+                "1 andere":
+                    "Vergelijk beide muziekdiensten en controleer of je ze allebei voldoende gebruikt om twee abonnementen te rechtvaardigen.",
+
+                "2 andere":
+                    "Je betaalt voor meerdere muziekdiensten. Kies welke je het meest gebruikt en overweeg minstens één abonnement stop te zetten.",
+
+                "Meer dan 2":
+                    "Je hebt verschillende betaalde muziekdiensten. Verminder overlap door één primaire muziekdienst te kiezen."
+            },
+
+            {
+                "Zeer tevreden":
+                    "Je bent zeer tevreden. Behouden is logisch zolang je de dienst voldoende gebruikt en de prijs passend blijft.",
+
+                "Tevreden":
+                    "Je bent tevreden. Controleer vooral of een goedkoper abonnement dezelfde functies biedt die voor jou belangrijk zijn.",
+
+                "Twijfel":
+                    "Vergelijk je huidige muziekdienst met een goedkoper abonnement of alternatief voordat de volgende betaling plaatsvindt.",
+
+                "Nee":
+                    "Overweeg een goedkoper alternatief of stopzetting omdat je niet tevreden bent over je huidige muziekabonnement."
+            }
+
+        ],
+
+
+        "fitness & sport": [
+
+            {
+                "3 keer of meer per week":
+                    "Je gebruikt je sportabonnement intensief. Behouden is logisch zolang prijs, locatie en faciliteiten goed bij je passen.",
+
+                "1 tot 2 keer per week":
+                    "Bereken of je huidige abonnement voordeliger blijft dan losse beurten of een goedkoper sportabonnement.",
+
+                "Enkele keren per maand":
+                    "Vergelijk je maandprijs met losse beurten of een goedkoper abonnement, omdat je maar enkele keren per maand gaat.",
+
+                "Bijna nooit":
+                    "Overweeg je sportabonnement stop te zetten of te vervangen door losse beurten als je bijna nooit gaat."
+            },
+
+            {
+                "Ja, regelmatig":
+                    "Je gebruikt de extra diensten regelmatig. Houd deze voordelen mee in rekening voordat je naar een goedkoper abonnement overstapt.",
+
+                "Soms":
+                    "Controleer of de extra diensten die je soms gebruikt de meerprijs van je huidige abonnement rechtvaardigen.",
+
+                "Bijna nooit":
+                    "Je gebruikt de extra diensten nauwelijks. Bekijk of een goedkoper abonnement zonder deze extra's voldoende is.",
+
+                "Er zijn geen extra diensten":
+                    "Je abonnement bevat geen extra diensten. Vergelijk daarom vooral prijs, locatie en gebruiksfrequentie."
+            },
+
+            {
+                "Maandelijks opzegbaar":
+                    "Je abonnement is flexibel. Daardoor kun je relatief eenvoudig overstappen of tijdelijk stoppen wanneer je gebruik afneemt.",
+
+                "Jaarcontract":
+                    "Controleer de einddatum en opzegvoorwaarden van je jaarcontract voordat je een wijziging plant.",
+
+                "Langere looptijd":
+                    "Controleer de resterende looptijd en voorwaarden voordat je beslist om van sportabonnement te veranderen.",
+
+                "Weet ik niet":
+                    "Controleer eerst de looptijd en opzegvoorwaarden van je sportabonnement voordat je een beslissing neemt."
+            },
+
+            {
+                "Zeer tevreden":
+                    "Je bent zeer tevreden over locatie en faciliteiten. Geef die voordelen voldoende gewicht bij een vergelijking met goedkopere opties.",
+
+                "Tevreden":
+                    "Je bent tevreden over locatie en faciliteiten. Vergelijk alleen alternatieven die praktisch even goed bij je passen.",
+
+                "Twijfel":
+                    "Bekijk of een andere sportclub betere faciliteiten, een betere locatie of een gunstigere prijs biedt.",
+
+                "Nee":
+                    "Vergelijk andere sportclubs of abonnementsvormen omdat de huidige locatie of faciliteiten onvoldoende bij je passen."
+            },
+
+            {
+                "Waarschijnlijk wel":
+                    "Vergelijk je huidige abonnement met een goedkoper sportabonnement; volgens je eigen inschatting zou dat waarschijnlijk voldoende zijn.",
+
+                "Misschien":
+                    "Bekijk welke onderdelen je werkelijk nodig hebt en vergelijk daarmee een goedkoper abonnement.",
+
+                "Waarschijnlijk niet":
+                    "Een goedkoper abonnement lijkt mogelijk minder geschikt. Zoek vooral naar besparing zonder belangrijke voordelen te verliezen.",
+
+                "Zeker niet":
+                    "Je hebt waarschijnlijk de mogelijkheden van je huidige abonnement nodig. Focus eerder op prijsvergelijking dan op downgraden."
+            }
+
+        ],
+
+                energie: [
+
+            {
+                "Vaste prijs":
+                    "Je hebt een vast energietarief. Vergelijk bij een volgende contractverlenging opnieuw met actuele tarieven om te controleren of de prijszekerheid de meerprijs waard is.",
+
+                "Variabele prijs":
+                    "Je hebt een variabel tarief. Vergelijk regelmatig met andere energiecontracten omdat je prijs mee verandert met de markt.",
+
+                "Dynamische prijs":
+                    "Controleer of je voldoende verbruik kunt verschuiven naar goedkope uren om echt voordeel uit een dynamisch tarief te halen.",
+
+                "Weet ik niet":
+                    "Controleer eerst op je contract of factuur welk type energietarief je hebt voordat je alternatieven vergelijkt."
+            },
+
+            {
+                "Ja":
+                    "Je hebt zonnepanelen. Vergelijk energiecontracten specifiek op voorwaarden die interessant zijn voor huishoudens met eigen productie.",
+
+                "Nee":
+                    "Je hebt geen zonnepanelen. Vergelijk contracten vooral op totale energiekost en voorwaarden die bij je verbruik passen.",
+
+                "Binnenkort":
+                    "Je plant zonnepanelen. Herbekijk je energiecontract zodra ze geplaatst zijn, omdat je verbruiksprofiel dan kan veranderen.",
+
+                "Weet ik niet":
+                    "Controleer eerst of zonnepanelen relevant zijn voor jouw aansluiting voordat je energietarieven verder vergelijkt."
+            },
+
+            {
+                "Laag":
+                    "Bij een laag verbruik kunnen vaste kosten relatief zwaar doorwegen. Vergelijk daarom niet alleen de prijs per kWh maar ook de vaste kosten.",
+
+                "Gemiddeld":
+                    "Vergelijk je totale jaarprijs met andere contracten op basis van je werkelijke jaarlijkse verbruik.",
+
+                "Hoog":
+                    "Bij een hoog energieverbruik kunnen kleine tariefverschillen sterk doorwegen. Een actuele prijsvergelijking kan daarom extra interessant zijn.",
+
+                "Weet ik niet":
+                    "Bekijk je jaarafrekening om je werkelijke verbruik te kennen voordat je energiecontracten vergelijkt."
+            },
+
+            {
+                "Minder dan 6 maanden geleden":
+                    "Je hebt recent vergeleken. Controleer vooral of je huidige contract nog overeenkomt met de voorwaarden waarop je toen gekozen hebt.",
+
+                "6 tot 12 maanden geleden":
+                    "Je laatste vergelijking is al enkele maanden geleden. Een nieuwe controle kan interessant zijn als tarieven ondertussen veranderd zijn.",
+
+                "Meer dan een jaar geleden":
+                    "Vergelijk je energiecontract opnieuw. Na meer dan een jaar kunnen prijzen en voorwaarden aanzienlijk veranderd zijn.",
+
+                "Nog nooit":
+                    "Voer een volledige vergelijking van je energiecontract uit om te controleren of je huidige tarief nog competitief is."
+            },
+
+            null
+
+        ],
+
+
+        internet: [
+
+            null,
+
+            null,
+
+            {
+                "Zeer tevreden":
+                    "Je bent zeer tevreden over je snelheid. Controleer of een goedkoper internetabonnement dezelfde snelheid kan bieden die je werkelijk nodig hebt.",
+
+                "Meestal tevreden":
+                    "Je huidige snelheid lijkt meestal voldoende. Vergelijk met een goedkoper snelheidsniveau voordat je je huidige formule behoudt.",
+
+                "Soms te traag":
+                    "Controleer eerst of de vertraging door je internetabonnement of door je wifi komt voordat je naar een duurder pakket overstapt.",
+
+                "Vaak te traag":
+                    "Vergelijk snellere internetformules of andere providers als je verbinding regelmatig te traag is."
+            },
+
+            {
+                "Nooit":
+                    "Je hebt geen wifi-problemen. Een duurder abonnement puur voor betere wifi lijkt daarom niet nodig.",
+
+                "Soms":
+                    "Controleer je router en wifi-bereik voordat je voor een duurder internetabonnement kiest.",
+
+                "Regelmatig":
+                    "Onderzoek eerst of betere wifi-apparatuur het probleem kan oplossen voordat je je internetabonnement verhoogt.",
+
+                "Heel vaak":
+                    "Controleer of je wifi-installatie of provider de oorzaak is van de problemen voordat je een nieuw abonnement kiest."
+            },
+
+            null
+
+        ],
+
+
+        telefonie: [
+
+            null,
+
+            null,
+
+            {
+                "Heel veel":
+                    "Je houdt iedere maand veel mobiele data over. Vergelijk je abonnement met een kleinere en goedkopere databundel.",
+
+                "Een beetje":
+                    "Je houdt meestal data over. Controleer of een iets kleinere databundel voldoende is voor je werkelijke gebruik.",
+
+                "Bijna niets":
+                    "Je databundel sluit goed aan bij je gebruik. Vergelijk vooral de prijs met gelijkaardige abonnementen.",
+
+                "Ik kom data tekort":
+                    "Je databundel is regelmatig te klein. Vergelijk grotere bundels en controleer of die voordeliger zijn dan bijkomende datakosten."
+            },
+
+            null,
+
+            null
+
+        ],
+
+
+        tv: [
+
+            {
+                "Dagelijks":
+                    "Je kijkt dagelijks klassieke televisie. Behouden kan logisch zijn, maar vergelijk of een goedkoper tv-pakket voldoende zenders bevat.",
+
+                "Enkele keren per week":
+                    "Je gebruikt klassieke televisie regelmatig. Controleer of een kleiner tv-pakket dezelfde zenders bevat die je werkelijk bekijkt.",
+
+                "Af en toe":
+                    "Je kijkt maar af en toe klassieke televisie. Vergelijk de kost van je tv-abonnement met alternatieven zonder klassiek tv-pakket.",
+
+                "Bijna nooit":
+                    "Je kijkt bijna nooit klassieke televisie. Overweeg het tv-gedeelte van je pakket te schrappen als je provider dat toelaat."
+            },
+
+            {
+                "Vooral live-tv":
+                    "Live-tv blijft belangrijk voor jou. Vergelijk daarom vooral goedkopere tv-pakketten waarbij live televisie behouden blijft.",
+
+                "Beide ongeveer evenveel":
+                    "Je combineert live-tv en streaming. Controleer of je betaalt voor overlappende content of functies.",
+
+                "Vooral streaming":
+                    "Je kijkt vooral via streaming. Bekijk of je klassieke tv-abonnement nog voldoende waarde toevoegt.",
+
+                "Bijna geen van beide":
+                    "Je gebruikt zowel klassieke tv als streaming weinig. Herbekijk of je nog voor een uitgebreid entertainmentpakket wilt betalen."
+            },
+
+            null,
+
+            null,
+
+            {
+                "Ja":
+                    "Je denkt zonder klassieke televisie te kunnen. Bekijk hoeveel je kunt besparen door het tv-gedeelte uit je pakket te halen.",
+
+                "Waarschijnlijk wel":
+                    "Onderzoek een internetabonnement zonder klassiek tv-pakket en vergelijk het prijsverschil met je huidige formule.",
+
+                "Waarschijnlijk niet":
+                    "Klassieke televisie blijft waarschijnlijk nuttig voor jou. Vergelijk daarom eerder kleinere of goedkopere tv-pakketten.",
+
+                "Nee":
+                    "Klassieke televisie blijft belangrijk voor jou. Focus op een voordeliger pakket zonder de tv-functionaliteit te verliezen."
+            }
+
+        ],
+
+                software: [
+
+            {
+                "Dagelijks":
+                    "Je gebruikt deze software dagelijks. Behouden is logisch, maar controleer of een goedkoper abonnement dezelfde functies biedt die je nodig hebt.",
+
+                "Enkele keren per week":
+                    "Vergelijk je huidige softwareabonnement met een goedkoper niveau dat nog steeds aansluit bij je gebruik.",
+
+                "Af en toe":
+                    "Je gebruikt de software maar af en toe. Bekijk of een goedkoper abonnement of een alternatief zonder abonnement voordeliger is.",
+
+                "Bijna nooit":
+                    "Overweeg het softwareabonnement stop te zetten als je het bijna nooit gebruikt."
+            },
+
+            null,
+
+            {
+                "Ja":
+                    "Je gebruikt de functies waarvoor je betaalt goed. Focus daarom vooral op prijs wanneer je alternatieven vergelijkt.",
+
+                "De meeste":
+                    "Je gebruikt de meeste functies. Controleer of een goedkoper abonnementsniveau dezelfde belangrijke functies bevat.",
+
+                "Slechts enkele":
+                    "Je gebruikt slechts enkele functies. Bekijk of een goedkoper abonnement of eenvoudiger alternatief voldoende is.",
+
+                "Bijna geen":
+                    "Je gebruikt nauwelijks de functies waarvoor je betaalt. Overweeg een goedkoper abonnement of een eenvoudiger alternatief."
+            },
+
+            null,
+
+            null
+
+        ],
+
+
+        cloud: [
+
+            {
+                "Minder dan 25%":
+                    "Je gebruikt minder dan een kwart van je opslagruimte. Controleer of je naar een kleiner en goedkoper opslagpakket kunt overstappen.",
+
+                "25% tot 50%":
+                    "Je gebruikt minder dan de helft van je opslagruimte. Vergelijk je huidige pakket met een kleinere opslagformule.",
+
+                "50% tot 80%":
+                    "Je gebruikt een groot deel van je opslag. Een kleiner pakket kan mogelijk te beperkt zijn, dus vergelijk de beschikbare opslaggrenzen zorgvuldig.",
+
+                "Meer dan 80%":
+                    "Je gebruikt bijna je volledige opslagcapaciteit. Behouden of uitbreiden kan logischer zijn dan downgraden."
+            },
+
+            null,
+
+            {
+                "Nee":
+                    "Je betaalt niet voor andere cloudopslag. Focus daarom vooral op de grootte en prijs van je huidige pakket.",
+
+                "1 andere dienst":
+                    "Vergelijk beide clouddiensten en controleer of je opslag dubbel betaalt of dezelfde bestanden op meerdere plaatsen bewaart.",
+
+                "2 andere diensten":
+                    "Je betaalt voor meerdere clouddiensten. Bekijk of je opslag kunt bundelen bij één dienst en zo abonnementen kunt schrappen.",
+
+                "Meer dan 2":
+                    "Je gebruikt verschillende betaalde clouddiensten. Consolideer je opslag waar mogelijk om dubbele kosten te verminderen."
+            },
+
+            null,
+
+            {
+                "Ja":
+                    "Je geeft zelf aan dat je meer opslag hebt dan nodig. Vergelijk onmiddellijk met een kleiner en goedkoper opslagpakket.",
+
+                "Misschien":
+                    "Controleer hoeveel opslag je werkelijk gebruikt en vergelijk dat met het eerstvolgende kleinere pakket.",
+
+                "Nee":
+                    "Je opslagcapaciteit lijkt goed bij je behoefte te passen. Vergelijk daarom vooral de prijs met soortgelijke diensten.",
+
+                "Weet ik niet":
+                    "Controleer eerst hoeveel opslagruimte je werkelijk gebruikt voordat je beslist of je pakket te groot is."
+            }
+
+        ],
+
+
+        verzekering: [
+
+            {
+                "Minder dan een jaar geleden":
+                    "Je hebt je verzekering recent vergeleken. Controleer vooral of premie en voorwaarden sindsdien niet gewijzigd zijn.",
+
+                "1 tot 2 jaar geleden":
+                    "Het is nuttig om je verzekering opnieuw te vergelijken om te controleren of premie en dekking nog competitief zijn.",
+
+                "Meer dan 2 jaar geleden":
+                    "Vergelijk je verzekering opnieuw. Na meer dan twee jaar kunnen premies, voorwaarden en alternatieven aanzienlijk veranderd zijn.",
+
+                "Nog nooit":
+                    "Voer een vergelijking uit met andere verzekeringen om te controleren of je huidige premie en dekking nog passend zijn."
+            },
+
+            {
+                "Ja, volledig":
+                    "Je kent je dekking goed. Gebruik die informatie om alternatieven met een vergelijkbare dekking te vergelijken.",
+
+                "Grotendeels":
+                    "Controleer de resterende voorwaarden en uitsluitingen voordat je je verzekering met alternatieven vergelijkt.",
+
+                "Niet echt":
+                    "Bekijk eerst welke dekkingen en uitsluitingen je verzekering bevat voordat je beslist of je huidige polis geschikt is.",
+
+                "Nee":
+                    "Controleer eerst waarvoor je precies verzekerd bent. Vergelijk niet alleen de prijs, maar vooral gelijkwaardige dekkingen."
+            },
+
+            {
+                "Ja":
+                    "Vraag na of je voordeel krijgt doordat meerdere verzekeringen bij dezelfde maatschappij zitten en vergelijk dat totaalvoordeel met alternatieven.",
+
+                "Nee":
+                    "Controleer of het bundelen van meerdere verzekeringen bij één maatschappij financieel voordeel kan opleveren.",
+
+                "Gedeeltelijk":
+                    "Vergelijk of verdere bundeling van je verzekeringen voordeel oplevert zonder belangrijke dekkingen te verliezen.",
+
+                "Weet ik niet":
+                    "Breng eerst in kaart bij welke maatschappijen je verzekeringen lopen en welke bundelkortingen je momenteel krijgt."
+            },
+
+            null,
+
+            null
+
+        ],
+
+
+        "bank & financieel": [
+
+            {
+                "Dagelijks":
+                    "Je gebruikt deze rekening dagelijks. Behouden kan logisch zijn, maar vergelijk de kosten met andere rekeningen die dezelfde functies bieden.",
+
+                "Regelmatig":
+                    "Je gebruikt deze rekening regelmatig. Controleer of je bankpakket niet uitgebreider en duurder is dan nodig.",
+
+                "Af en toe":
+                    "Je gebruikt deze rekening maar af en toe. Bekijk of een gratis of goedkoper bankpakket voldoende is.",
+
+                "Bijna nooit":
+                    "Je gebruikt deze rekening bijna nooit. Overweeg ze stop te zetten als er kosten aan verbonden zijn en je ze niet nodig hebt."
+            },
+
+            {
+                "Ja":
+                    "Je betaalt voor deze rekening of dit bankpakket. Vergelijk de jaarlijkse kost met gratis of goedkopere alternatieven.",
+
+                "Nee":
+                    "Je betaalt niets voor deze rekening. Behouden brengt daardoor weinig directe kosten mee zolang je ze nog nodig hebt.",
+
+                "Gedeeltelijk":
+                    "Controleer precies voor welke bankdiensten je betaalt en of je die functies werkelijk gebruikt.",
+
+                "Weet ik niet":
+                    "Controleer je tarievenlijst of rekeningafschriften om te bepalen hoeveel je jaarlijks voor je bankdiensten betaalt."
+            },
+
+            {
+                "Vaak":
+                    "Je gebruikt de extra voordelen regelmatig. Houd hun waarde mee in rekening wanneer je een goedkoper bankpakket vergelijkt.",
+
+                "Soms":
+                    "Controleer of de voordelen die je soms gebruikt de extra kost van je bankpakket rechtvaardigen.",
+
+                "Bijna nooit":
+                    "Je gebruikt de extra voordelen nauwelijks. Bekijk of een goedkoper basispakket voldoende is.",
+
+                "Weet ik niet":
+                    "Controleer welke extra voordelen je bankpakket bevat en of je ze daadwerkelijk gebruikt."
+            },
+
+            {
+                "Nee":
+                    "Je gebruikt één bank. Focus daarom vooral op de kosten en functies van je huidige bankpakket.",
+
+                "2 banken":
+                    "Controleer of je bij beide banken betalende diensten hebt en of er functies overlappen.",
+
+                "3 banken":
+                    "Je gebruikt drie banken. Breng de totale jaarlijkse bankkosten in kaart en controleer welke rekeningen je werkelijk nodig hebt.",
+
+                "Meer dan 3":
+                    "Je gebruikt meerdere banken. Overweeg je bankzaken te vereenvoudigen als je voor overlappende rekeningen of diensten betaalt."
+            },
+
+            null
+
+        ],
+
+                lidmaatschap: [
+
+            {
+                "Heel vaak":
+                    "Je gebruikt dit lidmaatschap intensief. Behouden is logisch zolang de voordelen opwegen tegen de kost.",
+
+                "Regelmatig":
+                    "Je gebruikt het lidmaatschap regelmatig. Controleer of je voldoende voordeel haalt uit de prijs die je betaalt.",
+
+                "Af en toe":
+                    "Je gebruikt het lidmaatschap maar af en toe. Vergelijk de jaarlijkse kost met wat je afzonderlijk zou betalen voor de voordelen die je werkelijk gebruikt.",
+
+                "Bijna nooit":
+                    "Je gebruikt het lidmaatschap bijna nooit. Overweeg het stop te zetten als er geen andere belangrijke voordelen aan verbonden zijn."
+            },
+
+            {
+                "Bijna allemaal":
+                    "Je benut bijna alle voordelen. Het lidmaatschap lijkt daardoor functioneel goed bij je gebruik te passen.",
+
+                "Meerdere":
+                    "Je gebruikt meerdere voordelen. Controleer of hun gezamenlijke waarde de kost van het lidmaatschap rechtvaardigt.",
+
+                "Slechts één of twee":
+                    "Je gebruikt maar enkele voordelen. Vergelijk hun afzonderlijke waarde met de totale abonnementsprijs.",
+
+                "Geen":
+                    "Je gebruikt momenteel geen van de inbegrepen voordelen. Overweeg het lidmaatschap stop te zetten."
+            },
+
+            null,
+
+            {
+                "Recent":
+                    "Je hebt het lidmaatschap recent geëvalueerd. Controleer vooral of je gebruik sindsdien veranderd is.",
+
+                "Dit jaar":
+                    "Je hebt het dit jaar nog beoordeeld. Plan een nieuwe controle wanneer je lidmaatschap vernieuwd wordt.",
+
+                "Meer dan een jaar geleden":
+                    "Evalueer opnieuw of het lidmaatschap nog voldoende waarde biedt voor wat je ervoor betaalt.",
+
+                "Nog nooit":
+                    "Beoordeel voor het eerst bewust welke voordelen je werkelijk gebruikt en of die de kost rechtvaardigen."
+            },
+
+            {
+                "Zeker":
+                    "Je zou het lidmaatschap duidelijk missen. Focus daarom eerder op een goedkoper niveau dan op volledig stopzetten.",
+
+                "Waarschijnlijk":
+                    "Controleer of een goedkoper lidmaatschapsniveau de voordelen behoudt die je waarschijnlijk zou missen.",
+
+                "Waarschijnlijk niet":
+                    "Overweeg het lidmaatschap tijdelijk stop te zetten om te beoordelen of je het werkelijk nodig hebt.",
+
+                "Nee":
+                    "Je verwacht het lidmaatschap niet te missen. Stopzetten kan daarom een concrete besparingsmogelijkheid zijn."
+            }
+
+        ],
+
+
+        "auto & mobiliteit": [
+
+            null,
+
+            {
+                "Dagelijks":
+                    "Je gebruikt het voertuig dagelijks. Focus vooral op de totale maandelijkse kost en de diensten die in je contract inbegrepen zijn.",
+
+                "Meerdere keren per week":
+                    "Je gebruikt het voertuig regelmatig. Vergelijk de totale contractkost met alternatieven die bij hetzelfde gebruik passen.",
+
+                "Af en toe":
+                    "Je gebruikt het voertuig slechts af en toe. Controleer of de vaste maandelijkse kost nog past bij je beperkte gebruik.",
+
+                "Bijna nooit":
+                    "Je gebruikt het voertuig bijna nooit. Onderzoek of een alternatief met lagere vaste kosten beter aansluit bij je mobiliteitsbehoefte."
+            },
+
+            {
+                "Ja, volledig":
+                    "Onderhoud en diensten zijn volledig inbegrepen. Neem hun waarde mee wanneer je je contract met goedkopere alternatieven vergelijkt.",
+
+                "Gedeeltelijk":
+                    "Controleer welke onderhouds- en servicediensten inbegrepen zijn en welke kosten je nog zelf betaalt.",
+
+                "Nee":
+                    "Onderhoud is niet inbegrepen. Tel deze bijkomende kosten mee wanneer je de totale kost van het voertuig beoordeelt.",
+
+                "Weet ik niet":
+                    "Controleer je contract om te zien welke onderhouds- en servicediensten inbegrepen zijn voordat je alternatieven vergelijkt."
+            },
+
+            {
+                "Ja":
+                    "Je kent de einddatum. Plan ruim vóór die datum een vergelijking zodat je tijdig alternatieven kunt bekijken.",
+
+                "Ongeveer":
+                    "Controleer de exacte einddatum van je voertuigcontract zodat je tijdig kunt beslissen over verlengen of veranderen.",
+
+                "Nee":
+                    "Zoek de einddatum van je contract op en controleer welke voorwaarden gelden voor beëindiging of verlenging.",
+
+                "Niet van toepassing":
+                    "Er is geen klassieke einddatum. Controleer daarom vooral welke voorwaarden gelden als je het contract wilt wijzigen of stopzetten."
+            },
+
+            {
+                "Zeer tevreden":
+                    "Je bent zeer tevreden over de totale kost. Behouden kan logisch zijn zolang het contract goed bij je gebruik blijft passen.",
+
+                "Tevreden":
+                    "Je bent tevreden over de kost. Vergelijk bij de volgende contractbeslissing met soortgelijke alternatieven.",
+
+                "Twijfel":
+                    "Breng de volledige maandelijkse en jaarlijkse kost in kaart en vergelijk die met andere mobiliteitsopties.",
+
+                "Nee":
+                    "Je bent niet tevreden over de totale kost. Onderzoek goedkopere contracten of andere mobiliteitsvormen."
+            }
+
+        ],
+
+
+        gezondheid: [
+
+            {
+                "Heel regelmatig":
+                    "Je gebruikt deze gezondheidsdienst intensief. Behouden is logisch zolang de dienst voldoende waarde blijft bieden.",
+
+                "Regelmatig":
+                    "Je gebruikt de dienst regelmatig. Controleer of de prijs in verhouding blijft tot hoe vaak je er gebruik van maakt.",
+
+                "Af en toe":
+                    "Je gebruikt de dienst slechts af en toe. Vergelijk het abonnement met betalen per gebruik als dat mogelijk is.",
+
+                "Bijna nooit":
+                    "Je gebruikt de dienst bijna nooit. Overweeg het abonnement stop te zetten als je de inbegrepen diensten niet nodig hebt."
+            },
+
+            {
+                "Ja":
+                    "Je benut de inbegrepen diensten goed. Focus vooral op prijs wanneer je alternatieven vergelijkt.",
+
+                "De meeste":
+                    "Je gebruikt het grootste deel van de diensten. Controleer of een goedkoper pakket dezelfde belangrijke onderdelen bevat.",
+
+                "Slechts enkele":
+                    "Je gebruikt slechts enkele diensten. Bekijk of een kleiner of goedkoper pakket beter bij je behoefte past.",
+
+                "Bijna geen":
+                    "Je gebruikt nauwelijks de inbegrepen diensten. Overweeg een goedkoper alternatief of stopzetting."
+            },
+
+            null,
+
+            {
+                "Nee":
+                    "Je hebt geen vergelijkbare diensten elders. Focus daarom vooral op de prijs-kwaliteitverhouding van deze dienst.",
+
+                "Een paar":
+                    "Controleer of er overlap bestaat tussen deze dienst en de andere gezondheidsdiensten die je gebruikt.",
+
+                "Ja, meerdere":
+                    "Je gebruikt meerdere vergelijkbare diensten. Breng de overlap in kaart en controleer of je voor dezelfde voordelen meerdere keren betaalt.",
+
+                "Weet ik niet":
+                    "Bekijk welke diensten je elders al krijgt om te controleren of er onnodige overlap bestaat."
+            },
+
+            {
+                "Zeer tevreden":
+                    "Je bent zeer tevreden over de prijs-kwaliteitverhouding. Behouden lijkt logisch zolang je gebruik gelijk blijft.",
+
+                "Tevreden":
+                    "Je bent tevreden. Vergelijk alleen met alternatieven die minstens dezelfde relevante diensten bieden.",
+
+                "Twijfel":
+                    "Vergelijk de kost met wat je daadwerkelijk gebruikt en bekijk of een goedkoper alternatief voldoende is.",
+
+                "Nee":
+                    "Je bent niet tevreden over de prijs-kwaliteitverhouding. Overweeg een goedkoper alternatief of stopzetting."
+            }
+
+        ],
+
+
+        media: [
+
+            {
+                "Dagelijks":
+                    "Je gebruikt dit media-abonnement dagelijks. Controleer vooral of je huidige abonnementsniveau niet uitgebreider is dan nodig.",
+
+                "Enkele keren per week":
+                    "Je gebruikt het abonnement regelmatig. Vergelijk met een goedkoper niveau dat dezelfde belangrijke content bevat.",
+
+                "Af en toe":
+                    "Je gebruikt het abonnement maar af en toe. Overweeg een goedkoper abonnement of tijdelijke stopzetting.",
+
+                "Bijna nooit":
+                    "Je gebruikt het media-abonnement bijna nooit. Stopzetten kan een eenvoudige besparingsmogelijkheid zijn."
+            },
+
+            null,
+
+            {
+                "Ja, heel vaak":
+                    "Je gebruikt veel van de beschikbare content. Behouden kan logisch zijn zolang de prijs voor jou passend blijft.",
+
+                "Regelmatig":
+                    "Je gebruikt de content regelmatig. Controleer of een goedkoper abonnement toegang blijft geven tot wat je vooral gebruikt.",
+
+                "Slechts een deel":
+                    "Je gebruikt slechts een deel van de content. Bekijk of een kleiner of goedkoper abonnement voldoende is.",
+
+                "Bijna nooit":
+                    "Je gebruikt nauwelijks de content waarvoor je betaalt. Overweeg het abonnement te verlagen of stop te zetten."
+            },
+
+            {
+                "Nee":
+                    "Je hebt geen andere betaalde media-abonnementen. Focus daarom vooral op gebruik en prijs van deze dienst.",
+
+                "1 ander":
+                    "Vergelijk beide media-abonnementen en controleer of er betaalde content of functies overlappen.",
+
+                "2 andere":
+                    "Je betaalt voor meerdere media-abonnementen. Bekijk welke je het meest gebruikt en overweeg een minder gebruikt abonnement stop te zetten.",
+
+                "3 of meer":
+                    "Je hebt verschillende media-abonnementen. Overweeg ze af te wisselen in plaats van allemaal tegelijk actief te houden."
+            },
+
+            {
+                "Zeker":
+                    "Je vindt de prijs duidelijk gerechtvaardigd. Behouden is logisch zolang je gebruik niet sterk verandert.",
+
+                "Waarschijnlijk wel":
+                    "Je vindt de prijs waarschijnlijk gerechtvaardigd. Controleer bij een prijsstijging opnieuw of dat nog steeds zo is.",
+
+                "Ik twijfel":
+                    "Vergelijk je gebruik met de abonnementsprijs en bekijk of een goedkoper alternatief voldoende is.",
+
+                "Nee":
+                    "Je vindt de prijs niet gerechtvaardigd. Overweeg een goedkoper abonnement, alternatief of stopzetting."
+            }
+
+        ],
+
+              ai: [
+
+            {
+                "Dagelijks":
+                    "Je gebruikt deze AI-dienst dagelijks. Behouden kan logisch zijn, maar controleer of je de betaalde functies voldoende benut.",
+
+                "Enkele keren per week":
+                    "Je gebruikt de AI-dienst regelmatig. Vergelijk de betaalde versie met de gratis versie en bepaal welke functies je werkelijk nodig hebt.",
+
+                "Af en toe":
+                    "Je gebruikt de AI-dienst maar af en toe. Overweeg de gratis versie als die voldoende mogelijkheden biedt.",
+
+                "Bijna nooit":
+                    "Je gebruikt de AI-dienst bijna nooit. Overweeg het betaalde abonnement stop te zetten en de gratis versie te gebruiken."
+            },
+
+            {
+                "Werk":
+                    "Omdat je de AI-dienst voor werk gebruikt, beoordeel vooral welke betaalde functies daadwerkelijk tijd of werk besparen.",
+
+                "Privé":
+                    "Voor privégebruik kan een gratis versie mogelijk voldoende zijn. Vergelijk welke betaalde functies je werkelijk nodig hebt.",
+
+                "Studie":
+                    "Controleer of de gratis versie voldoende mogelijkheden biedt voor je studie voordat je voor Premium blijft betalen.",
+
+                "Meerdere toepassingen":
+                    "Je gebruikt AI voor verschillende toepassingen. Breng in kaart welke betaalde functies voor die toepassingen echt noodzakelijk zijn."
+            },
+
+            {
+                "Ja, heel vaak":
+                    "Je gebruikt betaalde functies intensief. Behouden lijkt logisch zolang deze functies voldoende meerwaarde bieden.",
+
+                "Regelmatig":
+                    "Je gebruikt betaalde functies regelmatig. Controleer of de waarde ervan opweegt tegen de abonnementsprijs.",
+
+                "Bijna nooit":
+                    "Je gebruikt nauwelijks functies waarvoor betaling nodig is. Probeer de gratis versie als die je belangrijkste gebruik ondersteunt.",
+
+                "Weet ik niet":
+                    "Controleer welke functies exclusief bij je betaalde abonnement horen en of je die daadwerkelijk gebruikt."
+            },
+
+            {
+                "Nee":
+                    "Je betaalt niet voor andere AI-diensten. Focus daarom vooral op de waarde van dit abonnement.",
+
+                "1 andere":
+                    "Vergelijk beide AI-abonnementen en controleer of functies overlappen waarvoor je dubbel betaalt.",
+
+                "2 andere":
+                    "Je betaalt voor meerdere AI-diensten. Bekijk welke dienst je werkelijk het meest gebruikt en welke functies overlappen.",
+
+                "3 of meer":
+                    "Je hebt verschillende betaalde AI-diensten. Overweeg het aantal abonnementen te verminderen en functies bij één of twee diensten te bundelen."
+            },
+
+            {
+                "Waarschijnlijk wel":
+                    "Je denkt dat de gratis versie voldoende is. Probeer die als alternatief voordat je opnieuw voor een betaalde periode betaalt.",
+
+                "Misschien":
+                    "Vergelijk de functies die je werkelijk gebruikt met de gratis versie om te bepalen of Premium noodzakelijk is.",
+
+                "Waarschijnlijk niet":
+                    "De gratis versie lijkt waarschijnlijk onvoldoende. Controleer wel of een goedkoper betaald niveau beschikbaar is.",
+
+                "Zeker niet":
+                    "Je hebt de betaalde functies duidelijk nodig. Focus daarom vooral op prijs en eventuele goedkopere betaalde alternatieven."
+            }
+
+        ],
+
+
+        beveiliging: [
+
+            null,
+
+            {
+                "Dagelijks":
+                    "Je gebruikt of controleert de beveiligingsdienst dagelijks. Behouden kan logisch zijn zolang prijs en dienstverlening passend blijven.",
+
+                "Regelmatig":
+                    "Je gebruikt de dienst regelmatig. Vergelijk de huidige prijs met aanbieders die een vergelijkbaar beveiligingsniveau bieden.",
+
+                "Af en toe":
+                    "Je gebruikt de dienst slechts af en toe actief. Controleer vooral welke automatische beveiliging je abonnement ondertussen biedt.",
+
+                "Bijna nooit":
+                    "Je gebruikt de dienst nauwelijks actief. Controleer wel eerst welke automatische bescherming actief blijft voordat je iets wijzigt."
+            },
+
+            {
+                "Ja":
+                    "Professionele opvolging is inbegrepen. Vergelijk alleen met alternatieven die een vergelijkbaar niveau van opvolging bieden.",
+
+                "Nee":
+                    "Er is geen professionele opvolging inbegrepen. Vergelijk de prijs met eenvoudigere beveiligingsoplossingen zonder opvolgingsdienst.",
+
+                "Gedeeltelijk":
+                    "Controleer precies welke professionele opvolging inbegrepen is en of de meerprijs daarvoor gerechtvaardigd is.",
+
+                "Weet ik niet":
+                    "Controleer je contract om te bepalen welke professionele opvolging je precies krijgt voor de prijs die je betaalt."
+            },
+
+            {
+                "Minder dan een jaar geleden":
+                    "Je hebt recent vergeleken. Controleer vooral of prijs en voorwaarden sindsdien gewijzigd zijn.",
+
+                "1 tot 2 jaar geleden":
+                    "Vergelijk je beveiligingscontract opnieuw om te controleren of de huidige prijs nog competitief is.",
+
+                "Meer dan 2 jaar geleden":
+                    "Het is meer dan twee jaar geleden dat je alternatieven bekeek. Een nieuwe marktvergelijking is aangewezen.",
+
+                "Nog nooit":
+                    "Vergelijk je beveiligingsdienst met alternatieven die hetzelfde beschermingsniveau bieden."
+            },
+
+            {
+                "Zeer tevreden":
+                    "Je bent zeer tevreden over de prijs-kwaliteitverhouding. Behouden lijkt logisch zolang de voorwaarden gelijk blijven.",
+
+                "Tevreden":
+                    "Je bent tevreden. Controleer bij een prijsstijging opnieuw of de dienstverlening de kost blijft rechtvaardigen.",
+
+                "Twijfel":
+                    "Vergelijk prijs, dekking en dienstverlening met andere beveiligingsoplossingen.",
+
+                "Nee":
+                    "Je bent niet tevreden over de prijs-kwaliteitverhouding. Onderzoek alternatieven met een vergelijkbaar beschermingsniveau."
+            }
+
+        ],
+
+
+        "wonen & huishouden": [
+
+            null,
+
+            {
+                "Regelmatig":
+                    "Je gebruikt deze dienst regelmatig. Controleer of een abonnement voordeliger blijft dan afzonderlijke interventies.",
+
+                "Enkele keren per jaar":
+                    "Vergelijk de jaarlijkse abonnementsprijs met de kost van enkele losse interventies per jaar.",
+
+                "Zelden":
+                    "Je hebt de dienst zelden nodig. Bekijk of betalen per interventie goedkoper kan zijn.",
+
+                "Bijna nooit":
+                    "Je gebruikt de dienst bijna nooit. Overweeg of een vast abonnement nog financieel zinvol is."
+            },
+
+            {
+                "Ja, volledig":
+                    "Onderdelen of interventies zijn volledig inbegrepen. Neem hun waarde mee wanneer je goedkopere alternatieven vergelijkt.",
+
+                "Gedeeltelijk":
+                    "Controleer welke kosten wel en niet inbegrepen zijn om de werkelijke waarde van het abonnement te bepalen.",
+
+                "Nee":
+                    "Onderdelen en interventies zijn niet inbegrepen. Vergelijk daarom de abonnementskost kritisch met betalen per gebruik.",
+
+                "Weet ik niet":
+                    "Controleer je contract om te bepalen welke interventies en onderdelen werkelijk inbegrepen zijn."
+            },
+
+            {
+                "Recent":
+                    "Je hebt recent alternatieven bekeken. Controleer vooral of prijzen of voorwaarden ondertussen veranderd zijn.",
+
+                "Een tijdje geleden":
+                    "Vergelijk opnieuw met andere aanbieders om te controleren of je huidige contract nog competitief is.",
+
+                "Nog nooit":
+                    "Vergelijk deze dienst voor het eerst met andere aanbieders of met betalen per interventie.",
+
+                "Er zijn weinig alternatieven":
+                    "Als er weinig alternatieven zijn, beoordeel dan vooral of het abonnement goedkoper is dan afzonderlijke interventies."
+            },
+
+            {
+                "Zeker":
+                    "Je vindt de kost gerechtvaardigd. Behouden lijkt logisch zolang je gebruik en voorwaarden gelijk blijven.",
+
+                "Waarschijnlijk wel":
+                    "De kost lijkt waarschijnlijk gerechtvaardigd. Controleer bij verlenging opnieuw hoeveel je de dienst werkelijk gebruikt.",
+
+                "Ik twijfel":
+                    "Bereken hoeveel de dienst je jaarlijks kost en vergelijk dat met de waarde van de interventies die je werkelijk gebruikt.",
+
+                "Nee":
+                    "Je vindt de kost niet gerechtvaardigd. Onderzoek een goedkoper alternatief of betalen per gebruik."
+            }
+
+        ],
+
+
+        "hosting & websites": [
+
+            null,
+
+            {
+                "Essentieel":
+                    "De dienst is essentieel. Zoek besparing vooral binnen vergelijkbare pakketten zonder noodzakelijke functies te verliezen.",
+
+                "Belangrijk":
+                    "De dienst is belangrijk. Vergelijk goedkopere pakketten die je belangrijkste functies behouden.",
+
+                "Handig maar niet essentieel":
+                    "Controleer of een goedkoper pakket voldoende is voor een dienst die niet essentieel is.",
+
+                "Nauwelijks belangrijk":
+                    "De dienst is nauwelijks belangrijk. Overweeg downgraden of stopzetten als er geen belangrijke afhankelijkheden zijn."
+            },
+
+            {
+                "Ja":
+                    "Je gebruikt de inbegrepen functies goed. Vergelijk vooral prijs en prestaties met soortgelijke pakketten.",
+
+                "De meeste":
+                    "Je gebruikt de meeste functies. Controleer of een goedkoper pakket dezelfde belangrijke mogelijkheden biedt.",
+
+                "Slechts enkele":
+                    "Je gebruikt slechts enkele functies. Bekijk of een eenvoudiger en goedkoper pakket voldoende is.",
+
+                "Bijna geen":
+                    "Je gebruikt nauwelijks de inbegrepen functies. Overweeg een kleiner pakket of eenvoudiger alternatief."
+            },
+
+            {
+                "Ja, recent":
+                    "Je hebt recent prijzen vergeleken. Controleer vooral of je huidige aanbieder zijn prijs of voorwaarden gewijzigd heeft.",
+
+                "Minder dan een jaar geleden":
+                    "Je vergelijking is nog relatief recent. Controleer opnieuw bij de volgende verlenging.",
+
+                "Meer dan een jaar geleden":
+                    "Vergelijk hostingprijzen en voorwaarden opnieuw omdat je laatste vergelijking meer dan een jaar geleden was.",
+
+                "Nog nooit":
+                    "Vergelijk je huidige hosting- of websitepakket met andere aanbieders met vergelijkbare specificaties."
+            },
+
+            {
+                "Waarschijnlijk wel":
+                    "Je denkt dat een goedkoper pakket voldoende is. Vergelijk de eerstvolgende goedkopere formule met je werkelijke gebruik.",
+
+                "Misschien":
+                    "Controleer welke resources en functies je werkelijk gebruikt voordat je beslist of je kunt downgraden.",
+
+                "Waarschijnlijk niet":
+                    "Een goedkoper pakket lijkt mogelijk onvoldoende. Zoek eerder naar een voordeligere aanbieder met vergelijkbare mogelijkheden.",
+
+                "Zeker niet":
+                    "Je huidige pakketniveau lijkt noodzakelijk. Focus op prijsvergelijking zonder capaciteit of belangrijke functies te verminderen."
+            }
+
+        ],
+
+
+        "maaltijden & bezorging": [
+
+            {
+                "Meerdere keren per week":
+                    "Je gebruikt deze dienst intensief. Controleer of het abonnement werkelijk voordeel geeft ten opzichte van afzonderlijke bestellingen.",
+
+                "Ongeveer wekelijks":
+                    "Bereken of je wekelijkse gebruik voldoende voordeel oplevert om de abonnementsprijs te rechtvaardigen.",
+
+                "Enkele keren per maand":
+                    "Vergelijk je abonnementskost met wat je zonder abonnement voor enkele bestellingen per maand zou betalen.",
+
+                "Bijna nooit":
+                    "Je gebruikt de dienst bijna nooit. Overweeg het abonnement stop te zetten en alleen per bestelling te betalen."
+            },
+
+            null,
+
+            {
+                "Nooit":
+                    "Je verspilt geen bestellingen of tegoeden. Focus daarom vooral op de totale prijs tegenover je werkelijke gebruik.",
+
+                "Soms":
+                    "Je laat soms tegoeden of bestellingen ongebruikt. Bereken hoeveel waarde daardoor jaarlijks verloren gaat.",
+
+                "Regelmatig":
+                    "Je hebt regelmatig ongebruikte tegoeden. Overweeg een flexibelere formule zonder vaste verplichtingen.",
+
+                "Heel vaak":
+                    "Je betaalt vaak voor ongebruikte tegoeden of bestellingen. Stopzetten of overstappen naar betalen per gebruik kan voordeliger zijn."
+            },
+
+            {
+                "Nee":
+                    "Je gebruikt geen vergelijkbare diensten. Focus daarom vooral op de waarde van dit abonnement.",
+
+                "1 andere":
+                    "Vergelijk beide diensten en controleer of je voor overlappende voordelen of bezorgkortingen betaalt.",
+
+                "2 andere":
+                    "Je gebruikt meerdere vergelijkbare diensten. Bekijk welke je werkelijk het meest gebruikt en schrap onnodige overlap.",
+
+                "3 of meer":
+                    "Je gebruikt verschillende maaltijd- of bezorgdiensten. Beperk betaalde abonnementen tot de diensten die je daadwerkelijk vaak gebruikt."
+            },
+
+            {
+                "Absoluut":
+                    "Je ervaart duidelijke waarde. Behouden kan logisch zijn zolang het gebruik hoog blijft.",
+
+                "Waarschijnlijk wel":
+                    "De dienst lijkt voldoende waarde te bieden. Controleer regelmatig of je gebruik de abonnementsprijs blijft rechtvaardigen.",
+
+                "Ik twijfel":
+                    "Vergelijk je jaarlijkse abonnementsprijs met de concrete kortingen of voordelen die je werkelijk ontvangt.",
+
+                "Nee":
+                    "Je vindt dat de dienst onvoldoende waarde biedt. Stopzetten is dan een directe besparingsmogelijkheid."
+            }
+
+        ],
+
+
+        "boeken & lezen": [
+
+            {
+                "Dagelijks":
+                    "Je gebruikt deze dienst dagelijks. Behouden kan voordelig zijn zolang je voldoende boeken of luistercontent gebruikt.",
+
+                "Enkele keren per week":
+                    "Je gebruikt de dienst regelmatig. Vergelijk je abonnementsprijs met de kost van de boeken die je anders afzonderlijk zou kopen.",
+
+                "Af en toe":
+                    "Je gebruikt de dienst slechts af en toe. Controleer of losse aankopen goedkoper zouden zijn.",
+
+                "Bijna nooit":
+                    "Je gebruikt de dienst bijna nooit. Overweeg het abonnement stop te zetten en boeken afzonderlijk te kopen wanneer nodig."
+            },
+
+            null,
+
+            {
+                "Zeker":
+                    "Je benut het abonnement voldoende. Behouden lijkt logisch zolang je lees- of luistergedrag gelijk blijft.",
+
+                "Waarschijnlijk wel":
+                    "Je benut het abonnement waarschijnlijk voldoende. Vergelijk voor zekerheid je jaarlijkse kost met losse aankopen.",
+
+                "Ik twijfel":
+                    "Bereken hoeveel boeken je werkelijk leest of beluistert en vergelijk dat met je jaarlijkse abonnementsprijs.",
+
+                "Nee":
+                    "Je gebruikt de dienst onvoldoende. Losse aankopen of een goedkoper alternatief kunnen voordeliger zijn."
+            },
+
+            {
+                "Nee":
+                    "Je betaalt niet voor andere leesdiensten. Focus daarom vooral op het gebruik van dit abonnement.",
+
+                "1 andere":
+                    "Vergelijk beide lees- of luisterdiensten en controleer of de catalogussen of voordelen sterk overlappen.",
+
+                "2 andere":
+                    "Je betaalt voor meerdere leesdiensten. Overweeg één primaire dienst te behouden.",
+
+                "3 of meer":
+                    "Je hebt verschillende betaalde lees- of luisterdiensten. Verminder overlap door alleen de diensten te behouden die je werkelijk gebruikt."
+            },
+
+            {
+                "Waarschijnlijk wel":
+                    "Je denkt dat losse boeken voordeliger zijn. Vergelijk je gemiddelde maandelijkse leesvolume met de abonnementsprijs.",
+
+                "Misschien":
+                    "Bereken de kost van je werkelijke lees- of luistergedrag met losse aankopen voordat je verlengt.",
+
+                "Waarschijnlijk niet":
+                    "Het abonnement lijkt waarschijnlijk voordeliger dan losse aankopen. Behouden kan daarom financieel interessant zijn.",
+
+                "Zeker niet":
+                    "Je bent ervan overtuigd dat het abonnement voordeliger is. Focus vooral op voldoende gebruik."
+            }
+
+        ],
+
+
+        water: [
+
+            null,
+
+            {
+                "Laag":
+                    "Je waterverbruik is laag. Grote besparingen via gedragsverandering zijn mogelijk beperkt, maar blijf je verbruik opvolgen.",
+
+                "Gemiddeld":
+                    "Volg je waterverbruik regelmatig op en vergelijk het met eerdere periodes om ongewone stijgingen snel te herkennen.",
+
+                "Hoog":
+                    "Je waterverbruik is hoog. Zoek naar de grootste verbruiksposten en controleer of gerichte besparingsmaatregelen mogelijk zijn.",
+
+                "Weet ik niet":
+                    "Bekijk je waterfactuur of meterstanden om eerst zicht te krijgen op je werkelijke verbruik."
+            },
+
+            {
+                "Ja, regelmatig":
+                    "Je volgt je waterverbruik al actief op. Let vooral op onverwachte stijgingen die op extra verbruik of een lek kunnen wijzen.",
+
+                "Soms":
+                    "Volg je meterstand vaker op zodat je sneller merkt wanneer je waterverbruik stijgt.",
+
+                "Bijna nooit":
+                    "Controleer je waterverbruik regelmatiger om besparingsmogelijkheden en onverwachte stijgingen te herkennen.",
+
+                "Nooit":
+                    "Begin je waterverbruik periodiek te registreren zodat je weet waar mogelijke besparingen zitten."
+            },
+
+            {
+                "Ja, meerdere":
+                    "Je hebt al meerdere waterbesparende maatregelen. Focus vooral op het opvolgen van het effect ervan op je verbruik.",
+
+                "Een paar":
+                    "Je hebt al enkele maatregelen. Bekijk of bijkomende eenvoudige waterbesparende oplossingen zinvol zijn.",
+
+                "Nee":
+                    "Overweeg eenvoudige waterbesparende maatregelen op plaatsen waar je het meeste water gebruikt.",
+
+                "Weet ik niet":
+                    "Controleer welke waterbesparende voorzieningen al aanwezig zijn voordat je nieuwe maatregelen overweegt."
+            },
+
+            null
+
+        ],
+
+
+        overig: [
+
+            {
+                "Heel vaak":
+                    "Je gebruikt dit contract intensief. Behouden kan logisch zijn zolang prijs en voorwaarden passend blijven.",
+
+                "Regelmatig":
+                    "Je gebruikt het contract regelmatig. Controleer of de kost in verhouding staat tot het gebruik.",
+
+                "Af en toe":
+                    "Je gebruikt het contract slechts af en toe. Vergelijk de vaste kost met goedkopere of flexibelere alternatieven.",
+
+                "Bijna nooit":
+                    "Je gebruikt het contract bijna nooit. Overweeg stopzetting als er geen andere belangrijke voordelen aan verbonden zijn."
+            },
+
+            {
+                "Zeker":
+                    "Je vindt dat je voldoende waarde krijgt. Behouden lijkt logisch zolang prijs en voorwaarden niet verslechteren.",
+
+                "Waarschijnlijk wel":
+                    "Je krijgt waarschijnlijk voldoende waarde. Controleer bij verlenging opnieuw of dat nog steeds zo is.",
+
+                "Ik twijfel":
+                    "Vergelijk de totale kost met wat je werkelijk uit het contract haalt voordat je opnieuw verlengt.",
+
+                "Nee":
+                    "Je vindt dat je onvoldoende waarde krijgt. Onderzoek een goedkoper alternatief of stopzetting."
+            },
+
+            {
+                "Ja":
+                    "Je kent de eind- of verlengdatum. Plan vóór die datum een nieuwe beoordeling van prijs en voorwaarden.",
+
+                "Ongeveer":
+                    "Zoek de exacte eind- of verlengdatum op zodat je tijdig alternatieven kunt bekijken.",
+
+                "Nee":
+                    "Controleer wanneer het contract eindigt of verlengd wordt en welke opzegtermijn van toepassing is.",
+
+                "Niet van toepassing":
+                    "Er is geen klassieke einddatum. Controleer daarom welke voorwaarden gelden wanneer je wilt wijzigen of stopzetten."
+            },
+
+            {
+                "Recent":
+                    "Je hebt recent alternatieven bekeken. Controleer vooral of prijzen of voorwaarden ondertussen veranderd zijn.",
+
+                "Een tijdje geleden":
+                    "Vergelijk opnieuw met alternatieven om te controleren of je huidige contract nog competitief is.",
+
+                "Nog nooit":
+                    "Bekijk beschikbare alternatieven om voor het eerst te beoordelen hoe je huidige contract zich verhoudt tot andere opties.",
+
+                "Er zijn geen alternatieven":
+                    "Als er geen duidelijke alternatieven zijn, focus dan op het optimaliseren van prijs, voorwaarden of gebruik binnen je huidige contract."
+            },
+
+            {
+                "Lagere prijs":
+                    "Focus bij een volgende vergelijking op een lagere totale kost zonder belangrijke voordelen te verliezen.",
+
+                "Betere voorwaarden":
+                    "Vergelijk contracten vooral op voorwaarden zoals looptijd, opzegging en inbegrepen diensten.",
+
+                "Meer flexibiliteit":
+                    "Zoek naar een contract met kortere looptijd of flexibelere wijzigings- en opzegmogelijkheden.",
+
+                "Ik ben tevreden":
+                    "Je bent tevreden met het contract. Behouden is logisch zolang prijs, voorwaarden en gebruik stabiel blijven."
+            }
+
+        ]  
 
     };
 
@@ -3036,8 +4529,8 @@ if (premiumCtaButton) {
             ?.classList.add("hidden");
 
         document
-            .getElementById("ckaiPremiumScreen")
-            ?.classList.remove("hidden");
+    .getElementById("ckaiPremiumPlanScreen")
+    ?.classList.remove("hidden");
 
 
         // Premium altijd bovenaan openen
@@ -3058,29 +4551,26 @@ if (premiumCtaButton) {
 
 }
 
-const premiumLaterButton =
-    document.getElementById("premiumLater");
+const openPremiumButton =
+    document.getElementById("openPremium");
 
-if (premiumLaterButton) {
+if (openPremiumButton) {
 
-    premiumLaterButton.onclick = () => {
+    openPremiumButton.onclick = () => {
 
-        // Premium verbergen
-        document
-            .getElementById("ckaiPremiumScreen")
-            ?.classList.add("hidden");
+        const ckaiHome =
+            document.querySelector(".ckai-hero");
 
-        // Terug naar het CK AI advies
-        document
-            .getElementById("ckaiAdviceScreen")
-            ?.classList.remove("hidden");
+        const premiumScreen =
+            document.getElementById("ckaiPremiumScreen");
 
-        // Advies opnieuw bovenaan openen
-        const ckaiPage =
-            document.getElementById("page-ckai");
+        if (ckaiHome) {
+            ckaiHome.style.display = "none";
+        }
 
-        if (ckaiPage) {
-            ckaiPage.scrollTop = 0;
+        if (premiumScreen) {
+            premiumScreen.classList.remove("hidden");
+            premiumScreen.style.display = "block";
         }
 
         window.scrollTo({
@@ -3090,6 +4580,16 @@ if (premiumLaterButton) {
         });
 
     };
+
+}
+
+const premiumLaterButton =
+    document.getElementById("premiumLater");
+
+if (premiumLaterButton) {
+
+    premiumLaterButton.onclick =
+        closeCKAIPremium;
 
 }
 
