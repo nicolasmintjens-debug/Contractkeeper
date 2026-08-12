@@ -390,6 +390,36 @@ function showDetailModal(contract) {
 
     }
 
+    const websiteRow =
+    document.getElementById("detailWebsiteRow");
+
+const websiteLink =
+    document.getElementById("detailWebsite");
+
+const service =
+    ContractService.findServices(contract.name)
+        ?.find(item =>
+            item.name.toLowerCase() ===
+            contract.name.toLowerCase()
+        );
+
+if (
+    websiteRow &&
+    websiteLink &&
+    service?.domain
+) {
+
+    websiteLink.href =
+        `https://${service.domain}`;
+
+    websiteRow.style.display = "flex";
+
+} else if (websiteRow) {
+
+    websiteRow.style.display = "none";
+
+}
+
     modal.classList.add("show");
 
 }

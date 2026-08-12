@@ -1927,27 +1927,38 @@ if (ckaiEvaluationResult) {
 
         switch (ckaiEvaluationResult.status) {
 
-            case "behouden":
-                resultText.textContent =
-                    "Dit abonnement lijkt goed bij jouw gebruik te passen.";
-                break;
+    case "behouden":
 
-            case "optimaliseren":
-                resultText.textContent =
-                    "Dit abonnement past redelijk goed bij jouw gebruik, maar er zijn mogelijk optimalisaties.";
-                break;
+        resultText.textContent =
+            "Je antwoorden wijzen erop dat dit abonnement momenteel goed aansluit bij hoe je het gebruikt.";
 
-            case "herbekijken":
-                resultText.textContent =
-                    "Je haalt momenteel mogelijk niet genoeg waarde uit dit abonnement.";
-                break;
+        break;
 
-            case "opzeggen":
-                resultText.textContent =
-                    "Op basis van je antwoorden lijkt dit abonnement momenteel weinig waarde te bieden.";
-                break;
 
-        }
+    case "optimaliseren":
+
+        resultText.textContent =
+            "Je abonnement past redelijk goed bij je gebruik. CK AI ziet wel mogelijkheden om het beter af te stemmen op wat je nodig hebt.";
+
+        break;
+
+
+    case "herbekijken":
+
+        resultText.textContent =
+            "Op basis van je gebruik zijn er meerdere signalen dat dit abonnement mogelijk niet meer optimaal bij je past.";
+
+        break;
+
+
+    case "opzeggen":
+
+        resultText.textContent =
+            "Je gebruik wijst erop dat dit abonnement mogelijk onvoldoende waarde biedt om de huidige kosten te verantwoorden.";
+
+        break;
+
+}
 
     }
 
@@ -2752,6 +2763,108 @@ overig: [
 }
 
 /* ==========================================================
+   CK AI - PREMIUM ACTIEPUNTEN
+========================================================== */
+
+function getCKAIAction(category, index, answer) {
+
+    const actions = {
+
+        netflix: [
+
+            {
+                "Alleen ik":
+                    "Controleer of een goedkoper Netflix-abonnement voldoende is wanneer je het account alleen gebruikt.",
+
+                "2 personen":
+                    "Controleer of je huidige Netflix-abonnement past bij het aantal personen dat het gebruikt.",
+
+                "3 personen":
+                    "Vergelijk je huidige abonnement met de Netflix-formules die passen bij meerdere gebruikers.",
+
+                "4 of meer":
+                    "Controleer of je huidige Netflix-formule voldoende gelijktijdige gebruikers ondersteunt."
+            },
+
+            {
+                "Standard met reclame":
+                    "Je gebruikt al een voordeligere Netflix-formule. Controleer vooral of je de dienst voldoende gebruikt.",
+
+                "Standard":
+                    "Vergelijk Standard met de goedkopere Netflix-formule en bepaal of de verschillen voor jou belangrijk zijn.",
+
+                "Premium":
+                    "Controleer of je de extra mogelijkheden van Netflix Premium werkelijk gebruikt voordat je ervoor blijft betalen.",
+
+                "Weet ik niet":
+                    "Controleer eerst welk Netflix-abonnement je momenteel hebt en welke functies daarin inbegrepen zijn."
+            },
+
+            {
+                "Ja":
+                    "Je gebruikt 4K. Houd daar rekening mee voordat je naar een goedkoper abonnement overstapt.",
+
+                "Nee":
+                    "Bekijk of een goedkoper Netflix-abonnement zonder 4K voldoende is voor jouw gebruik.",
+
+                "Weet ik niet":
+                    "Controleer of je daadwerkelijk 4K gebruikt voordat je blijft betalen voor een formule waarin dit een belangrijk voordeel is."
+            },
+
+            {
+                "Dagelijks":
+                    "Je gebruikt Netflix intensief. Vergelijk daarom vooral abonnementsniveaus in plaats van meteen opzeggen.",
+
+                "Enkele keren per week":
+                    "Bekijk of een goedkoper Netflix-abonnement dezelfde waarde kan bieden voor jouw kijkgedrag.",
+
+                "Af en toe":
+                    "Overweeg een goedkoper abonnement of Netflix tijdelijk stop te zetten wanneer je het weinig gebruikt.",
+
+                "Bijna nooit":
+                    "Overweeg Netflix stop te zetten en alleen opnieuw te activeren wanneer je de dienst daadwerkelijk wilt gebruiken."
+            },
+
+            {
+                "Zeer tevreden":
+                    "Je bent zeer tevreden. Focus vooral op de vraag of je huidige abonnementsniveau niet duurder is dan nodig.",
+
+                "Tevreden":
+                    "Controleer of je dezelfde tevredenheid kunt behouden met een goedkoper abonnementsniveau.",
+
+                "Twijfel":
+                    "Vergelijk je huidige Netflix-abonnement met een goedkoper niveau voordat de volgende betaling plaatsvindt.",
+
+                "Nee":
+                    "Overweeg je Netflix-abonnement te verlagen of stop te zetten als de dienst onvoldoende waarde biedt."
+            }
+
+        ]
+
+    };
+
+
+    const categoryActions =
+        actions[category];
+
+    if (!categoryActions) {
+        return null;
+    }
+
+
+    const questionActions =
+        categoryActions[index];
+
+    if (!questionActions) {
+        return null;
+    }
+
+
+    return questionActions[answer] || null;
+
+}
+
+/* ==========================================================
    CK AI - RESULTAAT
 ========================================================== */
 
@@ -2979,6 +3092,284 @@ if (premiumLaterButton) {
     };
 
 }
+
+/* ==========================================================
+   CK AI - OPEN PREMIUM BESPAARPLAN
+========================================================== */
+
+const startPremiumButton =
+    document.getElementById("startPremium");
+
+if (startPremiumButton) {
+
+    startPremiumButton.onclick = () => {
+
+        const planContract =
+    document.getElementById("ckaiPlanContract");
+
+const planMonthly =
+    document.getElementById("ckaiPlanMonthly");
+
+const planYearly =
+    document.getElementById("ckaiPlanYearly");
+
+
+if (ckaiCurrentContract) {
+
+    if (planContract) {
+        planContract.textContent =
+            ckaiCurrentContract.name;
+    }
+
+    const amount =
+        Number(ckaiCurrentContract.amount) || 0;
+
+    let monthlyCost = 0;
+    let yearlyCost = 0;
+
+    switch (ckaiCurrentContract.frequency) {
+
+        case "monthly":
+            monthlyCost = amount;
+            yearlyCost = amount * 12;
+            break;
+
+        case "quarterly":
+            monthlyCost = amount / 3;
+            yearlyCost = amount * 4;
+            break;
+
+        case "yearly":
+            monthlyCost = amount / 12;
+            yearlyCost = amount;
+            break;
+
+    }
+
+    if (planMonthly) {
+        planMonthly.textContent =
+            ContractService.formatPrice(monthlyCost);
+    }
+
+    if (planYearly) {
+        planYearly.textContent =
+            ContractService.formatPrice(yearlyCost);
+    }
+
+}
+
+/* ===========================
+   PREMIUM AANBEVOLEN ACTIE
+=========================== */
+
+const planActionTitle =
+    document.getElementById("ckaiPlanActionTitle");
+
+const planActionText =
+    document.getElementById("ckaiPlanActionText");
+
+if (
+    ckaiEvaluationResult &&
+    planActionTitle &&
+    planActionText
+) {
+
+    switch (ckaiEvaluationResult.status) {
+
+        case "behouden":
+
+            planActionTitle.textContent =
+                "Contract behouden";
+
+            planActionText.textContent =
+                "Dit contract sluit goed aan bij je huidige gebruik. CK AI ziet momenteel geen sterke reden om het contract te wijzigen.";
+
+            break;
+
+
+        case "optimaliseren":
+
+            planActionTitle.textContent =
+                "Contract optimaliseren";
+
+            planActionText.textContent =
+                "Je contract biedt voldoende waarde, maar op basis van je antwoorden zijn er mogelijkheden om je abonnement beter af te stemmen op je gebruik.";
+
+            break;
+
+
+        case "herbekijken":
+
+            planActionTitle.textContent =
+                "Contract herbekijken";
+
+            planActionText.textContent =
+                "Op basis van je antwoorden is het verstandig om te controleren of dit contract nog de beste keuze is voor jouw huidige gebruik.";
+
+            break;
+
+
+        case "opzeggen":
+
+            planActionTitle.textContent =
+                "Opzeggen overwegen";
+
+            planActionText.textContent =
+                "Je antwoorden wijzen erop dat je momenteel weinig waarde uit dit contract haalt. Overweeg daarom of je het contract nog wilt behouden.";
+
+            break;
+
+    }
+
+}
+
+/* ===========================
+   PREMIUM PERSOONLIJKE ACTIEPUNTEN
+=========================== */
+
+const planActions =
+    document.getElementById("ckaiPlanActions");
+
+if (
+    planActions &&
+    ckaiCurrentContract
+) {
+
+    const answers =
+        Object.values(ckaiAnswers);
+
+    const contractKey =
+        ckaiCurrentContract.name.toLowerCase();
+
+    const categoryKey =
+        ckaiCurrentContract.category.toLowerCase();
+
+    const analysisKey =
+        CKAI_SCORING[contractKey]
+            ? contractKey
+            : categoryKey;
+
+    const scoring =
+        CKAI_SCORING[analysisKey];
+
+    const actionInsights = [];
+
+    ckaiQuestions.forEach((question, index) => {
+
+        const answer =
+            answers[index];
+
+        if (!answer) return;
+
+        const action =
+    getCKAIAction(
+        analysisKey,
+        index,
+        answer
+    );
+
+if (!action) return;
+
+const answerScore =
+    scoring?.[index]?.[answer];
+
+actionInsights.push({
+    text: action,
+    score:
+        typeof answerScore === "number"
+            ? Math.abs(answerScore)
+            : 0
+});
+
+    });
+
+
+    actionInsights.sort(
+        (a, b) => b.score - a.score
+    );
+
+
+    const strongestActions =
+        actionInsights.slice(0, 3);
+
+
+    if (strongestActions.length) {
+
+        planActions.innerHTML =
+            strongestActions
+                .map(item => `
+                    <div class="ckai-plan-action">
+                        ${item.text}
+                    </div>
+                `)
+                .join("");
+
+    }
+
+}
+
+        document
+            .getElementById("ckaiPremiumScreen")
+            ?.classList.add("hidden");
+
+        document
+            .getElementById("ckaiPremiumPlanScreen")
+            ?.classList.remove("hidden");
+
+        const ckaiPage =
+            document.getElementById("page-ckai");
+
+        if (ckaiPage) {
+            ckaiPage.scrollTop = 0;
+        }
+
+        window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: "instant"
+        });
+
+    };
+
+}
+
+
+/* ==========================================================
+   CK AI - SLUIT PREMIUM BESPAARPLAN
+========================================================== */
+
+const closePremiumPlanButton =
+    document.getElementById("closePremiumPlan");
+
+if (closePremiumPlanButton) {
+
+    closePremiumPlanButton.onclick = () => {
+
+        document
+            .getElementById("ckaiPremiumPlanScreen")
+            ?.classList.add("hidden");
+
+        document
+            .getElementById("ckaiAdviceScreen")
+            ?.classList.remove("hidden");
+
+        const ckaiPage =
+            document.getElementById("page-ckai");
+
+        if (ckaiPage) {
+            ckaiPage.scrollTop = 0;
+        }
+
+        window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: "instant"
+        });
+
+    };
+
+}
+
 
         const adviceAnalysis =
     document.getElementById("ckaiAdviceAnalysis");
