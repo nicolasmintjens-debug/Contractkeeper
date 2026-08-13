@@ -200,11 +200,40 @@ function saveContract(event) {
 
     } else {
 
-        ContractService.add(contract);
+    ContractService.add(contract);
 
-        showToast("Contract toegevoegd");
+    const contracts =
+        ContractService.getAll();
+
+    const realContracts =
+        contracts.filter(
+            item => item.isDemo !== true
+        );
+
+    const demoContracts =
+        contracts.filter(
+            item => item.isDemo === true
+        );
+
+    if (
+        realContracts.length === 1 &&
+        demoContracts.length > 0
+    ) {
+
+        const cleanedContracts =
+            contracts.filter(
+                item => item.isDemo !== true
+            );
+
+        Storage.saveContracts(
+            cleanedContracts
+        );
 
     }
+
+    showToast("Contract toegevoegd");
+
+}
 
     closeModal();
 

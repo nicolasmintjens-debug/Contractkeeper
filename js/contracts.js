@@ -265,7 +265,10 @@ if (status === "expired") {
         : `<i class="bi ${icon}"></i>`
 }
 
-<span>${escapeHtml(contract.name)}</span>
+<span>
+    ${escapeHtml(contract.name)}
+    ${contract.isDemo ? '<span class="demo-badge">DEMO</span>' : ''}
+</span>
 
         </div>
 

@@ -896,6 +896,31 @@ button{
 }
 
 /* ===========================
+   DEMO BADGE
+=========================== */
+
+.demo-badge {
+    display: inline-flex;
+    align-items: center;
+    margin-left: 7px;
+    padding: 3px 7px;
+
+    border-radius: 6px;
+
+    background: rgba(34, 197, 94, 0.12);
+    border: 1px solid rgba(34, 197, 94, 0.25);
+
+    color: #22c55e;
+
+    font-size: 9px;
+    font-weight: 700;
+    line-height: 1;
+
+    letter-spacing: 0.6px;
+    vertical-align: middle;
+}
+
+/* ===========================
    LINKER GEDEELTE
 =========================== */
 

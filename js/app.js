@@ -17,8 +17,13 @@ async function initApp() {
 
 }
 
-    // Demo-data toevoegen bij eerste opstart
-    Storage.seed();
+    // Bestaande demo-contracten herkennen
+if (typeof Storage.migrateDemoContracts === "function") {
+    Storage.migrateDemoContracts();
+}
+
+// Demo-data toevoegen bij eerste opstart
+Storage.seed();
 
     // Updates controleren
     if (typeof checkAppVersion === "function") {

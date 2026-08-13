@@ -154,7 +154,59 @@ const Storage = {
        Demo data
     ========================== */
 
-    seed() {
+migrateDemoContracts() {
+
+    const migrationKey =
+        "contractkeeper.demoMigrated";
+
+    if (localStorage.getItem(migrationKey) === "true") {
+        return;
+    }
+
+    const contracts =
+        this.getContracts();
+
+    let changed = false;
+
+    contracts.forEach(contract => {
+
+        const isNetflixDemo =
+            contract.name === "Netflix" &&
+            contract.supplier === "Netflix" &&
+            contract.category === "Streaming" &&
+            contract.frequency === "monthly" &&
+            Number(contract.amount) === 14.99 &&
+            contract.endDate === "2027-01-01";
+
+        const isProximusDemo =
+            contract.name === "Proximus" &&
+            contract.supplier === "Proximus" &&
+            contract.category === "Internet" &&
+            contract.frequency === "monthly" &&
+            Number(contract.amount) === 69.99 &&
+            contract.endDate === "2027-06-30";
+
+        if (isNetflixDemo || isProximusDemo) {
+
+            contract.isDemo = true;
+            changed = true;
+
+        }
+
+    });
+
+    if (changed) {
+        this.saveContracts(contracts);
+    }
+
+    localStorage.setItem(
+        migrationKey,
+        "true"
+    );
+
+},
+
+seed() {
 
     const seedKey =
         "contractkeeper.seeded";
@@ -199,6 +251,8 @@ const Storage = {
 
             notes: "",
 
+            isDemo: true,
+
             createdAt: new Date().toISOString(),
 
             updatedAt: null
@@ -222,6 +276,8 @@ const Storage = {
             endDate: "2027-06-30",
 
             notes: "",
+
+            isDemo: true,
 
             createdAt: new Date().toISOString(),
 
@@ -278,13 +334,16 @@ const Storage = {
 
             notes:
 
-                contract.notes || "",
+    contract.notes || "",
 
-            createdAt:
+isDemo:
 
-                contract.createdAt ||
+    contract.isDemo === true,
 
-                new Date().toISOString(),
+createdAt:
+
+    contract.createdAt ||
+    new Date().toISOString(),
 
             updatedAt:
 
