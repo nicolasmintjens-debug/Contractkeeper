@@ -373,15 +373,28 @@ getMostExpensiveContract() {
     const contracts = this.getAll();
 
     if (!contracts.length) {
-
         return null;
-
     }
 
+    const getMonthlyAmount = contract => {
+
+        switch (contract.frequency) {
+
+            case "quarterly":
+                return contract.amount / 3;
+
+            case "yearly":
+                return contract.amount / 12;
+
+            case "monthly":
+            default:
+                return contract.amount;
+        }
+
+    };
+
     return [...contracts].sort(
-
-        (a, b) => b.amount - a.amount
-
+        (a, b) => getMonthlyAmount(b) - getMonthlyAmount(a)
     )[0];
 
 },
@@ -889,7 +902,25 @@ if (notificationsEnabled && next && endingSoon === 0) {
 
 if (highest) {
 
-    const yearlyHighest = highest.amount * 12;
+    let monthlyHighest = highest.amount;
+
+    switch (highest.frequency) {
+
+        case "quarterly":
+            monthlyHighest = highest.amount / 3;
+            break;
+
+        case "yearly":
+            monthlyHighest = highest.amount / 12;
+            break;
+
+        case "monthly":
+        default:
+            monthlyHighest = highest.amount;
+            break;
+    }
+
+    const yearlyHighest = monthlyHighest * 12;
 
     insights.push({
 
@@ -903,12 +934,13 @@ if (highest) {
 
         message:
             `${highest.name} is je duurste contract. ` +
-            `Je betaalt ${this.formatPrice(highest.amount)} per maand, ` +
+            `Je betaalt ${this.formatPrice(monthlyHighest)} per maand, ` +
             `of ${this.formatPrice(yearlyHighest)} per jaar.`
 
     });
 
 }
+
 
 /* ---------------------------------
    Aandeel grootste contract
@@ -916,8 +948,26 @@ if (highest) {
 
 if (highest && monthlyTotal > 0) {
 
+    let monthlyHighest = highest.amount;
+
+    switch (highest.frequency) {
+
+        case "quarterly":
+            monthlyHighest = highest.amount / 3;
+            break;
+
+        case "yearly":
+            monthlyHighest = highest.amount / 12;
+            break;
+
+        case "monthly":
+        default:
+            monthlyHighest = highest.amount;
+            break;
+    }
+
     const share =
-        (highest.amount / monthlyTotal) * 100;
+        (monthlyHighest / monthlyTotal) * 100;
 
     insights.push({
 
