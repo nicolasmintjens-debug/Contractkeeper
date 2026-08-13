@@ -3,6 +3,89 @@
    contractService.js
    ========================================================== */
 
+/* ==========================================================
+   CURRENCY SERVICE
+========================================================== */
+
+const CurrencyService = {
+
+    rates: {
+        EUR: 1,
+        USD: 1,
+        GBP: 1
+    },
+
+    async updateRates() {
+
+        try {
+
+            const response = await fetch(
+                "https://api.frankfurter.dev/v2/rates?base=EUR&quotes=USD,GBP"
+            );
+
+            if (!response.ok) {
+                throw new Error("Wisselkoersen konden niet worden opgehaald.");
+            }
+
+            const data = await response.json();
+
+            data.forEach(item => {
+
+                if (item.quote === "USD") {
+                    this.rates.USD = item.rate;
+                }
+
+                if (item.quote === "GBP") {
+                    this.rates.GBP = item.rate;
+                }
+
+            });
+
+            localStorage.setItem(
+                "currencyRates",
+                JSON.stringify(this.rates)
+            );
+
+            localStorage.setItem(
+                "currencyRatesUpdated",
+                new Date().toISOString()
+            );
+
+        } catch (error) {
+
+            console.warn(
+                "Wisselkoersen konden niet worden bijgewerkt.",
+                error
+            );
+
+            const savedRates =
+                localStorage.getItem("currencyRates");
+
+            if (savedRates) {
+
+                this.rates = JSON.parse(savedRates);
+
+            }
+
+        }
+
+    },
+
+    loadSavedRates() {
+
+        const savedRates =
+            localStorage.getItem("currencyRates");
+
+        if (savedRates) {
+
+            this.rates = JSON.parse(savedRates);
+
+        }
+
+    }
+
+};
+
 const ContractService = {
 
     /* ======================================================
@@ -501,23 +584,34 @@ const grandTotal = Object.values(totals)
 
     formatPrice(amount) {
 
-        return new Intl.NumberFormat(
+    const currency =
+        localStorage.getItem("currency") || "EUR";
 
-            "nl-BE",
+    let convertedAmount =
+        Number(amount) || 0;
 
-            {
+    if (
+        currency !== "EUR" &&
+        typeof CurrencyService !== "undefined"
+    ) {
 
-                style: "currency",
+        const rate =
+            CurrencyService.rates[currency] || 1;
 
-                currency: "EUR"
+        convertedAmount =
+            convertedAmount * rate;
 
-            }
+    }
 
-        ).format(amount);
+    return new Intl.NumberFormat(
+        "nl-BE",
+        {
+            style: "currency",
+            currency: currency
+        }
+    ).format(convertedAmount);
 
-    },
-
-
+},
 
     /* ======================================================
        DATUM
@@ -709,13 +803,21 @@ getCKInsights() {
     const highest = this.getMostExpensiveContract();
     const categories = this.getCategoryTotals();
     const next = this.getNextEndingContract();
-    const endingSoon = this.getEndingSoonCount();
+
+    const reminderDays =
+    Number(localStorage.getItem("reminderDays") ?? 30);
+
+    const endingSoon =
+    this.getEndingSoonCount(reminderDays);
+
+    const notificationsEnabled =
+    localStorage.getItem("contractNotifications") !== "false";
 
     /* ---------------------------------
        Actie vereist
     --------------------------------- */
 
-    if (endingSoon > 0) {
+    if (notificationsEnabled && endingSoon > 0) {
 
     if (endingSoon === 1 && next) {
 
@@ -747,7 +849,9 @@ getCKInsights() {
             title: "Meerdere contracten lopen binnenkort af",
 
             message:
-                `${endingSoon} contracten lopen binnen 30 dagen af.`
+    reminderDays === 0
+        ? `${endingSoon} contracten eindigen vandaag.`
+        : `${endingSoon} contracten lopen binnen ${reminderDays} dagen af.`
 
         });
 
@@ -759,7 +863,7 @@ getCKInsights() {
    Eerstvolgende contract
 --------------------------------- */
 
-if (next && endingSoon === 0) {
+if (notificationsEnabled && next && endingSoon === 0) {
 
     insights.push({
 

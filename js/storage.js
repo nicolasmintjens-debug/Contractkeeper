@@ -156,67 +156,87 @@ const Storage = {
 
     seed() {
 
-        if (this.getContracts().length > 0) {
+    const seedKey =
+        "contractkeeper.seeded";
 
-            return;
+    const alreadySeeded =
+        localStorage.getItem(seedKey);
+
+    if (alreadySeeded === "true") {
+
+        return;
+
+    }
+
+    if (this.getContracts().length > 0) {
+
+        localStorage.setItem(
+            seedKey,
+            "true"
+        );
+
+        return;
+
+    }
+
+    this.saveContracts([
+
+        {
+
+            id: crypto.randomUUID(),
+
+            name: "Netflix",
+
+            supplier: "Netflix",
+
+            category: "Streaming",
+
+            frequency: "monthly",
+
+            amount: 14.99,
+
+            endDate: "2027-01-01",
+
+            notes: "",
+
+            createdAt: new Date().toISOString(),
+
+            updatedAt: null
+
+        },
+
+        {
+
+            id: crypto.randomUUID(),
+
+            name: "Proximus",
+
+            supplier: "Proximus",
+
+            category: "Internet",
+
+            frequency: "monthly",
+
+            amount: 69.99,
+
+            endDate: "2027-06-30",
+
+            notes: "",
+
+            createdAt: new Date().toISOString(),
+
+            updatedAt: null
 
         }
 
-        this.saveContracts([
+    ]);
 
-            {
+    localStorage.setItem(
+        seedKey,
+        "true"
+    );
 
-                id: crypto.randomUUID(),
-
-                name: "Netflix",
-
-                supplier: "Netflix",
-
-                category: "Streaming",
-
-                frequency: "monthly",
-
-                amount: 14.99,
-
-                endDate: "2027-01-01",
-
-                notes: "",
-
-                createdAt: new Date().toISOString(),
-
-                updatedAt: null
-
-            },
-
-            {
-
-                id: crypto.randomUUID(),
-
-                name: "Proximus",
-
-                supplier: "Proximus",
-
-                category: "Internet",
-
-                frequency: "monthly",
-
-                amount: 69.99,
-
-                endDate: "2027-06-30",
-
-                notes: "",
-
-                createdAt: new Date().toISOString(),
-
-                updatedAt: null
-
-            }
-
-        ]);
-
-    },
-
-
+},
 
     /* ==========================
        Normaliseren

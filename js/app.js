@@ -9,6 +9,14 @@ async function initApp() {
 
     console.log("🚀 ContractKeeper gestart");
 
+    if (typeof CurrencyService !== "undefined") {
+
+    CurrencyService.loadSavedRates();
+
+    CurrencyService.updateRates();
+
+}
+
     // Demo-data toevoegen bij eerste opstart
     Storage.seed();
 
@@ -42,6 +50,42 @@ initAI();
 
 // Settings initialiseren
 initSettings();
+
+if (typeof initAppVersion === "function") {
+    initAppVersion();
+}
+
+if (typeof initUpdateCheckSetting === "function") {
+    initUpdateCheckSetting();
+}
+
+if (typeof initAboutSetting === "function") {
+    initAboutSetting();
+}
+
+if (typeof initContractNotificationsSetting === "function") {
+    initContractNotificationsSetting();
+}
+
+if (typeof initReminderSetting === "function") {
+    initReminderSetting();
+}
+
+if (typeof initCurrencySetting === "function") {
+    initCurrencySetting();
+}
+
+if (typeof initDataExport === "function") {
+    initDataExport();
+}
+
+if (typeof initDataImport === "function") {
+    initDataImport();
+}
+
+if (typeof initDeleteAllData === "function") {
+    initDeleteAllData();
+}
 
 if (typeof initCKAIResult === "function") {
     initCKAIResult();

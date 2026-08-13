@@ -12,6 +12,526 @@ let touchStartX = 0;
 let currentCKAIHomeInsight = 0;
 
 /* ==========================================================
+   INSTELLINGEN - CONTRACTMELDINGEN
+========================================================== */
+
+function initContractNotificationsSetting() {
+
+    const toggle =
+        document.getElementById("contractNotifications");
+
+    if (!toggle) return;
+
+    const savedValue =
+        localStorage.getItem("contractNotifications");
+
+    if (savedValue !== null) {
+
+        toggle.checked =
+            savedValue === "true";
+
+    }
+
+    toggle.addEventListener("change", () => {
+
+    localStorage.setItem(
+        "contractNotifications",
+        toggle.checked
+    );
+
+    if (typeof updateDashboard === "function") {
+        updateDashboard();
+    }
+
+});
+
+}
+
+/* ==========================================================
+   INSTELLINGEN - HERINNERING
+========================================================== */
+
+function initReminderSetting() {
+
+    const setting =
+        document.getElementById("reminderSetting");
+
+    const value =
+        document.getElementById("reminderValue");
+
+    const sheet =
+        document.getElementById("reminderSheet");
+
+    if (!setting || !value || !sheet) return;
+
+    const savedDays =
+        localStorage.getItem("reminderDays");
+
+    const reminderDays =
+        savedDays !== null
+            ? Number(savedDays)
+            : 30;
+
+    value.textContent =
+        reminderDays === 0
+            ? "Op de einddatum"
+            : `${reminderDays} dagen vooraf`;
+
+    setting.onclick = () => {
+
+        sheet.classList.add("active");
+
+    };
+
+    sheet
+        .querySelectorAll("[data-days]")
+        .forEach(button => {
+
+            button.onclick = () => {
+
+                const days =
+                    Number(button.dataset.days);
+
+                localStorage.setItem(
+                    "reminderDays",
+                    days
+                );
+
+                value.textContent =
+    days === 0
+        ? "Op de einddatum"
+        : `${days} dagen vooraf`;
+
+if (typeof updateDashboard === "function") {
+    updateDashboard();
+}
+
+sheet.classList.remove("active");
+
+            };
+
+        });
+
+    const cancelButton =
+        sheet.querySelector(".settings-sheet-cancel");
+
+    if (cancelButton) {
+
+        cancelButton.onclick = () => {
+
+            sheet.classList.remove("active");
+
+        };
+
+    }
+
+}
+
+/* ==========================================================
+   INSTELLINGEN - VALUTA
+========================================================== */
+
+function initCurrencySetting() {
+
+    const setting =
+        document.getElementById("currencySetting");
+
+    const value =
+        document.getElementById("currencyValue");
+
+    const sheet =
+        document.getElementById("currencySheet");
+
+    if (!setting || !value || !sheet) return;
+
+    const savedCurrency =
+        localStorage.getItem("currency") || "EUR";
+
+    const currencyLabels = {
+        EUR: "Euro (€)",
+        USD: "US Dollar ($)",
+        GBP: "Britse pond (£)"
+    };
+
+    value.textContent =
+        currencyLabels[savedCurrency] || "Euro (€)";
+
+    setting.onclick = () => {
+
+        sheet.classList.add("active");
+
+    };
+
+    sheet
+        .querySelectorAll("[data-currency]")
+        .forEach(button => {
+
+            button.onclick = () => {
+
+                const currency =
+                    button.dataset.currency;
+
+                localStorage.setItem(
+    "currency",
+    currency
+);
+
+value.textContent =
+    currencyLabels[currency];
+
+if (typeof updateDashboard === "function") {
+    updateDashboard();
+}
+
+if (typeof renderContracts === "function") {
+    renderContracts();
+}
+
+sheet.classList.remove("active");
+
+            };
+
+        });
+
+    const cancelButton =
+        sheet.querySelector(".settings-sheet-cancel");
+
+    if (cancelButton) {
+
+        cancelButton.onclick = () => {
+
+            sheet.classList.remove("active");
+
+        };
+
+    }
+
+}
+
+/* ==========================================================
+   INSTELLINGEN - GEGEVENS EXPORTEREN
+========================================================== */
+
+function initDataExport() {
+
+    const exportSetting =
+        document.getElementById("exportDataSetting");
+
+    if (!exportSetting) return;
+
+    exportSetting.onclick = () => {
+
+        const backup = {
+
+            version: 1,
+
+            exportedAt:
+                new Date().toISOString(),
+
+            contracts:
+                ContractService.getAll(),
+
+            settings: {
+
+                contractNotifications:
+                    localStorage.getItem("contractNotifications") !== "false",
+
+                reminderDays:
+                    Number(localStorage.getItem("reminderDays") ?? 30),
+
+                currency:
+                    localStorage.getItem("currency") || "EUR"
+
+            }
+
+        };
+
+        const json =
+            JSON.stringify(backup, null, 2);
+
+        const blob =
+            new Blob(
+                [json],
+                {
+                    type: "application/json"
+                }
+            );
+
+        const url =
+            URL.createObjectURL(blob);
+
+        const link =
+            document.createElement("a");
+
+        const date =
+            new Date()
+                .toISOString()
+                .split("T")[0];
+
+        link.href = url;
+
+        link.download =
+            `ContractKeeper-backup-${date}.json`;
+
+        document.body.appendChild(link);
+
+        link.click();
+
+        link.remove();
+
+        URL.revokeObjectURL(url);
+
+    };
+
+}
+
+/* ==========================================================
+   INSTELLINGEN - GEGEVENS IMPORTEREN
+========================================================== */
+
+function initDataImport() {
+
+    const importSetting =
+        document.getElementById("importDataSetting");
+
+    if (!importSetting) return;
+
+    importSetting.onclick = () => {
+
+        const fileInput =
+            document.createElement("input");
+
+        fileInput.type = "file";
+        fileInput.accept = ".json,application/json";
+
+        fileInput.onchange = () => {
+
+            const file =
+    fileInput.files[0];
+
+if (!file) return;
+
+const reader =
+    new FileReader();
+
+reader.onload = () => {
+
+    try {
+
+        const backup =
+            JSON.parse(reader.result);
+
+        const isValidBackup =
+            backup &&
+            backup.version === 1 &&
+            Array.isArray(backup.contracts) &&
+            backup.settings &&
+            typeof backup.settings === "object";
+
+        if (!isValidBackup) {
+
+            alert(
+                "Dit bestand is geen geldige ContractKeeper-back-up."
+            );
+
+            return;
+        }
+
+        console.log(
+    "Geldige ContractKeeper-back-up:",
+    backup
+);
+
+const confirmed =
+    confirm(
+        `Deze back-up bevat ${backup.contracts.length} contracten.\n\n` +
+        `Je huidige gegevens worden vervangen.\n\n` +
+        `Wil je doorgaan?`
+    );
+
+if (!confirmed) {
+    return;
+}
+
+const normalizedContracts =
+    backup.contracts.map(
+        contract =>
+            Storage.normalizeContract(contract)
+    );
+
+Storage.saveContracts(
+    normalizedContracts
+);
+
+if (backup.settings) {
+
+    localStorage.setItem(
+        "contractNotifications",
+        String(
+            backup.settings.contractNotifications !== false
+        )
+    );
+
+    localStorage.setItem(
+        "reminderDays",
+        String(
+            backup.settings.reminderDays ?? 30
+        )
+    );
+
+    localStorage.setItem(
+        "currency",
+        backup.settings.currency || "EUR"
+    );
+
+}
+
+alert(
+    "Back-up succesvol geïmporteerd."
+);
+
+window.location.reload();
+
+    } catch (error) {
+
+        alert(
+            "Het geselecteerde bestand kon niet worden gelezen."
+        );
+
+    }
+
+};
+
+reader.readAsText(file);
+
+        };
+
+        fileInput.click();
+
+    };
+
+}
+
+/* ==========================================================
+   INSTELLINGEN - ALLE CONTRACTEN VERWIJDEREN
+========================================================== */
+
+function initDeleteAllData() {
+
+    const deleteSetting =
+        document.getElementById("deleteAllDataSetting");
+
+    if (!deleteSetting) return;
+
+    deleteSetting.onclick = () => {
+
+        const contracts =
+            ContractService.getAll();
+
+        if (contracts.length === 0) {
+
+            alert(
+                "Er zijn geen contracten om te verwijderen."
+            );
+
+            return;
+        }
+
+        const confirmed =
+            confirm(
+                `Je staat op het punt om ${contracts.length} contracten permanent te verwijderen.\n\n` +
+                `Deze actie kan niet ongedaan worden gemaakt.\n\n` +
+                `Wil je doorgaan?`
+            );
+
+        if (!confirmed) {
+            return;
+        }
+
+        Storage.clear();
+
+        alert(
+            "Alle contracten zijn verwijderd."
+        );
+
+        window.location.reload();
+
+    };
+
+}
+
+/* ==========================================================
+   INSTELLINGEN - CONTROLEER OP UPDATES
+========================================================== */
+
+function initUpdateCheckSetting() {
+
+    const updateSetting =
+        document.getElementById("checkUpdatesSetting");
+
+    if (!updateSetting) return;
+
+    updateSetting.onclick = async () => {
+
+        if (typeof checkAppVersion === "function") {
+
+            await checkAppVersion(true);
+
+        }
+
+    };
+
+}
+
+/* ==========================================================
+   INSTELLINGEN - OVER CONTRACTKEEPER
+========================================================== */
+
+function initAboutSetting() {
+
+    const aboutSetting =
+        document.getElementById("aboutSetting");
+
+    const aboutSheet =
+        document.getElementById("aboutSheet");
+
+    const closeButton =
+        document.getElementById("closeAboutSheet");
+
+    const aboutVersion =
+        document.getElementById("aboutVersion");
+
+    if (!aboutSetting || !aboutSheet) return;
+
+    if (
+        aboutVersion &&
+        typeof APP_VERSION !== "undefined"
+    ) {
+
+        aboutVersion.textContent =
+            APP_VERSION;
+
+    }
+
+    aboutSetting.onclick = () => {
+
+        aboutSheet.classList.add("active");
+
+    };
+
+    if (closeButton) {
+
+        closeButton.onclick = () => {
+
+            aboutSheet.classList.remove("active");
+
+        };
+
+    }
+
+}
+
+/* ==========================================================
    WIST JE DAT - TIPS
 ========================================================== */
 
@@ -537,8 +1057,11 @@ function updateEndingSoon() {
 
     if (!element) return;
 
-    const endingSoon =
-        ContractService.getEndingSoonCount();
+    const reminderDays =
+    Number(localStorage.getItem("reminderDays") ?? 30);
+
+const endingSoon =
+    ContractService.getEndingSoonCount(reminderDays);
 
     element.textContent = endingSoon;
 
@@ -551,12 +1074,20 @@ function updateEndingSoon() {
 
 } else if (endingSoon === 1) {
 
-    status.textContent = "1 binnen 30 dagen";
+    status.textContent =
+        reminderDays === 0
+            ? "1 eindigt vandaag"
+            : `1 binnen ${reminderDays} dagen`;
+
     status.className = "mini-card-status warning";
 
 } else {
 
-    status.textContent = `${endingSoon} binnen 30 dagen`;
+    status.textContent =
+        reminderDays === 0
+            ? `${endingSoon} eindigen vandaag`
+            : `${endingSoon} binnen ${reminderDays} dagen`;
+
     status.className = "mini-card-status danger";
 
 }
@@ -645,27 +1176,43 @@ function updateAttentionCard() {
 
     if (!count || !status) return;
 
+    const notificationsEnabled =
+        localStorage.getItem("contractNotifications") !== "false";
+
+    if (!notificationsEnabled) {
+
+        count.textContent = "0";
+        status.textContent = "Meldingen uit";
+        status.className = "mini-card-status";
+
+        return;
+
+    }
+
+    const reminderDays =
+        Number(localStorage.getItem("reminderDays") ?? 30);
+
     const endingSoon =
-        ContractService.getEndingSoonCount();
+        ContractService.getEndingSoonCount(reminderDays);
 
     count.textContent = endingSoon;
 
     if (endingSoon === 0) {
 
-    status.textContent = "Alles in orde";
-    status.className = "mini-card-status";
+        status.textContent = "Alles in orde";
+        status.className = "mini-card-status";
 
-} else if (endingSoon === 1) {
+    } else if (endingSoon === 1) {
 
-    status.textContent = "Opgelet";
-    status.className = "mini-card-status warning";
+        status.textContent = "Opgelet";
+        status.className = "mini-card-status warning";
 
-} else {
+    } else {
 
-    status.textContent = "Actie vereist";
-    status.className = "mini-card-status danger";
+        status.textContent = "Actie vereist";
+        status.className = "mini-card-status danger";
 
-}
+    }
 
 }
 
