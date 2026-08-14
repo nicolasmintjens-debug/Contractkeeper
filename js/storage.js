@@ -316,13 +316,17 @@ seed() {
 
                 contract.supplier || "",
 
-            category:
+           category:
 
-                contract.category || "Overig",
+    contract.category || "Overig",
 
-            frequency:
+telecomPack:
 
-                contract.frequency || "monthly",
+    contract.telecomPack || "",
+
+frequency:
+
+    contract.frequency || "monthly",
 
             amount:
 

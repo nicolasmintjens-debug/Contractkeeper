@@ -41,18 +41,18 @@ const SERVICES = [
     // INTERNET & TELEFONIE
     // ======================================================
 
-    { name: "Proximus", logo: "assets/logos/proximus.png", category: "Internet" },
-    { name: "Telenet", domain: "telenet.be", category: "Internet" },
-    { name: "Scarlet", domain: "scarlet.be", category: "Internet" },
-    { name: "DIGI", domain: "digi-belgium.be", category: "Internet" },
-    { name: "edpnet", domain: "edpnet.be", category: "Internet" },
+    { name: "Proximus", logo: "assets/logos/proximus.png", category: "Telecom" },
+    { name: "Telenet", domain: "telenet.be", category: "Telecom" },
+    { name: "Scarlet", domain: "scarlet.be", category: "Telecom" },
+    { name: "DIGI", domain: "digi-belgium.be", category: "Telecom" },
+    { name: "edpnet", domain: "edpnet.be", category: "Telecom" },
     { name: "TADAAM", domain: "tadaam.be", category: "Internet" },
     { name: "VOO", domain: "voo.be", category: "Internet" },
     { name: "Cybernet", domain: "cybernet.be", category: "Internet" },
     { name: "FASTfiber", domain: "fastfiber.be", category: "Internet" },
 
     { name: "Mobile Vikings", domain: "mobilevikings.be", category: "Telefonie" },
-    { name: "Orange", domain: "orange.be", category: "Telefonie" },
+    { name: "Orange", domain: "orange.be", category: "Telecom" },
     { name: "Base", domain: "base.be", category: "Telefonie" },
     { name: "hey!", domain: "heytelecom.be", category: "Telefonie" },
     { name: "Yoin", domain: "yoin.be", category: "Telefonie" },

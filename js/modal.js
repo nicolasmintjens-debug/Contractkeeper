@@ -6,6 +6,24 @@
 let editingContractId = null;
 let selectedContract = null;
 
+function updateTelecomPackVisibility() {
+
+    const categorySelect =
+        document.getElementById("category");
+
+    const telecomPackGroup =
+        document.getElementById("telecomPackGroup");
+
+    if (!categorySelect || !telecomPackGroup) {
+        return;
+    }
+
+    telecomPackGroup.style.display =
+        categorySelect.value === "Telecom"
+            ? "block"
+            : "none";
+
+}
 
 /* ==========================================================
    INITIALISATIE
@@ -13,17 +31,27 @@ let selectedContract = null;
 
 function initModal() {
 
-    const addModal = document.getElementById("addContractModal");
+    const addModal =
+        document.getElementById("addContractModal");
 
-    const openButton = document.getElementById("addContract");
+    const openButton =
+        document.getElementById("addContract");
 
-    const closeButton = document.getElementById("closeModal");
+    const closeButton =
+        document.getElementById("closeModal");
 
     const closeDetailButton =
         document.getElementById("closeDetailModal");
 
     const form =
         document.getElementById("contractForm");
+
+    const categorySelect =
+        document.getElementById("category");
+
+    const telecomPackGroup =
+        document.getElementById("telecomPackGroup");
+
 
     if (openButton) {
 
@@ -33,6 +61,18 @@ function initModal() {
         );
 
     }
+
+
+   if (categorySelect) {
+
+    categorySelect.addEventListener(
+        "change",
+        updateTelecomPackVisibility
+    );
+
+    updateTelecomPackVisibility();
+
+}
 
     if (closeButton) {
 
@@ -256,6 +296,11 @@ function readForm() {
 
         category: value("category"),
 
+        telecomPack:
+            value("category") === "Telecom"
+                ? value("telecomPack")
+                : "",
+
         frequency: value("frequency"),
 
         amount: Number(value("amount")),
@@ -277,6 +322,12 @@ function fillForm(contract) {
 
     setValue("name", contract.name);
     setValue("category", contract.category);
+    setValue(
+    "telecomPack",
+    contract.telecomPack || "Alleen internet"
+);
+
+updateTelecomPackVisibility();
     setValue("frequency", contract.frequency);
     setValue("amount", contract.amount);
     setValue("endDate", contract.endDate);
@@ -294,6 +345,8 @@ function resetForm() {
     editingContractId = null;
 
     document.getElementById("contractForm")?.reset();
+
+updateTelecomPackVisibility();
 
     const preview =
         document.getElementById("nameLogoPreview");
@@ -561,6 +614,8 @@ function initAutocomplete() {
 
                 document.getElementById("category").value =
                     item.dataset.category;
+
+                updateTelecomPackVisibility();    
 
                 const logo =
                     ContractService.getLogo(item.dataset.name);

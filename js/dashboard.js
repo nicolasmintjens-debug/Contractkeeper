@@ -2126,7 +2126,9 @@ const questions =
 
     ckaiCurrentContract = contract;
 
-ckaiQuestions = questions;
+ckaiQuestions = [
+    ...questions
+];
 
 ckaiCurrentQuestion = 0;
 
@@ -2134,6 +2136,30 @@ ckaiAnswers = {};
 
 ckaiSelectedAnswer = null;
 
+
+// Telecom-pack is al opgeslagen in het contract
+if (
+    contract.category.toLowerCase() === "telecom" &&
+    contract.telecomPack
+) {
+
+    // Antwoord op vraag 1 automatisch invullen
+    ckaiAnswers[ckaiQuestions[0].id] =
+        contract.telecomPack;
+
+    ckaiSelectedAnswer =
+        contract.telecomPack;
+
+    // Bestaande Telecom-logica uitvoeren
+    // zodat TV/mobiel-vragen worden toegevoegd
+    nextCKAIQuestion();
+
+    return;
+
+}
+
+
+// Normale analyse
 showCKAIQuestion(
     ckaiCurrentContract,
     ckaiQuestions,
@@ -2165,6 +2191,22 @@ function showCKAIQuestion(contract, questions, index) {
         contract.name;
 
     // Progressie
+const progressContainer =
+    document.getElementById("ckaiProgressSegments");
+
+// Juiste aantal segmenten aanmaken
+if (
+    progressContainer &&
+    progressContainer.children.length !== questions.length
+) {
+
+    progressContainer.innerHTML =
+        questions.map(() =>
+            `<div class="ckai-progress-segment"></div>`
+        ).join("");
+
+}
+
 const progressSegments =
     document.querySelectorAll(".ckai-progress-segment");
 
@@ -2301,7 +2343,7 @@ function nextCKAIQuestion() {
 
     }
 
-// Telecom: vragen aanpassen aan gekozen pakket
+// Telecom: extra vragen toevoegen op basis van gekozen pakket
 if (
     ckaiCurrentContract.category.toLowerCase() === "telecom" &&
     ckaiCurrentQuestion === 0
@@ -2310,10 +2352,127 @@ if (
     const telecomPack =
         ckaiAnswers[1];
 
-    console.log(
-        "Gekozen telecomPack:",
-        telecomPack
-    );
+    // Altijd opnieuw beginnen met de 5 basisvragen
+    ckaiQuestions = [
+        ...CKAI_QUESTIONS.telecom
+    ];
+
+    const tvQuestion = {
+    id: 6,
+    question: "Hoe vaak gebruik je de televisiedienst in je pakket?",
+    options: [
+        "Dagelijks",
+        "Enkele keren per week",
+        "Af en toe",
+        "Bijna nooit"
+    ],
+
+    scoring: {
+        "Dagelijks": 3,
+        "Enkele keren per week": 2,
+        "Af en toe": -1,
+        "Bijna nooit": -3
+    },
+
+    analysis: {
+        "Dagelijks":
+            "Je gebruikt de televisiedienst in je pakket dagelijks.",
+
+        "Enkele keren per week":
+            "Je gebruikt de televisiedienst meerdere keren per week.",
+
+        "Af en toe":
+            "Je gebruikt de televisiedienst in je pakket slechts af en toe.",
+
+        "Bijna nooit":
+            "Je gebruikt de televisiedienst in je pakket bijna nooit."
+    },
+
+    advice: {
+        "Dagelijks":
+            "Je televisiedienst wordt intensief gebruikt en lijkt daardoor een nuttig onderdeel van je telecomabonnement.",
+
+        "Enkele keren per week":
+            "Je gebruikt televisie regelmatig. Controleer vooral of de meerprijs binnen je pakket in verhouding staat tot je gebruik.",
+
+        "Af en toe":
+            "Je gebruikt televisie maar af en toe. Vergelijk de prijs van je huidige pakket met een formule zonder TV.",
+
+        "Bijna nooit":
+            "Je gebruikt televisie bijna nooit. Controleer hoeveel je kunt besparen met een pakket zonder televisiedienst."
+    }
+};
+
+    const mobileQuestion = {
+    id: 7,
+    question: "Hoe goed past je mobiele abonnement bij je gebruik?",
+    options: [
+        "Past zeer goed",
+        "Meestal voldoende",
+        "Ik heb veel data over",
+        "Ik kom regelmatig data tekort"
+    ],
+
+    scoring: {
+        "Past zeer goed": 3,
+        "Meestal voldoende": 2,
+        "Ik heb veel data over": -2,
+        "Ik kom regelmatig data tekort": -3
+    },
+
+    analysis: {
+        "Past zeer goed":
+            "Je mobiele abonnement sluit zeer goed aan bij je huidige gebruik.",
+
+        "Meestal voldoende":
+            "Je mobiele abonnement is meestal voldoende voor je huidige gebruik.",
+
+        "Ik heb veel data over":
+            "Je houdt regelmatig veel mobiele data over.",
+
+        "Ik kom regelmatig data tekort":
+            "Je huidige mobiele bundel is regelmatig te klein voor je gebruik."
+    },
+
+    advice: {
+        "Past zeer goed":
+            "Je mobiele formule lijkt goed afgestemd op je gebruik. Een wijziging is op basis daarvan niet noodzakelijk.",
+
+        "Meestal voldoende":
+            "Je mobiele formule past redelijk goed. Vergelijk eventueel of een goedkoper pakket dezelfde gebruiksruimte biedt.",
+
+        "Ik heb veel data over":
+            "Je gebruikt aanzienlijk minder mobiele data dan inbegrepen. Controleer of een kleinere databundel je telecomkost kan verlagen.",
+
+        "Ik kom regelmatig data tekort":
+            "Je mobiele bundel is regelmatig te klein. Vergelijk een grotere bundel en controleer of die binnen een andere telecomformule voordeliger is."
+    }
+};
+
+    if (telecomPack === "Internet + TV") {
+
+        ckaiQuestions.push(
+            tvQuestion
+        );
+
+    }
+
+    if (telecomPack === "Internet + mobiel") {
+
+        ckaiQuestions.push(
+            mobileQuestion
+        );
+
+    }
+
+    if (telecomPack === "Internet + TV + mobiel") {
+
+        ckaiQuestions.push(
+            tvQuestion,
+            mobileQuestion
+        );
+
+    }
 
 }
 
@@ -2416,23 +2575,35 @@ function evaluateCKAI() {
     const answers =
         Object.values(ckaiAnswers);
 
-    scoring.forEach((questionScoring, index) => {
+    ckaiQuestions.forEach((question, index) => {
 
-        if (!questionScoring) {
-            return;
-        }
+    const answer =
+        answers[index];
 
-        const answer =
-            answers[index];
+    if (!answer) {
+        return;
+    }
 
-        const answerScore =
-            questionScoring[answer];
+    let questionScoring =
+        scoring[index];
 
-        if (typeof answerScore === "number") {
-            score += answerScore;
-        }
+    if (!questionScoring && question.scoring) {
+        questionScoring =
+            question.scoring;
+    }
 
-    });
+    if (!questionScoring) {
+        return;
+    }
+
+    const answerScore =
+        questionScoring[answer];
+
+    if (typeof answerScore === "number") {
+        score += answerScore;
+    }
+
+});
 
 
     // Eindresultaat bepalen
@@ -5569,12 +5740,23 @@ if (
 
         if (!answer) return;
 
-        const action =
-    getCKAIAction(
-        analysisKey,
-        index,
-        answer
-    );
+        let action = null;
+
+if (question.advice) {
+
+    action =
+        question.advice[answer];
+
+} else {
+
+    action =
+        getCKAIAction(
+            analysisKey,
+            index,
+            answer
+        );
+
+}
 
 if (!action) return;
 
@@ -5712,12 +5894,23 @@ if (adviceAnalysis) {
 
         if (!answer) return;
 
-        const insight =
-            getCKAIInsight(
-                analysisKey,
-                index,
-                answer
-            );
+        let insight = null;
+
+if (question.analysis) {
+
+    insight =
+        question.analysis[answer];
+
+} else {
+
+    insight =
+        getCKAIInsight(
+            analysisKey,
+            index,
+            answer
+        );
+
+}
 
         if (!insight) return;
 
