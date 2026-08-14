@@ -493,6 +493,7 @@ const grandTotal = Object.values(totals)
 
         "Energie",
         "Water",
+        "Telecom",
         "Internet",
         "Telefonie",
         "TV",
@@ -533,6 +534,7 @@ const grandTotal = Object.values(totals)
 
         Energie: "bi-lightning-charge",
         Water: "bi-droplet",
+        Telecom: "bi-router",
         Internet: "bi-wifi",
         Telefonie: "bi-phone",
         TV: "bi-tv",

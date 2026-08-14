@@ -194,6 +194,73 @@ water: [
 
 ],
 
+/* ==========================================================
+   TELECOM
+========================================================== */
+
+telecom: [
+
+    {
+        id: 1,
+        question: "Wat zit er in je telecomabonnement?",
+        options: [
+            "Alleen internet",
+            "Internet + TV",
+            "Internet + mobiel",
+            "Internet + TV + mobiel"
+        ]
+    },
+
+    {
+        id: 2,
+        question: "Hoe tevreden ben je over je internetverbinding?",
+        options: [
+            "Zeer tevreden",
+            "Tevreden",
+            "Soms problemen",
+            "Vaak problemen"
+        ]
+    },
+
+    {
+        id: 3,
+        question: "Gebruik je alle onderdelen waarvoor je betaalt?",
+        options: [
+            "Ja, allemaal",
+            "De meeste",
+            "Slechts enkele",
+            "Nee"
+        ]
+    },
+
+    {
+        id: 4,
+        question: "Hoe tevreden ben je over de prijs van je volledige pakket?",
+        options: [
+            "Zeer tevreden",
+            "Tevreden",
+            "Eerder duur",
+            "Veel te duur"
+        ]
+    },
+
+    {
+        id: 5,
+        question: "Heb je je telecomabonnement recent met andere aanbieders vergeleken?",
+        options: [
+            "Minder dan 6 maanden geleden",
+            "6 tot 12 maanden geleden",
+            "Meer dan een jaar geleden",
+            "Nog nooit"
+        ]
+    }
+
+],
+
+
+/* ==========================================================
+   INTERNET
+========================================================== */
 
 /* ==========================================================
    INTERNET
@@ -1659,6 +1726,39 @@ const CKAI_SCORING = {
         null
     ],
 
+telecom: [
+
+    null,
+
+    {
+        "Zeer tevreden": 3,
+        "Tevreden": 2,
+        "Soms problemen": -2,
+        "Vaak problemen": -4
+    },
+
+    {
+        "Ja, allemaal": 3,
+        "De meeste": 2,
+        "Slechts enkele": -2,
+        "Nee": -4
+    },
+
+    {
+        "Zeer tevreden": 3,
+        "Tevreden": 2,
+        "Eerder duur": -2,
+        "Veel te duur": -4
+    },
+
+    {
+        "Minder dan 6 maanden geleden": 2,
+        "6 tot 12 maanden geleden": 1,
+        "Meer dan een jaar geleden": -1,
+        "Nog nooit": -2
+    }
+
+],
 
     internet: [
         null,

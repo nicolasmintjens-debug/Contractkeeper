@@ -1606,6 +1606,11 @@ document
     .getElementById("ckaiAdviceScreen")
     ?.classList.add("hidden");
 
+    // Oud Premium-advies verbergen
+document
+    .getElementById("ckaiPremiumPlanScreen")
+    ?.classList.add("hidden");
+
 
     // AI status resetten
     ckaiCurrentQuestion = 0;
@@ -2296,6 +2301,22 @@ function nextCKAIQuestion() {
 
     }
 
+// Telecom: vragen aanpassen aan gekozen pakket
+if (
+    ckaiCurrentContract.category.toLowerCase() === "telecom" &&
+    ckaiCurrentQuestion === 0
+) {
+
+    const telecomPack =
+        ckaiAnswers[1];
+
+    console.log(
+        "Gekozen telecomPack:",
+        telecomPack
+    );
+
+}
+
     // Volgende vraag
     ckaiCurrentQuestion++;
 
@@ -2416,7 +2437,7 @@ function evaluateCKAI() {
 
     // Eindresultaat bepalen
 
-    if (score >= 7) {
+    if (score >= 5) {
 
         return {
             status: "behouden",
@@ -2805,6 +2826,79 @@ function getCKAIInsight(category, index, answer) {
             }
         ],
 
+telecom: [
+
+    {
+        "Alleen internet":
+            "Je abonnement bestaat alleen uit internet. We beoordelen daarom vooral of je verbinding en totale prijs goed aansluiten bij je gebruik.",
+
+        "Internet + TV":
+            "Je hebt internet en televisie gebundeld in één telecomabonnement. Het is belangrijk om te bekijken of je beide onderdelen voldoende gebruikt.",
+
+        "Internet + mobiel":
+            "Je combineert internet en mobiel in één telecomabonnement. We bekijken of de volledige bundel voldoende waarde biedt.",
+
+        "Internet + TV + mobiel":
+            "Je hebt een volledig telecomabonnement met internet, televisie en mobiel. We beoordelen daarom het pakket als geheel en niet alleen de afzonderlijke onderdelen."
+    },
+
+    {
+        "Zeer tevreden":
+            "Je bent zeer tevreden over je internetverbinding.",
+
+        "Tevreden":
+            "Je bent tevreden over je internetverbinding.",
+
+        "Soms problemen":
+            "Je ervaart af en toe problemen met je internetverbinding.",
+
+        "Vaak problemen":
+            "Je ervaart regelmatig problemen met je internetverbinding."
+    },
+
+    {
+        "Ja, allemaal":
+            "Je gebruikt alle onderdelen waarvoor je betaalt.",
+
+        "De meeste":
+            "Je gebruikt de meeste onderdelen van je telecomabonnement.",
+
+        "Slechts enkele":
+            "Je gebruikt slechts een deel van de diensten waarvoor je betaalt.",
+
+        "Nee":
+            "Je betaalt voor onderdelen van je telecomabonnement die je niet of nauwelijks gebruikt."
+    },
+
+    {
+        "Zeer tevreden":
+            "Je bent zeer tevreden over de prijs van je volledige telecomabonnement.",
+
+        "Tevreden":
+            "Je bent tevreden over de prijs van je volledige telecomabonnement.",
+
+        "Eerder duur":
+            "Je vindt je telecomabonnement eerder duur.",
+
+        "Veel te duur":
+            "Je vindt dat je telecomabonnement veel te duur is."
+    },
+
+    {
+        "Minder dan 6 maanden geleden":
+            "Je hebt je telecomabonnement recent met andere aanbieders vergeleken.",
+
+        "6 tot 12 maanden geleden":
+            "Je hebt je telecomabonnement het afgelopen jaar nog vergeleken.",
+
+        "Meer dan een jaar geleden":
+            "Het is meer dan een jaar geleden dat je telecomabonnement nog werd vergeleken.",
+
+        "Nog nooit":
+            "Je hebt je huidige telecomabonnement nog nooit met andere aanbieders vergeleken."
+    }
+
+],
 
         internet: [
             null,
@@ -3830,6 +3924,79 @@ function getCKAIAction(category, index, answer) {
 
         ],
 
+telecom: [
+
+    {
+        "Alleen internet":
+            "Je hebt alleen internet in je telecomabonnement. Vergelijk vooral snelheid, stabiliteit en totale prijs met gelijkaardige internetformules.",
+
+        "Internet + TV":
+            "Je combineert internet en televisie. Vergelijk daarom altijd de prijs van het volledige pakket en controleer of je de tv-dienst voldoende gebruikt.",
+
+        "Internet + mobiel":
+            "Je combineert internet en mobiel. Vergelijk het volledige pakket met andere bundels en controleer of je mobiele formule aansluit bij je werkelijke gebruik.",
+
+        "Internet + TV + mobiel":
+            "Je combineert internet, televisie en mobiel. Vergelijk het volledige pakket met andere telecombundels en controleer of alle onderdelen nog voldoende waarde bieden."
+    },
+
+    {
+        "Zeer tevreden":
+            "Je internetverbinding werkt zeer goed voor jou. Een overstap puur voor betere prestaties lijkt daarom niet noodzakelijk.",
+
+        "Tevreden":
+            "Je bent tevreden over je internetverbinding. Vergelijk vooral prijs en pakketinhoud voordat je iets verandert.",
+
+        "Soms problemen":
+            "Je ervaart soms problemen met je internetverbinding. Controleer eerst of wifi, apparatuur of je provider de oorzaak is.",
+
+        "Vaak problemen":
+            "Je ervaart vaak problemen met je internetverbinding. Vergelijk andere formules of providers en controleer welke oplossing betere prestaties biedt."
+    },
+
+    {
+        "Ja, allemaal":
+            "Je gebruikt alle onderdelen van je telecomabonnement. De bundel lijkt daardoor goed aan te sluiten bij je gebruik.",
+
+        "De meeste":
+            "Je gebruikt de meeste onderdelen van je pakket. Controleer of het weinige dat je niet gebruikt een goedkopere formule mogelijk maakt.",
+
+        "Slechts enkele":
+            "Je gebruikt slechts enkele onderdelen waarvoor je betaalt. Een kleiner of anders samengesteld pakket kan mogelijk voordeliger zijn.",
+
+        "Nee":
+            "Je betaalt voor diensten die je nauwelijks gebruikt. Bekijk of je pakket kan worden verkleind of anders samengesteld."
+    },
+
+    {
+        "Zeer tevreden":
+            "Je bent zeer tevreden over de prijs van je pakket. Vergelijk eventueel nog met de markt om te bevestigen dat je huidige formule competitief blijft.",
+
+        "Tevreden":
+            "Je bent tevreden over de prijs. Een vergelijking kan aantonen of je dezelfde diensten elders goedkoper kunt krijgen.",
+
+        "Eerder duur":
+            "Je vindt je telecomabonnement eerder duur. Vergelijk je volledige pakket met andere formules en providers.",
+
+        "Veel te duur":
+            "Je vindt je telecomabonnement veel te duur. Een grondige vergelijking van andere pakketten en providers is sterk aangewezen."
+    },
+
+    {
+        "Minder dan 6 maanden geleden":
+            "Je hebt recent vergeleken. Je huidige pakket is daardoor waarschijnlijk nog redelijk actueel ten opzichte van de markt.",
+
+        "6 tot 12 maanden geleden":
+            "Je hebt het afgelopen jaar nog vergeleken. Controleer bij een volgende prijswijziging opnieuw of je pakket competitief blijft.",
+
+        "Meer dan een jaar geleden":
+            "Je hebt al meer dan een jaar niet vergeleken. Controleer opnieuw welke telecombundels momenteel beschikbaar zijn.",
+
+        "Nog nooit":
+            "Je hebt je telecomabonnement nog nooit vergeleken. Vergelijk je volledige pakket met alternatieven om te zien of je kunt besparen."
+    }
+
+],
 
         internet: [
 
