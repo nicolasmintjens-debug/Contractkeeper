@@ -1183,9 +1183,14 @@ function initDetailButtons() {
         return;
     }
 
-    openEnergyComparison(
-        selectedContract
-    );
+    closeDetailModal();
+
+    ckaiCurrentContract =
+        selectedContract;
+
+    openCKAI();
+
+    openCKAIEnergyComparison();
 
 });
     

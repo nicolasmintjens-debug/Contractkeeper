@@ -7856,3 +7856,169 @@ a,
     font-weight:600;
 
 }
+
+/* ==========================================================
+   CONTRACTDETAILS - ACTIEKNOPPEN
+========================================================== */
+
+.detail-actions {
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1.45fr)
+        minmax(0, 0.8fr)
+        minmax(0, 0.9fr);
+
+    gap: 10px;
+
+    width: 100%;
+
+    margin-top: 24px;
+
+}
+
+
+/* ALLE KNOPPEN */
+
+.detail-actions button {
+
+    min-width: 0;
+
+    width: 100%;
+
+    min-height: 58px;
+
+    padding: 10px 12px;
+
+    border: none;
+
+    border-radius: 18px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    font-family: inherit;
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    line-height: 1.15;
+
+    text-align: center;
+
+    cursor: pointer;
+
+    transition:
+        transform .2s ease,
+        opacity .2s ease;
+
+}
+
+
+/* ICOON */
+
+.detail-actions button i {
+
+    flex-shrink: 0;
+
+    font-size: 20px;
+
+}
+
+
+/* VERGELIJKEN */
+
+.detail-actions .btn-energy-compare {
+
+    background: #2563eb;
+
+    color: white;
+
+}
+
+
+/* BEWERKEN */
+
+.detail-actions .btn-primary {
+
+    background: #22c55e;
+
+    color: white;
+
+}
+
+
+/* VERWIJDEREN */
+
+.detail-actions .btn-danger {
+
+    background: #ef4444;
+
+    color: white;
+
+}
+
+
+/* HOVER */
+
+.detail-actions button:hover {
+
+    opacity: .9;
+
+    transform: translateY(-2px);
+
+}
+
+
+/* ACTIVE */
+
+.detail-actions button:active {
+
+    transform: scale(.97);
+
+}
+
+
+/* ==========================================================
+   KLEINERE SCHERMEN
+========================================================== */
+
+@media (max-width: 380px) {
+
+    .detail-actions {
+
+        grid-template-columns:
+            1.3fr
+            .8fr
+            .85fr;
+
+        gap: 7px;
+
+    }
+
+    .detail-actions button {
+
+        min-height: 54px;
+
+        padding: 8px 6px;
+
+        font-size: 13px;
+
+        border-radius: 16px;
+
+    }
+
+    .detail-actions button i {
+
+        font-size: 18px;
+
+    }
+
+}
