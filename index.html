@@ -1302,6 +1302,179 @@
 
 </div>
 
+<!-- =========================================
+     CK AI - ENERGIEVERGELIJKING
+========================================== -->
+
+<div
+    id="ckaiEnergyComparisonScreen"
+    class="hidden">
+
+    <div class="ckai-energy-comparison">
+
+        <div class="ckai-plan-header">
+
+            <span class="ckai-plan-label">
+                ⚡ ENERGIEVERGELIJKING
+            </span>
+
+            <h2>
+                Jouw energiecontract
+            </h2>
+
+            <p id="ckaiEnergyComparisonContract">
+                Contract
+            </p>
+
+        </div>
+
+
+        <!-- HUIDIGE KOST -->
+
+        <div class="ckai-plan-card">
+
+            <div class="ckai-plan-card-title">
+
+                <span class="ckai-plan-icon">
+                    💶
+                </span>
+
+                <span>
+                    Huidige geschatte kost
+                </span>
+
+            </div>
+
+            <strong
+                id="ckaiEnergyCurrentCost">
+                € 0,00
+            </strong>
+
+            <small>
+                per jaar
+            </small>
+
+        </div>
+
+
+        <!-- BESTE ALTERNATIEF -->
+
+        <!-- BESTE ALTERNATIEF -->
+
+<div class="ckai-plan-card">
+
+    <div class="ckai-plan-card-title">
+
+        <span class="ckai-plan-icon">
+            🏆
+        </span>
+
+        <span>
+            Beste gevonden alternatief
+        </span>
+
+    </div>
+
+
+    <h3 id="ckaiEnergyBestSupplier">
+        -
+    </h3>
+
+
+    <p id="ckaiEnergyBestProduct">
+        -
+    </p>
+
+
+    <strong id="ckaiEnergyBestCost">
+        € 0,00
+    </strong>
+
+    <small>
+        per jaar
+    </small>
+
+
+    <div
+        id="ckaiEnergyBestBreakdown"
+        class="ckai-energy-breakdown">
+
+    </div>
+
+</div>
+
+
+        <!-- BESPARING -->
+
+        <div class="ckai-plan-card">
+
+            <div class="ckai-plan-card-title">
+
+                <span class="ckai-plan-icon">
+                    📉
+                </span>
+
+                <span>
+                    Mogelijke besparing
+                </span>
+
+            </div>
+
+            <strong id="ckaiEnergySaving">
+                € 0,00
+            </strong>
+
+            <small>
+                per jaar
+            </small>
+
+<div
+    id="ckaiEnergySavingPercentage"
+    class="ckai-energy-saving-percentage">
+</div>
+
+        </div>
+
+
+        <!-- ALTERNATIEVEN -->
+
+        <div class="ckai-plan-card">
+
+            <div class="ckai-plan-card-title">
+
+                <span class="ckai-plan-icon">
+                    🔎
+                </span>
+
+                <span>
+                    Beste alternatieven
+                </span>
+
+            </div>
+
+            <div
+                id="ckaiEnergyAlternatives"
+                class="ckai-plan-actions">
+
+            </div>
+
+        </div>
+
+
+        <!-- TERUG -->
+
+        <button
+            id="closeEnergyComparison"
+            class="ckai-premium-later">
+
+            Terug naar analyse
+
+        </button>
+
+    </div>
+
+</div>
+
         <!-- ==========================================================
          PREMIUM
     ========================================================== -->
@@ -1960,6 +2133,40 @@
 
 </div>
 
+<h3>Woninggegevens</h3>
+
+<div class="settings-card">
+
+    <div class="settings-row">
+
+        <div class="settings-icon">
+            <i class="bi bi-house"></i>
+        </div>
+
+        <div class="settings-content">
+            <strong>Postcode</strong>
+            <span>Wordt gebruikt voor energievergelijkingen</span>
+        </div>
+
+        <div class="settings-action">
+
+            <input
+                type="text"
+                id="energyPostalCode"
+                inputmode="numeric"
+                maxlength="4"
+                placeholder="2000"
+                style="
+                    width:70px;
+                    text-align:center;
+                ">
+
+        </div>
+
+    </div>
+
+</div>
+
 <h3>Back-up & gegevens</h3>
 
 <div class="settings-card">
@@ -2354,9 +2561,286 @@
 
 </div>
 
-                <div class="form-group">
+<!-- =========================================
+     ENERGIEGEGEVENS
+========================================== -->
 
-                    <label for="frequency">
+<div
+    id="energyDetailsGroup"
+    style="display:none;">
+
+    <div class="form-group">
+
+        <label for="energyType">
+            Wat bevat je energiecontract?
+        </label>
+
+        <select id="energyType">
+
+            <option value="Elektriciteit">
+                ⚡ Elektriciteit
+            </option>
+
+            <option value="Gas">
+                🔥 Gas
+            </option>
+
+            <option value="Elektriciteit + gas">
+                ⚡🔥 Elektriciteit + gas
+            </option>
+
+        </select>
+
+    </div>
+
+
+    <div class="form-group">
+
+        <label for="energyTariffType">
+            Type tarief
+        </label>
+
+        <select id="energyTariffType">
+
+            <option value="Vast">
+                Vast
+            </option>
+
+            <option value="Variabel">
+                Variabel
+            </option>
+
+            <option value="Dynamisch">
+                Dynamisch
+            </option>
+
+        </select>
+
+    </div>
+
+
+    <div class="form-group">
+        <label for="energyProductName">
+            Tariefformule
+        </label>
+
+        <input
+            id="energyProductName"
+            type="text"
+            placeholder="Bijvoorbeeld Comfy, BasicFlex...">
+
+    </div>
+
+    <!-- METERTYPE -->
+
+<div class="form-group">
+
+    <label for="energyMeterType">
+        Metertype
+    </label>
+
+    <select id="energyMeterType">
+
+        <option value="Enkelvoudig">
+            Enkelvoudige meter
+        </option>
+
+        <option value="Dag en nacht">
+            Dag- en nachtmeter
+        </option>
+
+    </select>
+
+</div>
+
+
+<!-- DIGITALE METER -->
+
+<div class="form-group">
+
+    <label for="hasDigitalMeter">
+        Digitale meter
+    </label>
+
+    <select id="hasDigitalMeter">
+
+        <option value="Ja">
+            Ja
+        </option>
+
+        <option value="Nee">
+            Nee
+        </option>
+
+    </select>
+
+</div>
+
+
+    <!-- ELEKTRICITEITSVERBRUIK -->
+
+    <div
+        class="form-group"
+        id="electricityUsageGroup">
+
+        <label for="electricityYearUsage">
+            Jaarverbruik elektriciteit (kWh)
+        </label>
+
+        <input
+            id="electricityYearUsage"
+            type="number"
+            min="0"
+            step="1"
+            placeholder="Bijvoorbeeld 3500">
+
+    </div>
+
+<!-- ZONNEPANELEN -->
+
+<div
+    class="form-group"
+    id="solarPanelsGroup">
+
+    <label for="hasSolarPanels">
+        Heb je zonnepanelen?
+    </label>
+
+    <select id="hasSolarPanels">
+
+        <option value="Nee">
+            Nee
+        </option>
+
+        <option value="Ja">
+            Ja
+        </option>
+
+    </select>
+
+</div>
+
+
+<!-- INJECTIE -->
+
+<div
+    class="form-group"
+    id="solarInjectionGroup"
+    style="display:none;">
+
+    <label for="solarInjectionYear">
+        Jaarlijkse injectie (kWh)
+    </label>
+
+    <input
+        id="solarInjectionYear"
+        type="number"
+        min="0"
+        step="1"
+        placeholder="Bijvoorbeeld 1800">
+
+</div>    
+
+<div
+    class="form-group"
+    id="solarInjectionPriceGroup"
+    style="display:none;">
+
+    <label for="solarInjectionPrice">
+        Injectietarief (€/kWh)
+    </label>
+
+    <input
+        id="solarInjectionPrice"
+        type="number"
+        min="0"
+        step="0.0001"
+        placeholder="Bijvoorbeeld 0,0450">
+
+</div>
+
+    <!-- GASVERBRUIK -->
+
+    <div
+        class="form-group"
+        id="gasUsageGroup"
+        style="display:none;">
+
+        <label for="gasYearUsage">
+            Jaarverbruik gas (kWh)
+        </label>
+
+        <input
+            id="gasYearUsage"
+            type="number"
+            min="0"
+            step="1"
+            placeholder="Bijvoorbeeld 12000">
+
+    </div>
+
+    <!-- =========================================
+     ENERGIETARIEVEN
+========================================== -->
+
+<div
+    class="form-group"
+    id="electricityPriceGroup">
+
+    <label for="electricityPrice">
+        Elektriciteitsprijs (€/kWh)
+    </label>
+
+    <input
+        id="electricityPrice"
+        type="number"
+        min="0"
+        step="0.0001"
+        placeholder="Bijvoorbeeld 0,1450">
+
+</div>
+
+
+<div
+    class="form-group"
+    id="gasPriceGroup"
+    style="display:none;">
+
+    <label for="gasPrice">
+        Gasprijs (€/kWh)
+    </label>
+
+    <input
+        id="gasPrice"
+        type="number"
+        min="0"
+        step="0.0001"
+        placeholder="Bijvoorbeeld 0,0650">
+
+</div>
+
+
+<div class="form-group">
+
+    <label for="energyFixedFee">
+        Vaste jaarlijkse vergoeding (€)
+    </label>
+
+    <input
+        id="energyFixedFee"
+        type="number"
+        min="0"
+        step="0.01"
+        placeholder="Bijvoorbeeld 65,00">
+
+</div>
+
+
+</div>
+
+<div class="form-group">
+
+    <label for="frequency">
                         Betaling
                     </label>
 
@@ -2556,6 +3040,228 @@
 
 </div>
 
+<!-- =========================================
+     ENERGIEDETAILS
+========================================== -->
+
+<div
+    id="detailEnergyGroup"
+    style="display:none;">
+
+    <div class="detail-row">
+
+        <div class="detail-label">
+
+            <div class="detail-icon blue">
+                <i class="bi bi-lightning-charge"></i>
+            </div>
+
+            <span>Type energie</span>
+
+        </div>
+
+        <strong id="detailEnergyType">-</strong>
+
+    </div>
+
+
+    <div class="detail-row">
+
+        <div class="detail-label">
+
+            <div class="detail-icon purple">
+                <i class="bi bi-tag"></i>
+            </div>
+
+            <span>Type tarief</span>
+
+        </div>
+
+        <strong id="detailEnergyTariffType">-</strong>
+
+    </div>
+
+
+    <div class="detail-row">
+
+        <div class="detail-label">
+
+            <div class="detail-icon green">
+                <i class="bi bi-file-earmark-text"></i>
+            </div>
+
+            <span>Tariefformule</span>
+
+        </div>
+
+        <strong id="detailEnergyProductName">-</strong>
+
+    </div>
+
+
+    <div
+        class="detail-row"
+        id="detailElectricityUsageRow">
+
+        <div class="detail-label">
+
+            <div class="detail-icon blue">
+                <i class="bi bi-lightning-charge-fill"></i>
+            </div>
+
+            <span>Elektriciteitsverbruik</span>
+
+        </div>
+
+        <strong id="detailElectricityUsage">-</strong>
+
+    </div>
+
+
+    <div
+        class="detail-row"
+        id="detailGasUsageRow">
+
+        <div class="detail-label">
+
+            <div class="detail-icon orange">
+                <i class="bi bi-fire"></i>
+            </div>
+
+            <span>Gasverbruik</span>
+
+        </div>
+
+        <strong id="detailGasUsage">-</strong>
+
+    </div>
+
+<!-- ZONNEPANELEN -->
+
+<div
+    class="detail-row"
+    id="detailSolarPanelsRow">
+
+    <div class="detail-label">
+
+        <div class="detail-icon green">
+            <i class="bi bi-sun"></i>
+        </div>
+
+        <span>Zonnepanelen</span>
+
+    </div>
+
+    <strong id="detailSolarPanels">-</strong>
+
+</div>
+
+
+<!-- INJECTIE -->
+
+<div
+    class="detail-row"
+    id="detailSolarInjectionRow"
+    style="display:none;">
+
+    <div class="detail-label">
+
+        <div class="detail-icon orange">
+            <i class="bi bi-arrow-up-circle"></i>
+        </div>
+
+        <span>Jaarlijkse injectie</span>
+
+    </div>
+
+    <strong id="detailSolarInjection">-</strong>
+
+</div>    
+
+<!-- ELEKTRICITEITSPRIJS -->
+
+<div
+    class="detail-row"
+    id="detailElectricityPriceRow">
+
+    <div class="detail-label">
+
+        <div class="detail-icon blue">
+            <i class="bi bi-lightning-charge"></i>
+        </div>
+
+        <span>Elektriciteitsprijs</span>
+
+    </div>
+
+    <strong id="detailElectricityPrice">-</strong>
+
+</div>
+
+
+<!-- GASPRIJS -->
+
+<div
+    class="detail-row"
+    id="detailGasPriceRow">
+
+    <div class="detail-label">
+
+        <div class="detail-icon orange">
+            <i class="bi bi-fire"></i>
+        </div>
+
+        <span>Gasprijs</span>
+
+    </div>
+
+    <strong id="detailGasPrice">-</strong>
+
+</div>
+
+
+<!-- VASTE JAARLIJKSE VERGOEDING -->
+
+<div class="detail-row">
+
+    <div class="detail-label">
+
+        <div class="detail-icon purple">
+            <i class="bi bi-receipt"></i>
+        </div>
+
+        <span>Vaste vergoeding</span>
+
+    </div>
+
+    <strong id="detailEnergyFixedFee">-</strong>
+
+</div>
+
+<div class="energy-estimate-card">
+
+    <div class="energy-estimate-header">
+
+        <div class="detail-icon green">
+            <i class="bi bi-calculator"></i>
+        </div>
+
+        <span>Geschatte jaarkost</span>
+
+    </div>
+
+    <strong id="detailEstimatedEnergyCost">
+        -
+    </strong>
+
+    <small>
+        Op basis van je ingevoerde verbruik en tarieven
+    </small>
+
+</div>
+
+</div>
+
 <div
     id="detailWebsiteRow"
     class="detail-row"
@@ -2588,6 +3294,17 @@
 
             <div class="detail-actions">
 
+                <button
+    id="compareEnergyBtn"
+    class="btn-energy-compare"
+    style="display:none;">
+
+    <i class="bi bi-lightning-charge"></i>
+
+    Vergelijk energieprijzen
+
+</button>
+                
                 <button
                     id="editContractBtn"
                     class="btn-primary">
@@ -2713,6 +3430,7 @@
 <script src="js/modal.js"></script>
 <script src="js/updates.js"></script>
 <script src="js/utils.js"></script>
+<script src="js/energy-comparison.js"></script>
 <script src="js/app.js"></script>
 
 </body>

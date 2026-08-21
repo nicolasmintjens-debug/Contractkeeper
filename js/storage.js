@@ -324,6 +324,56 @@ telecomPack:
 
     contract.telecomPack || "",
 
+energyType:
+
+    contract.energyType || "",
+
+energyTariffType:
+
+    contract.energyTariffType || "",
+
+energyProductName:
+
+    contract.energyProductName || "",
+
+energyMeterType:
+    contract.energyMeterType || "",
+
+hasDigitalMeter:
+    contract.hasDigitalMeter || "",    
+
+electricityYearUsage:
+
+    Number(contract.electricityYearUsage) || 0,
+
+gasYearUsage:
+
+    Number(contract.gasYearUsage) || 0,
+
+hasSolarPanels:
+
+    contract.hasSolarPanels || "",
+
+solarInjectionYear:
+
+    Number(contract.solarInjectionYear) || 0,  
+
+solarInjectionPrice:
+
+    Number(contract.solarInjectionPrice) || 0,    
+    
+electricityPrice:
+
+    Number(contract.electricityPrice) || 0,
+
+gasPrice:
+
+    Number(contract.gasPrice) || 0,
+
+energyFixedFee:
+
+    Number(contract.energyFixedFee) || 0,    
+
 frequency:
 
     contract.frequency || "monthly",

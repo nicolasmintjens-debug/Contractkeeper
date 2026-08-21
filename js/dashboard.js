@@ -1536,6 +1536,16 @@ function openCKAI() {
     page.classList.remove("hidden");
     page.style.display = "block";
 
+const ckaiHero =
+    document.querySelector("#page-ckai .ckai-hero");
+
+if (ckaiHero) {
+
+    ckaiHero.classList.remove("hidden");
+    ckaiHero.style.display = "block";
+
+}
+
     // Navigatie resetten
     document
         .querySelectorAll(".bottom-nav button")
@@ -1595,6 +1605,11 @@ if (ckaiContent) {
     document
         .getElementById("ckaiResultScreen")
         ?.classList.add("hidden");
+
+    // Energievergelijking verbergen
+document
+    .getElementById("ckaiEnergyComparisonScreen")
+    ?.classList.add("hidden");    
 
     // Premiumscherm verbergen
     document
@@ -2130,6 +2145,51 @@ ckaiQuestions = [
     ...questions
 ];
 
+// Energievragen die al uit het contract gekend zijn overslaan
+
+if (categoryKey === "energie") {
+
+    ckaiQuestions =
+        ckaiQuestions
+            .map((question, index) => ({
+                ...question,
+                originalIndex: index
+            }))
+            .filter(question => {
+
+                const index =
+                    question.originalIndex;
+
+                // Vraag 1: type energietarief
+                if (
+                    index === 0 &&
+                    contract.energyTariffType
+                ) {
+                    return false;
+                }
+
+                // Vraag 2: zonnepanelen
+                if (
+                    index === 1 &&
+                    contract.hasSolarPanels
+                ) {
+                    return false;
+                }
+
+                // Vraag 3: verbruik
+                if (
+                    index === 2 &&
+                    Number(contract.electricityYearUsage) > 0
+                ) {
+                    return false;
+                }
+
+                return true;
+
+            });
+
+}
+
 ckaiCurrentQuestion = 0;
 
 ckaiAnswers = {};
@@ -2584,8 +2644,11 @@ function evaluateCKAI() {
         return;
     }
 
-    let questionScoring =
-        scoring[index];
+    const scoringIndex =
+    question.originalIndex ?? index;
+
+let questionScoring =
+    scoring[scoringIndex];
 
     if (!questionScoring && question.scoring) {
         questionScoring =
@@ -2604,6 +2667,117 @@ function evaluateCKAI() {
     }
 
 });
+
+// Extra beoordeling voor Energie op basis van contractgegevens
+
+if (categoryKey === "energie") {
+
+    const energyType =
+        ckaiCurrentContract.energyType || "";
+
+    const tariffType =
+        ckaiCurrentContract.energyTariffType || "";
+
+    const electricityUsage =
+        Number(ckaiCurrentContract.electricityYearUsage) || 0;
+
+    const gasUsage =
+        Number(ckaiCurrentContract.gasYearUsage) || 0;
+
+    const hasSolarPanels =
+        ckaiCurrentContract.hasSolarPanels === "Ja";
+
+    const solarInjection =
+        Number(ckaiCurrentContract.solarInjectionYear) || 0;
+
+    const electricityPrice =
+        Number(ckaiCurrentContract.electricityPrice) || 0;
+
+    const gasPrice =
+        Number(ckaiCurrentContract.gasPrice) || 0;
+
+    const fixedFee =
+        Number(ckaiCurrentContract.energyFixedFee) || 0;
+
+
+    // Tarieftype
+
+    if (tariffType === "Vast") {
+        score += 1;
+    }
+
+    if (tariffType === "Variabel") {
+        score += 0;
+    }
+
+    if (tariffType === "Dynamisch") {
+        score -= 1;
+    }
+
+
+    // Ontbrekende prijsinformatie
+
+    if (
+        (
+            energyType === "Elektriciteit" ||
+            energyType === "Elektriciteit + gas"
+        ) &&
+        electricityPrice <= 0
+    ) {
+        score -= 1;
+    }
+
+    if (
+        (
+            energyType === "Gas" ||
+            energyType === "Elektriciteit + gas"
+        ) &&
+        gasPrice <= 0
+    ) {
+        score -= 1;
+    }
+
+
+    // Verbruik gekend
+
+    if (
+        (
+            energyType === "Elektriciteit" ||
+            energyType === "Elektriciteit + gas"
+        ) &&
+        electricityUsage > 0
+    ) {
+        score += 1;
+    }
+
+    if (
+        (
+            energyType === "Gas" ||
+            energyType === "Elektriciteit + gas"
+        ) &&
+        gasUsage > 0
+    ) {
+        score += 1;
+    }
+
+
+    // Zonnepanelen
+
+    if (
+        hasSolarPanels &&
+        solarInjection > 0
+    ) {
+        score += 1;
+    }
+
+
+    // Hoge vaste vergoeding als aandachtspunt
+
+    if (fixedFee >= 150) {
+        score -= 1;
+    }
+
+}
 
 
     // Eindresultaat bepalen
@@ -2643,6 +2817,163 @@ function evaluateCKAI() {
         title: "Opzeggen of alternatief zoeken",
         score: score
     };
+
+}
+
+function getCKAIEnergyContractInsight() {
+
+    if (
+        !ckaiCurrentContract ||
+        ckaiCurrentContract.category.toLowerCase() !== "energie"
+    ) {
+        return "";
+    }
+
+
+    const contract =
+        ckaiCurrentContract;
+
+
+    /* ===========================
+       BASISGEGEVENS
+    =========================== */
+
+    const electricityUsage =
+        Number(
+            contract.electricityYearUsage
+        ) || 0;
+
+    const gasUsage =
+        Number(
+            contract.gasYearUsage
+        ) || 0;
+
+
+    /* ===========================
+       V-TEST VERGELIJKING
+    =========================== */
+
+    if (
+        typeof findBestEnergyCombinations === "function" &&
+        electricityUsage > 0 &&
+        gasUsage > 0
+    ) {
+
+        const results =
+            findBestEnergyCombinations(
+                contract
+            );
+
+
+        if (
+            results &&
+            results.length > 0
+        ) {
+
+            const best =
+                results[0];
+
+
+            const electricityPrice =
+                Number(
+                    contract.electricityPrice
+                ) || 0;
+
+            const gasPrice =
+                Number(
+                    contract.gasPrice
+                ) || 0;
+
+            const fixedFee =
+                Number(
+                    contract.energyFixedFee
+                ) || 0;
+
+            const solarInjection =
+                Number(
+                    contract.solarInjectionYear
+                ) || 0;
+
+            const solarInjectionPrice =
+                Number(
+                    contract.solarInjectionPrice
+                ) || 0;
+
+
+            let currentCost =
+                electricityUsage *
+                electricityPrice;
+
+            currentCost +=
+                gasUsage *
+                gasPrice;
+
+            currentCost +=
+                fixedFee;
+
+
+            if (
+                contract.hasSolarPanels === "Ja" &&
+                solarInjection > 0 &&
+                solarInjectionPrice > 0
+            ) {
+
+                currentCost -=
+                    solarInjection *
+                    solarInjectionPrice;
+
+            }
+
+
+            const saving =
+                currentCost -
+                best.totalCost;
+
+
+            if (saving > 0) {
+
+                return (
+                    "Je energiecontract verdient opnieuw aandacht. " +
+                    "Op basis van je werkelijke verbruik zijn er momenteel " +
+                    "mogelijk voordeligere alternatieven beschikbaar."
+                );
+
+            }
+
+
+            return (
+                "Je energiecontract lijkt momenteel redelijk aan te sluiten " +
+                "bij je verbruik. Een actuele vergelijking kan helpen om dit " +
+                "regelmatig te blijven controleren."
+            );
+
+        }
+
+    }
+
+
+    /* ===========================
+       GEEN VERGELIJKING BESCHIKBAAR
+    =========================== */
+
+    if (
+        electricityUsage > 0 ||
+        gasUsage > 0
+    ) {
+
+        return (
+            "Je werkelijke energieverbruik is bekend. " +
+            "Daardoor kan CK AI je contract nauwkeuriger beoordelen " +
+            "en vergelijken."
+        );
+
+    }
+
+
+    return (
+        "Vul je energieverbruik aan om je contract nauwkeuriger " +
+        "te kunnen beoordelen en vergelijken."
+    );
 
 }
 
@@ -5503,13 +5834,24 @@ if (premiumCtaButton) {
 
         }
 
-        document
-            .getElementById("ckaiAdviceScreen")
-            ?.classList.add("hidden");
+       if (
+    ckaiCurrentContract &&
+    ckaiCurrentContract.category.toLowerCase() === "energie"
+) {
 
-        document
-    .getElementById("ckaiPremiumPlanScreen")
-    ?.classList.remove("hidden");
+    openCKAIEnergyComparison();
+
+} else {
+
+    document
+        .getElementById("ckaiAdviceScreen")
+        ?.classList.add("hidden");
+
+    document
+        .getElementById("ckaiPremiumPlanScreen")
+        ?.classList.remove("hidden");
+
+}
 
 
         // Premium altijd bovenaan openen
@@ -5527,6 +5869,440 @@ if (premiumCtaButton) {
         });
 
     };
+
+}
+
+/* ==========================================================
+   CK AI - ENERGIEVERGELIJKING OPENEN
+========================================================== */
+
+function openCKAIEnergyComparison() {
+
+    const cleanEnergyProductName = (name) => {
+
+    if (!name) {
+        return "";
+    }
+
+    return name
+        .replace(/\s+/g, " ")
+        .trim();
+};
+
+    const screen =
+        document.getElementById(
+            "ckaiEnergyComparisonScreen"
+        );
+
+    if (!screen) {
+        console.error(
+            "❌ Energievergelijkingsscherm niet gevonden."
+        );
+        return;
+    }
+
+    if (!ckaiCurrentContract) {
+        console.error(
+            "❌ Geen huidig energiecontract gevonden."
+        );
+        return;
+    }
+
+    const results =
+        findBestEnergyCombinations(
+            ckaiCurrentContract
+        );
+
+    if (
+        !results ||
+        !results.length
+    ) {
+
+        console.warn(
+            "⚠️ Geen V-test alternatieven gevonden."
+        );
+
+        return;
+    }
+
+    const best =
+        results[0];
+
+
+    /* ===========================
+       HUIDIGE KOST
+    =========================== */
+
+    const electricityUsage =
+        Number(
+            ckaiCurrentContract.electricityYearUsage
+        ) || 0;
+
+    const gasUsage =
+        Number(
+            ckaiCurrentContract.gasYearUsage
+        ) || 0;
+
+    const electricityPrice =
+        Number(
+            ckaiCurrentContract.electricityPrice
+        ) || 0;
+
+    const gasPrice =
+        Number(
+            ckaiCurrentContract.gasPrice
+        ) || 0;
+
+    const fixedFee =
+        Number(
+            ckaiCurrentContract.energyFixedFee
+        ) || 0;
+
+    const solarInjection =
+        Number(
+            ckaiCurrentContract.solarInjectionYear
+        ) || 0;
+
+    const solarInjectionPrice =
+        Number(
+            ckaiCurrentContract.solarInjectionPrice
+        ) || 0;
+
+
+    let currentCost =
+        electricityUsage *
+        electricityPrice;
+
+    currentCost +=
+        gasUsage *
+        gasPrice;
+
+    currentCost +=
+        fixedFee;
+
+
+    if (
+        ckaiCurrentContract.hasSolarPanels === "Ja" &&
+        solarInjection > 0 &&
+        solarInjectionPrice > 0
+    ) {
+
+        currentCost -=
+            solarInjection *
+            solarInjectionPrice;
+
+    }
+
+
+    const saving =
+        currentCost -
+        best.totalCost;
+
+
+    const formatEuro =
+        value =>
+            new Intl.NumberFormat(
+                "nl-BE",
+                {
+                    style: "currency",
+                    currency: "EUR"
+                }
+            ).format(value);
+
+
+    /* ===========================
+       SCHERM VULLEN
+    =========================== */
+
+    document.getElementById(
+        "ckaiEnergyComparisonContract"
+    ).textContent =
+        ckaiCurrentContract.name;
+
+
+    document.getElementById(
+        "ckaiEnergyCurrentCost"
+    ).textContent =
+        formatEuro(currentCost);
+
+
+    document.getElementById(
+        "ckaiEnergyBestSupplier"
+    ).textContent =
+        best.supplier;
+
+
+    const electricityProduct =
+    best.electricityProduct === "DYNAMIC"
+        ? "Dynamisch"
+        : cleanEnergyProductName(
+            best.electricityProduct
+        );
+
+const gasProduct =
+    best.gasProduct === "DYNAMIC"
+        ? "Dynamisch"
+        : cleanEnergyProductName(
+            best.gasProduct
+        );
+
+document.getElementById(
+    "ckaiEnergyBestProduct"
+).textContent =
+    `Elektriciteit: ${electricityProduct} • Gas: ${gasProduct}`;
+
+
+    document.getElementById(
+        "ckaiEnergyBestCost"
+    ).textContent =
+        formatEuro(best.totalCost);
+
+/* ===========================
+   KOSTENOPBOUW BESTE ALTERNATIEF
+=========================== */
+
+const bestBreakdown =
+    document.getElementById(
+        "ckaiEnergyBestBreakdown"
+    );
+
+if (bestBreakdown) {
+
+    bestBreakdown.innerHTML = `
+
+        <div class="ckai-energy-breakdown-row">
+
+            <span>
+                ⚡ Elektriciteit
+            </span>
+
+            <strong>
+                ${formatEuro(
+                    best.electricityCost
+                )}
+            </strong>
+
+        </div>
+
+        <div class="ckai-energy-breakdown-row">
+
+    <span>
+        📄 Vaste vergoeding
+    </span>
+
+    <strong>
+        ${formatEuro(
+            best.fixedFee
+        )}
+    </strong>
+
+</div>
+
+        <div class="ckai-energy-breakdown-row">
+
+            <span>
+                🔥 Gas
+            </span>
+
+            <strong>
+                ${formatEuro(
+                    best.gasCost
+                )}
+            </strong>
+
+        </div>
+
+
+        ${
+            best.injectionRevenue > 0
+                ? `
+                    <div class="ckai-energy-breakdown-row">
+
+                        <span>
+                            ☀️ Injectievergoeding
+                        </span>
+
+                        <strong class="ckai-energy-breakdown-negative">
+                            - ${formatEuro(
+                                best.injectionRevenue
+                            )}
+                        </strong>
+
+                    </div>
+                  `
+                : ""
+        }
+
+    `;
+
+}
+
+    document.getElementById(
+        "ckaiEnergySaving"
+    ).textContent =
+        saving > 0
+            ? formatEuro(saving)
+            : "Geen besparing";
+
+    const savingPercentage =
+    currentCost > 0
+        ? (saving / currentCost) * 100
+        : 0;
+
+const savingPercentageElement =
+    document.getElementById(
+        "ckaiEnergySavingPercentage"
+    );
+
+if (savingPercentageElement) {
+
+    savingPercentageElement.textContent =
+        `${savingPercentage.toFixed(0)}% goedkoper dan je huidige contract`;
+
+}
+
+
+    /* ===========================
+       TOP 3
+    =========================== */
+
+    document.getElementById(
+    "ckaiEnergyAlternatives"
+).innerHTML =
+    results
+        .slice(0, 3)
+        .map(
+            (alternative, index) => {
+
+                const difference =
+                    alternative.totalCost -
+                    best.totalCost;
+
+
+                const rank =
+                    index === 0
+                        ? "🥇"
+                        : index === 1
+                            ? "🥈"
+                            : "🥉";
+
+
+                const electricity =
+                    alternative.electricityProduct === "DYNAMIC"
+                        ? "Dynamisch"
+                        : cleanEnergyProductName(
+                            alternative.electricityProduct
+                        );
+
+
+                const gas =
+                    alternative.gasProduct
+                        ? alternative.gasProduct === "DYNAMIC"
+                            ? "Dynamisch"
+                            : cleanEnergyProductName(
+                                alternative.gasProduct
+                            )
+                        : "";
+
+
+                return `
+
+                    <div class="ckai-energy-alternative">
+
+                        <div class="ckai-energy-alternative-header">
+
+                            <span class="ckai-energy-rank">
+                                ${rank}
+                            </span>
+
+                            <strong>
+                                ${alternative.supplier}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="ckai-energy-alternative-products">
+
+                            <span>
+                                ⚡ ${electricity}
+                            </span>
+
+
+                            ${
+                                gas
+                                    ? `
+                                        <span>
+                                            🔥 ${gas}
+                                        </span>
+                                      `
+                                    : ""
+                            }
+
+                        </div>
+
+
+                        <div class="ckai-energy-alternative-price">
+
+                            <strong>
+                                ${formatEuro(
+                                    alternative.totalCost
+                                )}
+                            </strong>
+
+                            <span>
+                                per jaar
+                            </span>
+
+                        </div>
+
+
+                        ${
+                            index === 0
+                                ? `
+                                    <div class="ckai-energy-alternative-label">
+                                        Beste prijs
+                                    </div>
+                                  `
+                                : `
+                                    <div class="ckai-energy-alternative-label">
+                                        ${formatEuro(
+                                            difference
+                                        )}
+                                        duurder dan beste optie
+                                    </div>
+                                  `
+                        }
+
+                    </div>
+
+                `;
+
+            }
+        )
+        .join("");
+
+
+    /* ===========================
+       SCHERM TONEN
+    =========================== */
+
+    document
+        .getElementById("ckaiAdviceScreen")
+        ?.classList.add("hidden");
+
+    document
+        .getElementById("ckaiPremiumPlanScreen")
+        ?.classList.add("hidden");
+
+    screen.classList.remove("hidden");
+
+
+    window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "instant"
+    });
 
 }
 
@@ -5903,20 +6679,26 @@ if (question.analysis) {
 
 } else {
 
-    insight =
-        getCKAIInsight(
-            analysisKey,
-            index,
-            answer
-        );
+    const insightIndex =
+    question.originalIndex ?? index;
+
+insight =
+    getCKAIInsight(
+        analysisKey,
+        insightIndex,
+        answer
+    );
 
 }
 
         if (!insight) return;
 
 
-        const answerScore =
-            scoring?.[index]?.[answer];
+        const scoringIndex =
+    question.originalIndex ?? index;
+
+const answerScore =
+    scoring?.[scoringIndex]?.[answer];
 
 
         if (
@@ -5991,6 +6773,16 @@ if (question.analysis) {
 
     }
 
+const energyInsight =
+    getCKAIEnergyContractInsight();
+
+if (energyInsight) {
+
+    analysisParts.push(
+        energyInsight
+    );
+
+}
 
     adviceAnalysis.textContent =
         analysisParts.join(" ");
@@ -6087,5 +6879,44 @@ if (adviceRecommendation) {
 }
 
     });
+
+}
+
+/* ==========================================================
+   CK AI - TERUG NAAR STANDAARDANALYSE
+========================================================== */
+
+const closeEnergyComparison =
+    document.getElementById("closeEnergyComparison");
+
+if (closeEnergyComparison) {
+
+    closeEnergyComparison.onclick = () => {
+
+        const energyScreen =
+            document.getElementById(
+                "ckaiEnergyComparisonScreen"
+            );
+
+        const adviceScreen =
+            document.getElementById(
+                "ckaiAdviceScreen"
+            );
+
+        if (energyScreen) {
+            energyScreen.classList.add("hidden");
+        }
+
+        if (adviceScreen) {
+            adviceScreen.classList.remove("hidden");
+        }
+
+        window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: "instant"
+        });
+
+    };
 
 }

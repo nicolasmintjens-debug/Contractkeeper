@@ -411,6 +411,36 @@ function initSettings() {
 localStorage.removeItem("contractTheme");
 document.documentElement.removeAttribute("data-theme");
 
+const energyPostalCode =
+    document.getElementById("energyPostalCode");
+
+if (energyPostalCode) {
+
+    const savedPostalCode =
+        localStorage.getItem("energyPostalCode");
+
+    if (savedPostalCode) {
+        energyPostalCode.value =
+            savedPostalCode;
+    }
+
+    energyPostalCode.addEventListener("input", () => {
+
+        // Alleen cijfers toelaten
+        energyPostalCode.value =
+            energyPostalCode.value
+                .replace(/\D/g, "")
+                .slice(0, 4);
+
+        localStorage.setItem(
+            "energyPostalCode",
+            energyPostalCode.value
+        );
+
+    });
+
+}    
+
 const notificationsToggle =
     document.getElementById("contractNotifications");
 

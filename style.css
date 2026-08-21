@@ -7307,6 +7307,108 @@ a,
 
 }
 
+/* ===========================
+   ENERGIE ALTERNATIEVEN
+=========================== */
+
+.ckai-energy-alternative{
+
+    padding:12px;
+
+    background:rgba(255,255,255,.025);
+
+    border:1px solid rgba(255,255,255,.05);
+
+    border-radius:14px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:7px;
+
+    color:#D9E3F0;
+
+    font-size:12px;
+
+    line-height:1.4;
+
+}
+
+
+.ckai-energy-alternative-header{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:7px;
+
+    color:white;
+
+    font-size:14px;
+
+    line-height:1.3;
+
+}
+
+
+.ckai-energy-rank{
+
+    flex-shrink:0;
+
+    font-size:15px;
+
+}
+
+
+.ckai-energy-alternative-products{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:4px;
+
+    color:#B8C7D9;
+
+    font-size:11px;
+
+    line-height:1.4;
+
+}
+
+
+.ckai-energy-alternative-price{
+
+    display:flex;
+
+    align-items:baseline;
+
+    gap:5px;
+
+    margin-top:2px;
+
+    color:#34D399;
+
+}
+
+
+.ckai-energy-alternative-price strong{
+
+    font-size:13px;
+
+}
+
+
+.ckai-energy-alternative-price span{
+
+    color:#8FA2B8;
+
+    font-size:10px;
+
+}
+
 
 /* ===========================
    TERUGKNOP
@@ -7546,5 +7648,211 @@ a,
 .ckai-tool-card:active {
 
     transform: scale(0.98);
+
+}
+
+/* ===========================
+   ENERGIE FORMULIER
+=========================== */
+
+#energyDetailsGroup .form-group {
+    margin-bottom: 20px;
+}
+
+/* ===========================
+   ENERGIE - GESCHATTE JAARKOST
+=========================== */
+
+.energy-estimate-card {
+
+    margin-top: 18px;
+
+    padding: 18px;
+
+    border-radius: 18px;
+
+    background:
+        rgba(34, 197, 94, 0.08);
+
+    border:
+        1px solid rgba(34, 197, 94, 0.18);
+
+}
+
+.energy-estimate-header {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin-bottom: 12px;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+}
+
+.energy-estimate-card strong {
+
+    display: block;
+
+    font-size: 26px;
+
+    font-weight: 700;
+
+    margin-bottom: 6px;
+
+    color: #34D399;
+
+}
+
+.energy-estimate-card small {
+
+    display: block;
+
+    font-size: 12px;
+
+    line-height: 1.5;
+
+    opacity: 0.7;
+
+}
+
+/* ===========================
+   ENERGIE VERGELIJKEN
+=========================== */
+
+.btn-energy-compare {
+
+    background: #2563eb;
+
+    color: white;
+
+    border: none;
+
+    border-radius: 12px;
+
+    padding: 14px 18px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+}
+
+.btn-energy-compare:hover {
+
+    background: #1d4ed8;
+
+}
+
+/* ===========================
+   KOSTENOPBOUW ENERGIE
+=========================== */
+
+.ckai-energy-breakdown{
+
+    margin-top:8px;
+
+    padding-top:8px;
+
+    border-top:1px solid rgba(255,255,255,.06);
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:5px;
+
+}
+
+
+.ckai-energy-breakdown-row{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:10px;
+
+    color:#AFC0D3;
+
+    font-size:10px;
+
+    line-height:1.4;
+
+}
+
+
+.ckai-energy-breakdown-row strong{
+
+    color:#E7EEF7;
+
+    font-size:11px;
+
+    font-weight:600;
+
+    white-space:nowrap;
+
+}
+
+
+.ckai-energy-breakdown-negative{
+
+    color:#34D399 !important;
+
+}
+
+/* ===========================
+   BESPARINGSPERCENTAGE
+=========================== */
+
+.ckai-energy-saving-percentage{
+
+    margin-top:6px;
+
+    color:#34D399;
+
+    font-size:10px;
+
+    font-weight:600;
+
+}
+
+/* ===========================
+   ALTERNATIEF LABEL
+=========================== */
+
+.ckai-energy-alternative-label{
+
+    margin-top:1px;
+
+    color:#8FA2B8;
+
+    font-size:10px;
+
+    line-height:1.3;
+
+}
+
+.ckai-energy-alternative:first-child
+.ckai-energy-alternative-label{
+
+    color:#34D399;
+
+    font-weight:600;
 
 }
