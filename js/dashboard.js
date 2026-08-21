@@ -5894,6 +5894,15 @@ function openCKAIEnergyComparison() {
             "ckaiEnergyComparisonScreen"
         );
 
+    // CK AI home verbergen
+const ckaiHero =
+    document.querySelector("#page-ckai .ckai-hero");
+
+if (ckaiHero) {
+    ckaiHero.classList.add("hidden");
+    ckaiHero.style.display = "none";
+}    
+
     if (!screen) {
         console.error(
             "❌ Energievergelijkingsscherm niet gevonden."
@@ -5909,24 +5918,39 @@ function openCKAIEnergyComparison() {
     }
 
     const results =
-        findBestEnergyCombinations(
-            ckaiCurrentContract
-        );
+    findBestEnergyCombinations(
+        ckaiCurrentContract
+    );
 
-    if (
-        !results ||
-        !results.length
-    ) {
+// Vergelijkingsscherm tonen
+screen.classList.remove("hidden");
+screen.style.display = "block";
 
-        console.warn(
-            "⚠️ Geen V-test alternatieven gevonden."
-        );
+// Geen resultaten? Toon voorlopig melding
+if (
+    !results ||
+    !results.length
+) {
 
-        return;
-    }
+    console.warn(
+        "⚠️ Geen V-test alternatieven gevonden."
+    );
 
-    const best =
-        results[0];
+    document.getElementById(
+        "ckaiEnergyBestSupplier"
+    ).textContent =
+        "Geen resultaten";
+
+    document.getElementById(
+        "ckaiEnergyBestProduct"
+    ).textContent =
+        "Er zijn momenteel geen vergelijkbare energiecontracten beschikbaar.";
+
+    return;
+}
+
+const best =
+    results[0];
 
 
     /* ===========================
