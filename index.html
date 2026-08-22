@@ -2680,8 +2680,12 @@
     <!-- ELEKTRICITEITSVERBRUIK -->
 
     <div
-        class="form-group"
-        id="electricityUsageGroup">
+    class="form-group"
+    id="electricityUsageGroup">
+
+    <!-- ENKELVOUDIGE METER -->
+
+    <div id="singleMeterUsageGroup">
 
         <label for="electricityYearUsage">
             Jaarverbruik elektriciteit (kWh)
@@ -2695,6 +2699,44 @@
             placeholder="Bijvoorbeeld 3500">
 
     </div>
+
+
+    <!-- DAG- EN NACHTMETER -->
+
+    <div
+        id="dualMeterUsageGroup"
+        style="display:none;">
+
+        <label for="electricityDayUsage">
+            Jaarverbruik dag (kWh)
+        </label>
+
+        <input
+            id="electricityDayUsage"
+            type="number"
+            min="0"
+            step="1"
+            placeholder="Bijvoorbeeld 2200">
+
+
+        <label
+            for="electricityNightUsage"
+            style="margin-top:12px;">
+
+            Jaarverbruik nacht (kWh)
+
+        </label>
+
+        <input
+            id="electricityNightUsage"
+            type="number"
+            min="0"
+            step="1"
+            placeholder="Bijvoorbeeld 1300">
+
+    </div>
+
+</div>
 
 <!-- ZONNEPANELEN -->
 
@@ -2761,23 +2803,38 @@
 
     <!-- GASVERBRUIK -->
 
-    <div
-        class="form-group"
-        id="gasUsageGroup"
-        style="display:none;">
+    <!-- GASVERBRUIK -->
 
-        <label for="gasYearUsage">
-            Jaarverbruik gas (kWh)
-        </label>
+<div
+    class="form-group"
+    id="gasUsageGroup"
+    style="display:none;">
 
-        <input
-            id="gasYearUsage"
-            type="number"
-            min="0"
-            step="1"
-            placeholder="Bijvoorbeeld 12000">
+    <label>
+        Jaarverbruik gas
+    </label>
 
-    </div>
+    <select id="gasUsageUnit">
+
+        <option value="kWh">
+            kWh
+        </option>
+
+        <option value="m3">
+            m³
+        </option>
+
+    </select>
+
+
+    <input
+        id="gasYearUsage"
+        type="number"
+        min="0"
+        step="1"
+        placeholder="Bijvoorbeeld 12000">
+
+</div>
 
     <!-- =========================================
      ENERGIETARIEVEN
@@ -2787,16 +2844,59 @@
     class="form-group"
     id="electricityPriceGroup">
 
-    <label for="electricityPrice">
-        Elektriciteitsprijs (€/kWh)
-    </label>
 
-    <input
-        id="electricityPrice"
-        type="number"
-        min="0"
-        step="0.0001"
-        placeholder="Bijvoorbeeld 0,1450">
+    <!-- ENKELVOUDIGE METER -->
+
+    <div id="singleMeterPriceGroup">
+
+        <label for="electricityPrice">
+            Elektriciteitsprijs (€/kWh)
+        </label>
+
+        <input
+            id="electricityPrice"
+            type="number"
+            min="0"
+            step="0.0001"
+            placeholder="Bijvoorbeeld 0,1450">
+
+    </div>
+
+
+    <!-- DAG- EN NACHTMETER -->
+
+    <div
+        id="dualMeterPriceGroup"
+        style="display:none;">
+
+        <label for="electricityDayPrice">
+            Dagprijs (€/kWh)
+        </label>
+
+        <input
+            id="electricityDayPrice"
+            type="number"
+            min="0"
+            step="0.0001"
+            placeholder="Bijvoorbeeld 0,3200">
+
+
+        <label
+            for="electricityNightPrice"
+            style="margin-top:12px;">
+
+            Nachtprijs (€/kWh)
+
+        </label>
+
+        <input
+            id="electricityNightPrice"
+            type="number"
+            min="0"
+            step="0.0001"
+            placeholder="Bijvoorbeeld 0,2800">
+
+    </div>
 
 </div>
 
@@ -3099,24 +3199,69 @@
     </div>
 
 
-    <div
-        class="detail-row"
-        id="detailElectricityUsageRow">
+    <!-- ELEKTRICITEITSVERBRUIK ENKELVOUDIGE METER -->
 
-        <div class="detail-label">
+<div
+    class="detail-row"
+    id="detailElectricityUsageRow">
 
-            <div class="detail-icon blue">
-                <i class="bi bi-lightning-charge-fill"></i>
-            </div>
+    <div class="detail-label">
 
-            <span>Elektriciteitsverbruik</span>
-
+        <div class="detail-icon blue">
+            <i class="bi bi-lightning-charge-fill"></i>
         </div>
 
-        <strong id="detailElectricityUsage">-</strong>
+        <span>Elektriciteitsverbruik</span>
 
     </div>
 
+    <strong id="detailElectricityUsage">-</strong>
+
+</div>
+
+
+<!-- DAGVERBRUIK -->
+
+<div
+    class="detail-row"
+    id="detailElectricityDayUsageRow"
+    style="display:none;">
+
+    <div class="detail-label">
+
+        <div class="detail-icon blue">
+            <i class="bi bi-sun"></i>
+        </div>
+
+        <span>Dagverbruik</span>
+
+    </div>
+
+    <strong id="detailElectricityDayUsage">-</strong>
+
+</div>
+
+
+<!-- NACHTVERBRUIK -->
+
+<div
+    class="detail-row"
+    id="detailElectricityNightUsageRow"
+    style="display:none;">
+
+    <div class="detail-label">
+
+        <div class="detail-icon purple">
+            <i class="bi bi-moon-stars"></i>
+        </div>
+
+        <span>Nachtverbruik</span>
+
+    </div>
+
+    <strong id="detailElectricityNightUsage">-</strong>
+
+</div>
 
     <div
         class="detail-row"
@@ -3180,6 +3325,8 @@
 
 <!-- ELEKTRICITEITSPRIJS -->
 
+<!-- ELEKTRICITEITSPRIJS ENKELVOUDIGE METER -->
+
 <div
     class="detail-row"
     id="detailElectricityPriceRow">
@@ -3187,7 +3334,7 @@
     <div class="detail-label">
 
         <div class="detail-icon blue">
-            <i class="bi bi-lightning-charge"></i>
+            <i class="bi bi-lightning-charge-fill"></i>
         </div>
 
         <span>Elektriciteitsprijs</span>
@@ -3195,6 +3342,50 @@
     </div>
 
     <strong id="detailElectricityPrice">-</strong>
+
+</div>
+
+
+<!-- DAGPRIJS -->
+
+<div
+    class="detail-row"
+    id="detailElectricityDayPriceRow"
+    style="display:none;">
+
+    <div class="detail-label">
+
+        <div class="detail-icon blue">
+            <i class="bi bi-sun"></i>
+        </div>
+
+        <span>Dagprijs</span>
+
+    </div>
+
+    <strong id="detailElectricityDayPrice">-</strong>
+
+</div>
+
+
+<!-- NACHTPRIJS -->
+
+<div
+    class="detail-row"
+    id="detailElectricityNightPriceRow"
+    style="display:none;">
+
+    <div class="detail-label">
+
+        <div class="detail-icon purple">
+            <i class="bi bi-moon-stars"></i>
+        </div>
+
+        <span>Nachtprijs</span>
+
+    </div>
+
+    <strong id="detailElectricityNightPrice">-</strong>
 
 </div>
 

@@ -346,9 +346,21 @@ electricityYearUsage:
 
     Number(contract.electricityYearUsage) || 0,
 
+electricityDayUsage:
+
+    Number(contract.electricityDayUsage) || 0,
+
+electricityNightUsage:
+
+    Number(contract.electricityNightUsage) || 0,
+
 gasYearUsage:
 
     Number(contract.gasYearUsage) || 0,
+
+gasUsageUnit:
+
+    contract.gasUsageUnit || "kWh",
 
 hasSolarPanels:
 
@@ -365,6 +377,14 @@ solarInjectionPrice:
 electricityPrice:
 
     Number(contract.electricityPrice) || 0,
+
+electricityDayPrice:
+
+    Number(contract.electricityDayPrice) || 0,
+
+electricityNightPrice:
+
+    Number(contract.electricityNightPrice) || 0,    
 
 gasPrice:
 

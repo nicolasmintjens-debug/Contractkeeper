@@ -23,6 +23,24 @@ function updateTelecomPackVisibility() {
     const electricityUsageGroup =
         document.getElementById("electricityUsageGroup");
 
+    const singleMeterUsageGroup =
+    document.getElementById("singleMeterUsageGroup");
+
+const dualMeterUsageGroup =
+    document.getElementById("dualMeterUsageGroup");
+
+const energyMeterType =
+    document.getElementById("energyMeterType");    
+
+const energyMeterTypeGroup =
+    energyMeterType?.closest(".form-group");
+
+const digitalMeter =
+    document.getElementById("hasDigitalMeter");
+
+const digitalMeterGroup =
+    digitalMeter?.closest(".form-group");
+
     const gasUsageGroup =
         document.getElementById("gasUsageGroup");
 
@@ -91,6 +109,20 @@ function updateTelecomPackVisibility() {
             type === "Gas" ||
             type === "Elektriciteit + gas";
 
+        if (energyMeterTypeGroup) {
+    energyMeterTypeGroup.style.display =
+        isEnergy && hasElectricity
+            ? "block"
+            : "none";
+}
+
+if (digitalMeterGroup) {
+    digitalMeterGroup.style.display =
+        isEnergy && hasElectricity
+            ? "block"
+            : "none";
+}    
+
 
         if (electricityUsageGroup) {
 
@@ -100,6 +132,71 @@ function updateTelecomPackVisibility() {
                     : "none";
 
         }
+
+       if (
+    singleMeterUsageGroup &&
+    dualMeterUsageGroup &&
+    energyMeterType
+) {
+
+    const isDualMeter =
+        energyMeterType.value
+            .toLowerCase()
+            .includes("dag") &&
+        energyMeterType.value
+            .toLowerCase()
+            .includes("nacht");
+
+
+    singleMeterUsageGroup.style.display =
+        isEnergy && hasElectricity && !isDualMeter
+            ? "block"
+            : "none";
+
+
+    dualMeterUsageGroup.style.display =
+        isEnergy && hasElectricity && isDualMeter
+            ? "block"
+            : "none";
+
+}
+
+/* ==========================================================
+   ENKELVOUDIGE / DAG- EN NACHTMETER - PRIJZEN
+========================================================== */
+
+const singleMeterPriceGroup =
+    document.getElementById("singleMeterPriceGroup");
+
+const dualMeterPriceGroup =
+    document.getElementById("dualMeterPriceGroup");
+
+
+if (
+    singleMeterPriceGroup &&
+    dualMeterPriceGroup &&
+    energyMeterType
+) {
+
+    const isDualMeter =
+        energyMeterType.value
+            .toLowerCase()
+            .includes("dag") &&
+        energyMeterType.value
+            .toLowerCase()
+            .includes("nacht");
+
+    singleMeterPriceGroup.style.display =
+        isDualMeter
+            ? "none"
+            : "block";
+
+    dualMeterPriceGroup.style.display =
+        isDualMeter
+            ? "block"
+            : "none";
+
+}
 
 
         if (gasUsageGroup) {
@@ -154,7 +251,7 @@ function updateTelecomPackVisibility() {
         }
 
 
-        if (solarInjectionPriceGroup) {
+               if (solarInjectionPriceGroup) {
 
             solarInjectionPriceGroup.style.display =
                 isEnergy &&
@@ -167,7 +264,7 @@ function updateTelecomPackVisibility() {
 
     }
 
-}   
+}
 
 /* ==========================================================
    INITIALISATIE
@@ -195,6 +292,9 @@ function initModal() {
 
     const energyType =
         document.getElementById("energyType"); 
+
+    const energyMeterType =
+    document.getElementById("energyMeterType");    
         
     const hasSolarPanels =
     document.getElementById("hasSolarPanels");    
@@ -227,6 +327,15 @@ function initModal() {
 if (energyType) {
 
     energyType.addEventListener(
+        "change",
+        updateTelecomPackVisibility
+    );
+
+}
+
+if (energyMeterType) {
+
+    energyMeterType.addEventListener(
         "change",
         updateTelecomPackVisibility
     );
@@ -451,6 +560,28 @@ function saveContract(event) {
 
 }
 
+/* ==========================================================
+   GASVERBRUIK - m³ NAAR kWh
+========================================================== */
+
+function getGasUsageInKwh(contract) {
+
+    const usage =
+        Number(contract.gasYearUsage) || 0;
+
+    const unit =
+        contract.gasUsageUnit || "kWh";
+
+    if (unit === "m3") {
+
+        // Belgische aardgasomrekening
+        // 1 m³ ≈ 10,7 kWh
+        return usage * 10.7;
+
+    }
+
+    return usage;
+}
 
 /* ==========================================================
    FORM UITLEZEN
@@ -498,14 +629,65 @@ hasDigitalMeter:
         : "",        
 
         electricityYearUsage:
-            category === "Energie"
-                ? Number(value("electricityYearUsage")) || 0
-                : 0,
+
+    category === "Energie" &&
+    (
+        value("energyType") === "Elektriciteit" ||
+        value("energyType") === "Elektriciteit + gas"
+    ) &&
+    document.getElementById("energyMeterType")?.value === "Dag en nacht"
+
+        ? (
+            Number(value("electricityDayUsage")) || 0
+        ) + (
+            Number(value("electricityNightUsage")) || 0
+        )
+
+        : category === "Energie" &&
+          (
+              value("energyType") === "Elektriciteit" ||
+              value("energyType") === "Elektriciteit + gas"
+          )
+
+            ? Number(value("electricityYearUsage")) || 0
+
+            : 0,
+
+
+electricityDayUsage:
+
+    category === "Energie" &&
+    (
+        value("energyType") === "Elektriciteit" ||
+        value("energyType") === "Elektriciteit + gas"
+    )
+
+        ? Number(value("electricityDayUsage")) || 0
+
+        : 0,
+
+
+electricityNightUsage:
+
+    category === "Energie" &&
+    (
+        value("energyType") === "Elektriciteit" ||
+        value("energyType") === "Elektriciteit + gas"
+    )
+
+        ? Number(value("electricityNightUsage")) || 0
+
+        : 0,
 
         gasYearUsage:
     category === "Energie"
         ? Number(value("gasYearUsage")) || 0
         : 0,
+
+gasUsageUnit:
+    category === "Energie"
+        ? value("gasUsageUnit")
+        : "kWh",
 
 hasSolarPanels:
     category === "Energie"
@@ -525,8 +707,50 @@ solarInjectionPrice:
         : 0,
 
 electricityPrice:
-    category === "Energie"
-        ? Number(value("electricityPrice")) || 0
+
+    category === "Energie" &&
+    (
+        value("energyType") === "Elektriciteit" ||
+        value("energyType") === "Elektriciteit + gas"
+    ) &&
+    document.getElementById("energyMeterType")?.value === "Dag en nacht"
+
+        ? Number(value("electricityDayPrice")) || 0
+
+        : category === "Energie" &&
+          (
+              value("energyType") === "Elektriciteit" ||
+              value("energyType") === "Elektriciteit + gas"
+          )
+
+            ? Number(value("electricityPrice")) || 0
+
+            : 0,
+
+
+electricityDayPrice:
+
+    category === "Energie" &&
+    (
+        value("energyType") === "Elektriciteit" ||
+        value("energyType") === "Elektriciteit + gas"
+    )
+
+        ? Number(value("electricityDayPrice")) || 0
+
+        : 0,
+
+
+electricityNightPrice:
+
+    category === "Energie" &&
+    (
+        value("energyType") === "Elektriciteit" ||
+        value("energyType") === "Elektriciteit + gas"
+    )
+
+        ? Number(value("electricityNightPrice")) || 0
+
         : 0,
 
 gasPrice:
@@ -587,6 +811,16 @@ function fillForm(contract) {
     );
 
     setValue(
+    "electricityDayUsage",
+    contract.electricityDayUsage || ""
+);
+
+setValue(
+    "electricityNightUsage",
+    contract.electricityNightUsage || ""
+);
+
+    setValue(
     "energyMeterType",
     contract.energyMeterType || "Enkelvoudig"
 );
@@ -602,6 +836,11 @@ setValue(
 );
 
 setValue(
+    "gasUsageUnit",
+    contract.gasUsageUnit || "kWh"
+);
+
+setValue(
     "hasSolarPanels",
     contract.hasSolarPanels || "Nee"
 );
@@ -614,6 +853,16 @@ setValue(
 setValue(
     "electricityPrice",
     contract.electricityPrice || ""
+);
+
+setValue(
+    "electricityDayPrice",
+    contract.electricityDayPrice || ""
+);
+
+setValue(
+    "electricityNightPrice",
+    contract.electricityNightPrice || ""
 );
 
 setValue(
@@ -764,15 +1013,98 @@ if (
     document.getElementById("detailEnergyProductName").textContent =
         contract.energyProductName || "-";
 
-    document.getElementById("detailElectricityUsage").textContent =
+    const detailElectricityUsage =
+    document.getElementById("detailElectricityUsage");
+
+const detailElectricityDayUsage =
+    document.getElementById("detailElectricityDayUsage");
+
+const detailElectricityNightUsage =
+    document.getElementById("detailElectricityNightUsage");
+
+const detailElectricityDayUsageRow =
+    document.getElementById("detailElectricityDayUsageRow");
+
+const detailElectricityNightUsageRow =
+    document.getElementById("detailElectricityNightUsageRow");
+
+
+const isDualMeter =
+    contract.energyMeterType === "Dag en nacht";
+
+
+if (detailElectricityUsage) {
+
+    detailElectricityUsage.textContent =
         contract.electricityYearUsage
             ? `${contract.electricityYearUsage} kWh`
             : "-";
 
-    document.getElementById("detailGasUsage").textContent =
-        contract.gasYearUsage
-            ? `${contract.gasYearUsage} kWh`
+}
+
+
+if (detailElectricityDayUsage) {
+
+    detailElectricityDayUsage.textContent =
+        contract.electricityDayUsage
+            ? `${contract.electricityDayUsage} kWh`
             : "-";
+
+}
+
+
+if (detailElectricityNightUsage) {
+
+    detailElectricityNightUsage.textContent =
+        contract.electricityNightUsage
+            ? `${contract.electricityNightUsage} kWh`
+            : "-";
+
+}
+
+
+if (detailElectricityUsageRow) {
+
+    detailElectricityUsageRow.style.display =
+        (
+            contract.energyType === "Elektriciteit" ||
+            contract.energyType === "Elektriciteit + gas"
+        ) && !isDualMeter
+            ? "flex"
+            : "none";
+
+}
+
+
+if (detailElectricityDayUsageRow) {
+
+    detailElectricityDayUsageRow.style.display =
+        (
+            contract.energyType === "Elektriciteit" ||
+            contract.energyType === "Elektriciteit + gas"
+        ) && isDualMeter
+            ? "flex"
+            : "none";
+
+}
+
+
+if (detailElectricityNightUsageRow) {
+
+    detailElectricityNightUsageRow.style.display =
+        (
+            contract.energyType === "Elektriciteit" ||
+            contract.energyType === "Elektriciteit + gas"
+        ) && isDualMeter
+            ? "flex"
+            : "none";
+
+}
+
+    document.getElementById("detailGasUsage").textContent =
+    contract.gasYearUsage
+        ? `${contract.gasYearUsage} ${contract.gasUsageUnit || "kWh"}`
+        : "-";
 
     const detailSolarPanelsRow =
     document.getElementById("detailSolarPanelsRow");
@@ -825,21 +1157,76 @@ const detailGasPriceRow =
 
 // ELEKTRICITEITSPRIJS
 
+const detailElectricityDayPriceRow =
+    document.getElementById("detailElectricityDayPriceRow");
+
+const detailElectricityNightPriceRow =
+    document.getElementById("detailElectricityNightPriceRow");
+
+
 if (detailElectricityPriceRow) {
 
     const hasElectricity =
         contract.energyType === "Elektriciteit" ||
         contract.energyType === "Elektriciteit + gas";
 
+    const isDayNight =
+    contract.energyMeterType === "Dag en nacht";
+
+    /*
+     * ENKELVOUDIGE METER
+     */
+
     detailElectricityPriceRow.style.display =
-        hasElectricity
+        hasElectricity && !isDayNight
             ? "flex"
             : "none";
 
+
     document.getElementById("detailElectricityPrice").textContent =
         contract.electricityPrice
-            ? `€ ${Number(contract.electricityPrice).toFixed(4).replace(".", ",")} / kWh`
+            ? `€ ${Number(contract.electricityPrice)
+                .toFixed(4)
+                .replace(".", ",")} / kWh`
             : "-";
+
+
+    /*
+     * DAG- & NACHTMETER
+     */
+
+    if (detailElectricityDayPriceRow) {
+
+        detailElectricityDayPriceRow.style.display =
+            hasElectricity && isDayNight
+                ? "flex"
+                : "none";
+
+        document.getElementById("detailElectricityDayPrice").textContent =
+            contract.electricityDayPrice
+                ? `€ ${Number(contract.electricityDayPrice)
+                    .toFixed(4)
+                    .replace(".", ",")} / kWh`
+                : "-";
+
+    }
+
+
+    if (detailElectricityNightPriceRow) {
+
+        detailElectricityNightPriceRow.style.display =
+            hasElectricity && isDayNight
+                ? "flex"
+                : "none";
+
+        document.getElementById("detailElectricityNightPrice").textContent =
+            contract.electricityNightPrice
+                ? `€ ${Number(contract.electricityNightPrice)
+                    .toFixed(4)
+                    .replace(".", ",")} / kWh`
+                : "-";
+
+    }
 
 }
 
@@ -882,13 +1269,28 @@ if (estimatedElement) {
     let estimatedEnergyCost = 0;
 
     const electricityUsage =
-        Number(contract.electricityYearUsage) || 0;
+    Number(contract.electricityYearUsage) || 0;
 
-    const gasUsage =
-        Number(contract.gasYearUsage) || 0;
+const electricityDayUsage =
+    Number(contract.electricityDayUsage) || 0;
 
-    const electricityPrice =
-        Number(contract.electricityPrice) || 0;
+const electricityNightUsage =
+    Number(contract.electricityNightUsage) || 0;
+
+const electricityPrice =
+    Number(contract.electricityPrice) || 0;
+
+const electricityDayPrice =
+    Number(contract.electricityDayPrice) || 0;
+
+const electricityNightPrice =
+    Number(contract.electricityNightPrice) || 0;
+
+const isDualMeter =
+    contract.energyMeterType === "Dag en nacht";
+
+const gasUsage =
+    getGasUsageInKwh(contract);
 
     const gasPrice =
         Number(contract.gasPrice) || 0;
@@ -903,8 +1305,25 @@ if (estimatedElement) {
         Number(contract.solarInjectionPrice) || 0;
 
 
-    estimatedEnergyCost +=
+    let electricityCost = 0;
+
+
+if (isDualMeter) {
+
+    electricityCost =
+        (electricityDayUsage * electricityDayPrice) +
+        (electricityNightUsage * electricityNightPrice);
+
+} else {
+
+    electricityCost =
         electricityUsage * electricityPrice;
+
+}
+
+
+estimatedEnergyCost +=
+    electricityCost;
 
     estimatedEnergyCost +=
         gasUsage * gasPrice;

@@ -152,9 +152,23 @@ function calculateCurrentEnergyContractCost(
     }
 
 
+    /* ===========================
+       VERBRUIK
+    =========================== */
+
     const electricityUsage =
         Number(
             contract.electricityYearUsage
+        ) || 0;
+
+    const electricityDayUsage =
+        Number(
+            contract.electricityDayUsage
+        ) || 0;
+
+    const electricityNightUsage =
+        Number(
+            contract.electricityNightUsage
         ) || 0;
 
     const gasUsage =
@@ -162,24 +176,40 @@ function calculateCurrentEnergyContractCost(
             contract.gasYearUsage
         ) || 0;
 
+
+    /* ===========================
+       PRIJZEN
+    =========================== */
+
     const electricityPrice =
-    Number(
-        product.prices.singleRateEuroPerKwh ??
-        product.prices.dayRateEuroPerKwh ??
-        product.prices.dynamicRateEuroPerKwh
-    ) || 0;
+        Number(
+            contract.electricityPrice
+        ) || 0;
+
+    const electricityDayPrice =
+        Number(
+            contract.electricityDayPrice
+        ) || 0;
+
+    const electricityNightPrice =
+        Number(
+            contract.electricityNightPrice
+        ) || 0;
 
     const gasPrice =
-    Number(
-        product.prices.singleRateEuroPerKwh ??
-        product.prices.dayRateEuroPerKwh ??
-        product.prices.dynamicRateEuroPerKwh
-    ) || 0;
+        Number(
+            contract.gasPrice
+        ) || 0;
 
     const fixedFee =
         Number(
             contract.energyFixedFee
         ) || 0;
+
+
+    /* ===========================
+       ZONNEPANELEN
+    =========================== */
 
     const solarInjection =
         Number(
@@ -192,19 +222,60 @@ function calculateCurrentEnergyContractCost(
         ) || 0;
 
 
-    const electricityCost =
-        electricityUsage *
-        electricityPrice;
+    /* ===========================
+       ELEKTRICITEITSKOST
+    =========================== */
+
+    let electricityCost = 0;
+
+
+    if (
+        contract.energyMeterType ===
+        "Dag en nacht"
+    ) {
+
+        electricityCost =
+            (
+                electricityDayUsage *
+                electricityDayPrice
+            ) +
+            (
+                electricityNightUsage *
+                electricityNightPrice
+            );
+
+    } else {
+
+        electricityCost =
+            electricityUsage *
+            electricityPrice;
+
+    }
+
+
+    /* ===========================
+       GASKOST
+    =========================== */
 
     const gasCost =
         gasUsage *
         gasPrice;
+
+
+    /* ===========================
+       INJECTIEVERGOEDING
+    =========================== */
 
     const injectionRevenue =
         contract.hasSolarPanels === "Ja"
             ? solarInjection *
               solarInjectionPrice
             : 0;
+
+
+    /* ===========================
+       TOTALE JAARKOST
+    =========================== */
 
     const totalCost =
         electricityCost +
@@ -257,26 +328,83 @@ function calculateVTestElectricityCost(
     }
 
 
+    /* ===========================
+       VERBRUIK
+    =========================== */
+
     const electricityUsage =
         Number(
             contract.electricityYearUsage
         ) || 0;
 
+    const electricityDayUsage =
+        Number(
+            contract.electricityDayUsage
+        ) || 0;
 
-    const electricityPrice =
-    Number(
-        product.prices.singleRateEuroPerKwh ??
-        product.prices.dayRateEuroPerKwh ??
-        product.prices.dynamicRateEuroPerKwh
-    );
+    const electricityNightUsage =
+        Number(
+            contract.electricityNightUsage
+        ) || 0;
 
-if (
-    !Number.isFinite(electricityPrice) ||
-    electricityPrice <= 0
-) {
-    return null;
-}
 
+    /* ===========================
+       METERTYPE
+    =========================== */
+
+    const isDualMeter =
+        contract.energyMeterType === "Dag en nacht";
+
+
+    /* ===========================
+       PRIJZEN
+    =========================== */
+
+    const singleRate =
+        Number(
+            product.prices.singleRateEuroPerKwh
+        ) || 0;
+
+    const dayRate =
+        Number(
+            product.prices.dayRateEuroPerKwh
+        ) || 0;
+
+    const nightRate =
+        Number(
+            product.prices.nightRateEuroPerKwh
+        ) || 0;
+
+
+    /* ===========================
+       CONTROLE
+    =========================== */
+
+    if (isDualMeter) {
+
+        if (
+            dayRate <= 0 ||
+            nightRate <= 0
+        ) {
+
+            return null;
+
+        }
+
+    } else {
+
+        if (singleRate <= 0) {
+
+            return null;
+
+        }
+
+    }
+
+
+    /* ===========================
+       VASTE VERGOEDING
+    =========================== */
 
     const fixedFee =
         Number(
@@ -284,10 +412,30 @@ if (
         ) || 0;
 
 
-    const energyCost =
-        electricityUsage *
-        electricityPrice;
+    /* ===========================
+       ELEKTRICITEITSKOST
+    =========================== */
 
+    let energyCost = 0;
+
+
+    if (isDualMeter) {
+
+        energyCost =
+            (electricityDayUsage * dayRate) +
+            (electricityNightUsage * nightRate);
+
+    } else {
+
+        energyCost =
+            electricityUsage * singleRate;
+
+    }
+
+
+    /* ===========================
+       TOTAAL
+    =========================== */
 
     const totalCost =
         energyCost +
@@ -308,8 +456,26 @@ if (
         electricityUsage:
             electricityUsage,
 
+        electricityDayUsage:
+            electricityDayUsage,
+
+        electricityNightUsage:
+            electricityNightUsage,
+
         electricityPrice:
-            electricityPrice,
+            isDualMeter
+                ? null
+                : singleRate,
+
+        electricityDayPrice:
+            isDualMeter
+                ? dayRate
+                : null,
+
+        electricityNightPrice:
+            isDualMeter
+                ? nightRate
+                : null,
 
         energyCost:
             energyCost,
@@ -389,9 +555,7 @@ function calculateVTestGasCost(
 
 
     const gasUsage =
-        Number(
-            contract.gasYearUsage
-        ) || 0;
+    getGasUsageInKwh(contract);
 
 
     const gasPrice =
@@ -521,7 +685,12 @@ if (
 
 const injectionPrice =
     injectionProduct?.prices
-        ?.singleRateEuroPerKwh ?? 0;
+        ?.singleRateEuroPerKwh ??
+    injectionProduct?.prices
+        ?.dynamicRateEuroPerKwh ??
+    injectionProduct?.prices
+        ?.dayRateEuroPerKwh ??
+    0;
 
 
 const injectionRevenue =
@@ -575,183 +744,270 @@ const totalCost =
    BESTE ENERGIECOMBINATIES PER LEVERANCIER
 ========================================================== */
 
+/* ==========================================================
+   BESTE ENERGIEALTERNATIEVEN
+========================================================== */
+
 function findBestEnergyCombinations(
     contract
 ) {
 
     if (!contract) {
-
         return [];
-
     }
 
 
-    const electricityProducts =
-        getRelevantEnergyProducts(
-            "Elektriciteit"
+    /* ===========================
+       ELEKTRICITEIT
+    =========================== */
+
+    if (
+        contract.energyType === "Elektriciteit"
+    ) {
+
+        const electricityProducts =
+            getRelevantEnergyProducts(
+                "Elektriciteit"
+            );
+
+        const results =
+            electricityProducts
+                .map(product =>
+                    calculateVTestElectricityCost(
+                        product,
+                        contract
+                    )
+                )
+                .filter(Boolean)
+                .map(result => ({
+                    ...result,
+
+                    supplier:
+                        result.supplier,
+
+                    electricityProduct:
+                        result.product,
+
+                    gasProduct:
+                        null
+                }));
+
+
+        return results.sort(
+            (a, b) =>
+                a.totalCost - b.totalCost
         );
+    }
 
 
-    const gasProducts =
-        getRelevantEnergyProducts(
-            "Gas"
+    /* ===========================
+       GAS
+    =========================== */
+
+    if (
+        contract.energyType === "Gas"
+    ) {
+
+        const gasProducts =
+            getRelevantEnergyProducts(
+                "Gas"
+            );
+
+        const results =
+            gasProducts
+                .map(product =>
+                    calculateVTestGasCost(
+                        product,
+                        contract
+                    )
+                )
+                .filter(Boolean)
+                .map(result => ({
+                    ...result,
+
+                    supplier:
+                        result.supplier,
+
+                    electricityProduct:
+                        null,
+
+                    gasProduct:
+                        result.product
+                }));
+
+
+        return results.sort(
+            (a, b) =>
+                a.totalCost - b.totalCost
         );
+    }
 
 
-    const hasSolarPanels =
-        contract.hasSolarPanels === "Ja";
+    /* ===========================
+       ELEKTRICITEIT + GAS
+    =========================== */
+
+    if (
+        contract.energyType ===
+        "Elektriciteit + gas"
+    ) {
+
+        const electricityProducts =
+            getRelevantEnergyProducts(
+                "Elektriciteit"
+            );
+
+        const gasProducts =
+            getRelevantEnergyProducts(
+                "Gas"
+            );
+
+        const hasSolarPanels =
+            contract.hasSolarPanels === "Ja";
 
 
-    const suppliers =
-        [
-            ...new Set(
-                electricityProducts
-                    .map(
+        const suppliers =
+            [
+                ...new Set(
+                    electricityProducts.map(
                         product =>
                             product.supplier
                     )
-            )
-        ];
+                )
+            ];
 
 
-    const results = [];
+        const results = [];
 
 
-    suppliers.forEach(
-        supplier => {
+        suppliers.forEach(
+            supplier => {
 
-            const supplierElectricityProducts =
-                electricityProducts.filter(
-                    product =>
-                        product.supplier ===
-                        supplier
-                );
-
-
-            const supplierGasProducts =
-                gasProducts.filter(
-                    product =>
-                        product.supplier ===
-                        supplier
-                );
-
-
-            if (
-                !supplierElectricityProducts.length ||
-                !supplierGasProducts.length
-            ) {
-
-                return;
-
-            }
-
-
-            /* ===========================
-               INJECTIEPRODUCT
-            =========================== */
-
-            let injectionProduct = null;
-
-
-            if (hasSolarPanels) {
-
-                injectionProduct =
-                    energyPrices.find(
+                const supplierElectricityProducts =
+                    electricityProducts.filter(
                         product =>
-                            product.energy ===
-                                "Elektriciteit" &&
-                            product.contractType ===
-                                "Injectie" &&
                             product.supplier ===
-                                supplier
+                            supplier
                     );
 
 
-                if (!injectionProduct) {
+                const supplierGasProducts =
+                    gasProducts.filter(
+                        product =>
+                            product.supplier ===
+                            supplier
+                    );
 
+
+                if (
+                    !supplierElectricityProducts.length ||
+                    !supplierGasProducts.length
+                ) {
                     return;
-
                 }
 
-            }
+
+                /* ===========================
+                   INJECTIEPRODUCT
+                =========================== */
+
+                let injectionProduct = null;
 
 
-            /* ===========================
-               ALLE COMBINATIES
-            =========================== */
+                if (hasSolarPanels) {
 
-            let bestResult = null;
-
-
-            supplierElectricityProducts.forEach(
-                electricityProduct => {
-
-                    supplierGasProducts.forEach(
-                        gasProduct => {
-
-                            const result =
-                                calculateCombinedVTestEnergyCost(
-                                    electricityProduct,
-                                    gasProduct,
-                                    contract
-                                );
+                    injectionProduct =
+                        energyPrices.find(
+                            product =>
+                                product.energy ===
+                                    "Elektriciteit" &&
+                                product.contractType ===
+                                    "Injectie" &&
+                                product.supplier ===
+                                    supplier
+                        );
 
 
-                            if (!result) {
-
-                                return;
-
-                            }
-
-
-                            if (
-                                !bestResult ||
-                                result.totalCost <
-                                bestResult.totalCost
-                            ) {
-
-                                bestResult = {
-
-                                    ...result,
-
-                                    supplier:
-                                        supplier,
-
-                                    injectionProduct:
-                                        injectionProduct
-
-                                };
-
-                            }
-
-                        }
-                    );
-
+                    if (!injectionProduct) {
+                        return;
+                    }
                 }
-            );
 
 
-            if (bestResult) {
+                /* ===========================
+                   ALLE COMBINATIES
+                =========================== */
 
-                results.push(
-                    bestResult
+                let bestResult = null;
+
+
+                supplierElectricityProducts.forEach(
+                    electricityProduct => {
+
+                        supplierGasProducts.forEach(
+                            gasProduct => {
+
+                                const result =
+                                    calculateCombinedVTestEnergyCost(
+                                        electricityProduct,
+                                        gasProduct,
+                                        contract
+                                    );
+
+
+                                if (!result) {
+                                    return;
+                                }
+
+
+                                if (
+                                    !bestResult ||
+                                    result.totalCost <
+                                    bestResult.totalCost
+                                ) {
+
+                                    bestResult = {
+
+                                        ...result,
+
+                                        supplier:
+                                            supplier,
+
+                                        injectionProduct:
+                                            injectionProduct
+
+                                    };
+                                }
+
+                            }
+                        );
+                    }
                 );
 
+
+                if (bestResult) {
+
+                    results.push(
+                        bestResult
+                    );
+                }
+
             }
-
-        }
-    );
+        );
 
 
-    return results.sort(
-        (
-            a,
-            b
-        ) =>
-            a.totalCost -
-            b.totalCost
-    );
+        return results.sort(
+            (a, b) =>
+                a.totalCost - b.totalCost
+        );
+    }
 
+
+    /* ===========================
+       ONBEKEND TYPE
+    =========================== */
+
+    return [];
 }
 
 /* ==========================================================
@@ -900,6 +1156,25 @@ function getRelevantEnergyProducts(
 
     return energyPrices.filter(
         product => {
+
+                    /* ===========================
+           UITSLUITEN UIT VERGELIJKING
+        =========================== */
+
+        const productName =
+            String(product.product || "")
+                .toLowerCase();
+
+        if (
+    productName.includes("sociaal tarief") ||
+    productName.includes("groepsaankoop") ||
+    productName.includes("speciale aanbieding") ||
+    productName.includes("prepaid")
+) {
+
+    return false;
+
+}
 
             if (
                 energyType === "Elektriciteit"

@@ -2177,12 +2177,15 @@ if (categoryKey === "energie") {
                 }
 
                 // Vraag 3: verbruik
-                if (
-                    index === 2 &&
-                    Number(contract.electricityYearUsage) > 0
-                ) {
-                    return false;
-                }
+if (
+    index === 2 &&
+    (
+        Number(contract.electricityYearUsage) > 0 ||
+        Number(contract.gasYearUsage) > 0
+    )
+) {
+    return false;
+}
 
                 return true;
 
@@ -2826,7 +2829,9 @@ function getCKAIEnergyContractInsight() {
         !ckaiCurrentContract ||
         ckaiCurrentContract.category.toLowerCase() !== "energie"
     ) {
+
         return "";
+
     }
 
 
@@ -2835,28 +2840,11 @@ function getCKAIEnergyContractInsight() {
 
 
     /* ===========================
-       BASISGEGEVENS
-    =========================== */
-
-    const electricityUsage =
-        Number(
-            contract.electricityYearUsage
-        ) || 0;
-
-    const gasUsage =
-        Number(
-            contract.gasYearUsage
-        ) || 0;
-
-
-    /* ===========================
        V-TEST VERGELIJKING
     =========================== */
 
     if (
-        typeof findBestEnergyCombinations === "function" &&
-        electricityUsage > 0 &&
-        gasUsage > 0
+        typeof findBestEnergyCombinations === "function"
     ) {
 
         const results =
@@ -2874,9 +2862,38 @@ function getCKAIEnergyContractInsight() {
                 results[0];
 
 
+            /* ===========================
+               VERBRUIK
+            =========================== */
+
+            const electricityUsage =
+                Number(
+                    contract.electricityYearUsage
+                ) || 0;
+
+            const gasUsage =
+                Number(
+                    contract.gasYearUsage
+                ) || 0;
+
+
+            /* ===========================
+               PRIJZEN
+            =========================== */
+
             const electricityPrice =
                 Number(
                     contract.electricityPrice
+                ) || 0;
+
+            const electricityDayPrice =
+                Number(
+                    contract.electricityDayPrice
+                ) || 0;
+
+            const electricityNightPrice =
+                Number(
+                    contract.electricityNightPrice
                 ) || 0;
 
             const gasPrice =
@@ -2889,6 +2906,85 @@ function getCKAIEnergyContractInsight() {
                     contract.energyFixedFee
                 ) || 0;
 
+
+            /* ===========================
+               HUIDIGE KOST
+            =========================== */
+
+            let currentCost = 0;
+
+
+            /* ===========================
+               ELEKTRICITEIT
+            =========================== */
+
+            if (
+                contract.energyType === "Elektriciteit" ||
+                contract.energyType === "Elektriciteit + gas"
+            ) {
+
+                if (
+                    contract.energyMeterType ===
+                    "Dag en nacht"
+                ) {
+
+                    const electricityDayUsage =
+                        Number(
+                            contract.electricityDayUsage
+                        ) || 0;
+
+                    const electricityNightUsage =
+                        Number(
+                            contract.electricityNightUsage
+                        ) || 0;
+
+                    currentCost +=
+                        electricityDayUsage *
+                        electricityDayPrice;
+
+                    currentCost +=
+                        electricityNightUsage *
+                        electricityNightPrice;
+
+                } else {
+
+                    currentCost +=
+                        electricityUsage *
+                        electricityPrice;
+
+                }
+
+            }
+
+
+            /* ===========================
+               GAS
+            =========================== */
+
+            if (
+                contract.energyType === "Gas" ||
+                contract.energyType === "Elektriciteit + gas"
+            ) {
+
+                currentCost +=
+                    gasUsage *
+                    gasPrice;
+
+            }
+
+
+            /* ===========================
+               VASTE VERGOEDING
+            =========================== */
+
+            currentCost +=
+                fixedFee;
+
+
+            /* ===========================
+               ZONNEPANELEN
+            =========================== */
+
             const solarInjection =
                 Number(
                     contract.solarInjectionYear
@@ -2898,18 +2994,6 @@ function getCKAIEnergyContractInsight() {
                 Number(
                     contract.solarInjectionPrice
                 ) || 0;
-
-
-            let currentCost =
-                electricityUsage *
-                electricityPrice;
-
-            currentCost +=
-                gasUsage *
-                gasPrice;
-
-            currentCost +=
-                fixedFee;
 
 
             if (
@@ -2924,6 +3008,10 @@ function getCKAIEnergyContractInsight() {
 
             }
 
+
+            /* ===========================
+               BESPARING
+            =========================== */
 
             const saving =
                 currentCost -
@@ -2950,7 +3038,6 @@ function getCKAIEnergyContractInsight() {
         }
 
     }
-
 
     /* ===========================
        GEEN VERGELIJKING BESCHIKBAAR
@@ -5963,14 +6050,24 @@ const best =
         ) || 0;
 
     const gasUsage =
-        Number(
-            ckaiCurrentContract.gasYearUsage
-        ) || 0;
+    getGasUsageInKwh(
+        ckaiCurrentContract
+    );
 
     const electricityPrice =
-        Number(
-            ckaiCurrentContract.electricityPrice
-        ) || 0;
+    Number(
+        ckaiCurrentContract.electricityPrice
+    ) || 0;
+
+const electricityDayPrice =
+    Number(
+        ckaiCurrentContract.electricityDayPrice
+    ) || 0;
+
+const electricityNightPrice =
+    Number(
+        ckaiCurrentContract.electricityNightPrice
+    ) || 0;
 
     const gasPrice =
         Number(
@@ -5993,17 +6090,73 @@ const best =
         ) || 0;
 
 
-    let currentCost =
-        electricityUsage *
-        electricityPrice;
+    let currentCost = 0;
+
+
+/* ===========================
+   ELEKTRICITEIT
+=========================== */
+
+if (
+    ckaiCurrentContract.energyType === "Elektriciteit" ||
+    ckaiCurrentContract.energyType === "Elektriciteit + gas"
+) {
+
+    if (
+        ckaiCurrentContract.energyMeterType === "Dag en nacht"
+    ) {
+
+        const electricityDayUsage =
+            Number(
+                ckaiCurrentContract.electricityDayUsage
+            ) || 0;
+
+        const electricityNightUsage =
+            Number(
+                ckaiCurrentContract.electricityNightUsage
+            ) || 0;
+
+        currentCost +=
+            electricityDayUsage *
+            electricityDayPrice;
+
+        currentCost +=
+            electricityNightUsage *
+            electricityNightPrice;
+
+    } else {
+
+        currentCost +=
+            electricityUsage *
+            electricityPrice;
+
+    }
+
+}
+
+
+/* ===========================
+   GAS
+=========================== */
+
+if (
+    ckaiCurrentContract.energyType === "Gas" ||
+    ckaiCurrentContract.energyType === "Elektriciteit + gas"
+) {
 
     currentCost +=
         gasUsage *
         gasPrice;
 
-    currentCost +=
-        fixedFee;
+}
 
+
+/* ===========================
+   VASTE VERGOEDING
+=========================== */
+
+currentCost +=
+    fixedFee;   
 
     if (
         ckaiCurrentContract.hasSolarPanels === "Ja" &&
@@ -6056,24 +6209,54 @@ const best =
         best.supplier;
 
 
-    const electricityProduct =
-    best.electricityProduct === "DYNAMIC"
-        ? "Dynamisch"
-        : cleanEnergyProductName(
-            best.electricityProduct
-        );
+   const electricityProduct =
+    best.electricityProduct
+        ? (
+            best.electricityProduct === "DYNAMIC"
+                ? "Dynamisch"
+                : cleanEnergyProductName(
+                    best.electricityProduct
+                )
+        )
+        : "";
 
 const gasProduct =
-    best.gasProduct === "DYNAMIC"
-        ? "Dynamisch"
-        : cleanEnergyProductName(
-            best.gasProduct
-        );
+    best.gasProduct
+        ? (
+            best.gasProduct === "DYNAMIC"
+                ? "Dynamisch"
+                : cleanEnergyProductName(
+                    best.gasProduct
+                )
+        )
+        : "";
+
+
+const productLabels = [];
+
+
+if (electricityProduct) {
+
+    productLabels.push(
+        `Elektriciteit: ${electricityProduct}`
+    );
+
+}
+
+
+if (gasProduct) {
+
+    productLabels.push(
+        `Gas: ${gasProduct}`
+    );
+
+}
+
 
 document.getElementById(
     "ckaiEnergyBestProduct"
 ).textContent =
-    `Elektriciteit: ${electricityProduct} • Gas: ${gasProduct}`;
+    productLabels.join(" • ");
 
 
     document.getElementById(
@@ -6094,43 +6277,57 @@ if (bestBreakdown) {
 
     bestBreakdown.innerHTML = `
 
+        ${
+            best.electricityCost > 0
+                ? `
+                    <div class="ckai-energy-breakdown-row">
+
+                        <span>
+                            ⚡ Elektriciteit
+                        </span>
+
+                        <strong>
+                            ${formatEuro(
+                                best.electricityCost
+                            )}
+                        </strong>
+
+                    </div>
+                  `
+                : ""
+        }
+
+
+        ${
+            best.gasCost > 0
+                ? `
+                    <div class="ckai-energy-breakdown-row">
+
+                        <span>
+                            🔥 Gas
+                        </span>
+
+                        <strong>
+                            ${formatEuro(
+                                best.gasCost
+                            )}
+                        </strong>
+
+                    </div>
+                  `
+                : ""
+        }
+
+
         <div class="ckai-energy-breakdown-row">
 
             <span>
-                ⚡ Elektriciteit
+                📄 Vaste vergoeding
             </span>
 
             <strong>
                 ${formatEuro(
-                    best.electricityCost
-                )}
-            </strong>
-
-        </div>
-
-        <div class="ckai-energy-breakdown-row">
-
-    <span>
-        📄 Vaste vergoeding
-    </span>
-
-    <strong>
-        ${formatEuro(
-            best.fixedFee
-        )}
-    </strong>
-
-</div>
-
-        <div class="ckai-energy-breakdown-row">
-
-            <span>
-                🔥 Gas
-            </span>
-
-            <strong>
-                ${formatEuro(
-                    best.gasCost
+                    best.fixedFee
                 )}
             </strong>
 
@@ -6187,14 +6384,60 @@ if (savingPercentageElement) {
 
 
     /* ===========================
-       TOP 3
-    =========================== */
+   TOP 3
+=========================== */
 
-    document.getElementById(
+const topAlternatives = [];
+
+const seenSuppliers = new Set();
+
+
+for (const alternative of results) {
+
+    const supplierKey =
+        String(
+            alternative.supplier || ""
+        )
+            .trim()
+            .toLowerCase();
+
+
+    if (
+        seenSuppliers.has(
+            supplierKey
+        )
+    ) {
+
+        continue;
+
+    }
+
+
+    seenSuppliers.add(
+        supplierKey
+    );
+
+
+    topAlternatives.push(
+        alternative
+    );
+
+
+    if (
+        topAlternatives.length === 3
+    ) {
+
+        break;
+
+    }
+
+}
+
+
+document.getElementById(
     "ckaiEnergyAlternatives"
 ).innerHTML =
-    results
-        .slice(0, 3)
+    topAlternatives
         .map(
             (alternative, index) => {
 
@@ -6212,21 +6455,27 @@ if (savingPercentageElement) {
 
 
                 const electricity =
-                    alternative.electricityProduct === "DYNAMIC"
-                        ? "Dynamisch"
-                        : cleanEnergyProductName(
-                            alternative.electricityProduct
-                        );
+    alternative.electricityProduct
+        ? (
+            alternative.electricityProduct === "DYNAMIC"
+                ? "Dynamisch"
+                : cleanEnergyProductName(
+                    alternative.electricityProduct
+                )
+        )
+        : "";
 
 
-                const gas =
+const gas =
+    alternative.gasProduct
+        ? (
+            alternative.gasProduct === "DYNAMIC"
+                ? "Dynamisch"
+                : cleanEnergyProductName(
                     alternative.gasProduct
-                        ? alternative.gasProduct === "DYNAMIC"
-                            ? "Dynamisch"
-                            : cleanEnergyProductName(
-                                alternative.gasProduct
-                            )
-                        : "";
+                )
+        )
+        : "";
 
 
                 return `
@@ -6246,24 +6495,30 @@ if (savingPercentageElement) {
                         </div>
 
 
-                        <div class="ckai-energy-alternative-products">
+                       <div class="ckai-energy-alternative-products">
 
-                            <span>
-                                ⚡ ${electricity}
-                            </span>
+    ${
+        electricity
+            ? `
+                <span>
+                    ⚡ ${electricity}
+                </span>
+              `
+            : ""
+    }
 
 
-                            ${
-                                gas
-                                    ? `
-                                        <span>
-                                            🔥 ${gas}
-                                        </span>
-                                      `
-                                    : ""
-                            }
+    ${
+        gas
+            ? `
+                <span>
+                    🔥 ${gas}
+                </span>
+              `
+            : ""
+    }
 
-                        </div>
+</div>
 
 
                         <div class="ckai-energy-alternative-price">
